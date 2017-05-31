@@ -1,8 +1,8 @@
-package dsNews.dao;
+package dao;
 
 import java.util.List;
 
-import dsNews.modelos.User;
+import models.User;
 
 public interface DAOUser {
 
