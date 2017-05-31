@@ -1,4 +1,4 @@
-package dsNews.dao;
+package dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 
-import dsNews.modelos.User;
+import models.User;
 
 public class DAOUserImpl implements DAOUser{
 	
