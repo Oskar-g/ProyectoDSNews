@@ -10,13 +10,16 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/dsnews_content" />
-		<property name="username" value="jesus" />
-		<property name="password" value="hijodedios" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
 	</bean>
 
 
-	<!-- <bean id="DAOArticle" class="dao.DAOArticleImp">
+	<bean id="DAOUser" class="dao.DAOUserImpl">
 		<property name="dataSource" ref="dataSource" />
-	</bean> -->
+	</bean>
 	
+	<bean id="DAOArticle" class="dao.DAOArticleImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 </beans>
