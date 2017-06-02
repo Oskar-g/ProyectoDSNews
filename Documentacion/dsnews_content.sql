@@ -145,7 +145,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `password`, `role`) VALUES
 (1, 'jorge', 'd67326a22642a324aa1b0745f2f17abb', 'admin'),
 (2, 'plata', 'e0b95c145bd9ef5d82e5a97f87f41a54', 'admin'),
-(3, 'jesus', 'jesus', 'dios'),
+(3, 'jesus', '110d46fcd978c24f306cd7fa23464d73', 'dios'),
 (4, 'prueba', '81dc9bdb52d04dc20036dbd8313ed055', 'tuutamadre');
 
 --

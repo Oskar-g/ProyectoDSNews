@@ -205,5 +205,25 @@ public class DSNewsController {
         return mv;
 		
 	}
+	
+	@RequestMapping(value = {"borrar"})
+	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
+			@RequestParam("guid")int guid){
+		boolean ok = daoa.delete(guid);
+		ModelAndView mv = null;
+
+		
+		if(ok){
+			try {
+				rs.sendRedirect("paginaAdmin");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			mv = new ModelAndView("errorBorrar");
+		}
+		return mv;
+	}
 
 }
