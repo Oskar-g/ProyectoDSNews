@@ -31,7 +31,8 @@ Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${us
 			<td><c:out value="${article.sectionId}"/></td>
 			<td><c:out value="${article.title}"/></td>
 			<td><c:out value="${article.pubDate}"/></td>
-			<td><a href="formEditar?guid=${article.guid}"><button>Modificar noticia</button></a></td>		
+			<td><a href="formEditar?guid=${article.guid}"><button>Modificar noticia</button></a></td>
+			<td><a href="borrar?guid=${article.guid}"><button>Borrar noticia</button></a></td>				
 		</tr>
 	</c:forEach>
 </table>

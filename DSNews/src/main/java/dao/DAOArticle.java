@@ -11,6 +11,6 @@ public interface DAOArticle {
 	public boolean create(Article a, User u);
 	public boolean update(Article a,User u);
 	public Article read(int guid);
-
+	public boolean delete(int guid);
 
 }

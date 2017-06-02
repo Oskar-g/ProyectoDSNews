@@ -131,7 +131,18 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		return a;
 	}
-	
+	//Borrar article
+	public boolean delete(int guid){
+		String sql = "delete from article where guid = ?";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		int i = jdbc.update(sql, new Object[]{guid});
+		if (i == 0){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 	
 }

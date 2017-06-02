@@ -7,9 +7,8 @@
 <head>
 </head>
 <body>
-OSCAR QUE NO TE SALE PRINGAO
 
-<a href="formLogin"><button>Hacer login</button></a>
+Visionado de noticias y demás Contenido de noticias
 </body>
 
 </html>

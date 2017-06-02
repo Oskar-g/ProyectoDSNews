@@ -19,6 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `dsnews_content`
 --
+DROP DATABASE dsnews_content;
 CREATE DATABASE IF NOT EXISTS `dsnews_content` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `dsnews_content`;
 
@@ -145,7 +146,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `password`, `role`) VALUES
 (1, 'jorge', 'd67326a22642a324aa1b0745f2f17abb', 'admin'),
 (2, 'plata', 'e0b95c145bd9ef5d82e5a97f87f41a54', 'admin'),
-(3, 'jesus', 'jesus', 'dios'),
+(3, 'jesus', '110d46fcd978c24f306cd7fa23464d73', 'dios'),
 (4, 'prueba', '81dc9bdb52d04dc20036dbd8313ed055', 'tuutamadre');
 
 --
@@ -236,3 +237,7 @@ ALTER TABLE `media`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE USER 'jesus'@'localhost' IDENTIFIED BY 'hijodedios';
+GRANT ALL ON dsnews_content.* TO 'jesus'@'localhost';
