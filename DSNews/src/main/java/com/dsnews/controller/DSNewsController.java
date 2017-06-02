@@ -130,9 +130,9 @@ public class DSNewsController {
         Article a = new Article( link,  title,  content,  date,  description,  keywords,
     			 userid,  channelid,  sectionid);
         boolean crear = daoa.create(a,us);
-        System.out.println("creada la noticia");
         
         if(crear){
+            System.out.println("creada la noticia");
         	try {
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
@@ -143,6 +143,67 @@ public class DSNewsController {
         }
         return mv;
 	}
-
+	
+	@RequestMapping(value = {"formEditar"})
+	public ModelAndView formEditar(HttpSession sesion,
+			@RequestParam("guid")int guid){
+		Article a = daoa.read(guid);
+		
+		ModelAndView mv = new ModelAndView("formEditar");
+		mv.addObject("guid",guid);
+		mv.addObject("article",a);
+		return mv;
+	}
+	
+	@RequestMapping(value = {"editar"})
+	public ModelAndView editar(HttpSession sesion,HttpServletResponse rs,
+			@RequestParam("guid")int guid,
+			@RequestParam("link")String link,
+			@RequestParam("title")String title,
+			@RequestParam("content")String content,
+			@RequestParam("pubDate")String pubDateStr,
+			@RequestParam("description")String description,
+			@RequestParam("channelid")String channelidStr,
+			@RequestParam("sectionid")String sectionidStr,
+			@RequestParam("keywords")String keywords){
+		
+		ModelAndView mv = null;
+		User us = (User)sesion.getAttribute("user");
+		
+		//Parseamos los que no son strings
+		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
+		Date date = null;
+        try {
+            date = formatter.parse(pubDateStr);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+        
+        int userid=0;
+        int channelid = 0;
+        int sectionid = 0;
+        try{
+        	channelid = Integer.parseInt(channelidStr);
+        	sectionid = Integer.parseInt(sectionidStr);
+        }catch (NumberFormatException nmb) {
+        	nmb.printStackTrace();
+		}
+		
+        Article a = new Article(guid, link,  title,  content,  date,  description,  keywords,
+    			 userid,  channelid, sectionid);
+        boolean modificar = daoa.update(a,us);
+        
+        if(modificar){
+        	try {
+				rs.sendRedirect("paginaAdmin");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        }else{
+        	mv = new ModelAndView("errorDatos");
+        }
+        return mv;
+		
+	}
 
 }

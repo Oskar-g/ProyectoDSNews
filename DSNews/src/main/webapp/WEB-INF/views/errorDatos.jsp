@@ -10,7 +10,7 @@
 	
 	<h2 style="text-align: center;">ERROR EN LOS DATOS INTRODUCIDOS. POR FAVOR INTRODUCZALOS DE NUEVO</h2>
 	
-	<script>window.setTimeout('window.location="formCrear";',1000);</script>
+	<script>window.setTimeout('window.location="paginaAdmin";',1000);</script>
 
 </body>
 </html>
