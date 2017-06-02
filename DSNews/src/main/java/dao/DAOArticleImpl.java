@@ -59,6 +59,9 @@ public class DAOArticleImpl implements DAOArticle {
 	//Metodos
 	//Listar para el user normal
 	public List<Article> listar(User u) {
+		
+		//Añadir where adicional que dependa de que exista o no (null) la request de filter+keyword [where ?=?]
+		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
 		String sql = "select guid,section_id,title,pub_date,user_id from article where user_id = ? order by pub_date";
@@ -66,6 +69,7 @@ public class DAOArticleImpl implements DAOArticle {
 		lista = jdbc.query(sql, new Object[]{u.getId()},new RowMapperArticleUser());
 		return lista;
 	}
+	
 	//Listar para el superuser
 	public List<Article> listarSuperUser(User u) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
@@ -75,6 +79,8 @@ public class DAOArticleImpl implements DAOArticle {
 		lista = jdbc.query(sql,new RowMapperArticleSuperUser());
 		return lista;
 	}
+	
+	
 	//CRUD
 	//Cear una nueva noticia
 	public boolean create(Article a, User u) {
