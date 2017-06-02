@@ -13,44 +13,45 @@
 </head>
 <body>
 
-<h1>Crear noticia</h1>
+<h1>Editar noticia</h1>
 <div>
 <form action="editar">
+<input type="hidden" name = "guid" value="${guid}">
 <table>
 	<tr>
 		<td><label for="link">Link</label></td>
-		<td><input type="text" name="link"></td>
+		<td><input type="text" name="link" value="${article.link}"></td>
 	</tr>
 	<tr>
 		<td><label for="title">Titular</label></td>
-		<td><input type="text" name="title"></td>
+		<td><input type="text" name="title" value="${article.title}"></td>
 	</tr>
 	<tr>
 		<td><label for="content">Contenido</label></td>
- 		<td><textarea name="content"></textarea></td>
+ 		<td><textarea name="content">${article.content}</textarea></td>
 	<tr>
 		<td><label for="pubDate">Fecha publicacion</label></td>
-		<td><input type="Date" name="pubDate"></td>
+		<td><input type="Date" name="pubDate" value="${article.pubDate}"></td>
 	</tr>
 	<tr>
 		<td><label for="description">Descripcion</label></td>
-		<td><input type="text" name="description"></td>
+		<td><input type="text" name="description" value="${article.description}"></td>
 	</tr>
 	<tr>
 		<td><label for="channelid">Id periodico</label></td>
-		<td><input type="number" name="channelid"></td>
+		<td><input type="number" name="channelid" value="${article.channelId}"></td>
 	</tr>
 	<tr>
 		<td><label for="sectionid">Id seccion</label></td>
-		<td><input type="number" name="sectionid"></td>
+		<td><input type="number" name="sectionid" value="${article.sectionId}"></td>
 	</tr>
 	<tr>
 		<td><label for="keywords">Palabras clave</label></td>
-		<td><input type="text" name="keywords"></td>
+		<td><input type="text" name="keywords" value="${article.keywords}"></td>
 	</tr>
 	
 	<tr>
-		<td><button>CREAR</button></td>
+		<td><button>TERMINAR EDICION</button></td>
 	</tr>
 </table>
 

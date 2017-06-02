@@ -95,6 +95,42 @@ public class DAOArticleImpl implements DAOArticle {
 		}
 		return result;
 	}
+	//Editar nueva noticia
+	public boolean update (Article a,User u){
+		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
+		boolean result = false;
+		String sql = "update article set "
+				+"link = ?,"
+				+"title = ?,"
+				+"content = ?,"
+				+"pub_date = ?,"
+				+"description = ?,"
+				+"keywords = ?,"
+				+"user_id = ?,"
+				+"channel_id = ?,"
+				+"section_id = ? "
+				+"where guid = ?";
+		
+		try{
+			jdbc.update(sql,new Object[]{a.getLink(),a.getTitle(),a.getContent(),
+					a.getPubDate(),a.getDescription(),a.getKeywords(),
+					u.getId(),a.getChannelId(),a.getSectionId(),a.getGuid()});
+			result = true;
+		}catch (DataAccessException dae) {
+			dae.printStackTrace();
+		}
+		return result;
+	}
+	
+	//Read article
+	public Article read(int guid){
+		String sql= "select * from article where guid = ?";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		Article a = jdbc.queryForObject(sql, new Object[]{guid}, new RowMapperArticleSuperUser());
+		
+		return a;
+	}
 	
 	
 	
