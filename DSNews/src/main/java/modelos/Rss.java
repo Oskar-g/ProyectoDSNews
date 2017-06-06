@@ -13,6 +13,12 @@ public class Rss {
 	}
 	//Con parametros
 
+	public Rss(int id,String link, int sectionId) {
+		super();
+		this.id= id;
+		this.link = link;
+		this.sectionId = sectionId;
+	}
 	public Rss(String link, int sectionId) {
 		super();
 		this.link = link;

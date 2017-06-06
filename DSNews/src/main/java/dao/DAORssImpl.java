@@ -17,6 +17,7 @@ public class DAORssImpl implements DAORss{
 		class RowMapperRss implements RowMapper<Rss>{
 			public Rss mapRow(ResultSet rs, int numRow) throws SQLException{
 				Rss r = new Rss(
+					rs.getInt("id"),
 					rs.getString("link"),
 					rs.getInt("section_id")
 					);
@@ -39,7 +40,7 @@ public class DAORssImpl implements DAORss{
 	public List<Rss> listar() {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Rss> lista;
-		String sql = "select link,section_id from rss order by section_id";
+		String sql = "select id,link,section_id from rss order by section_id";
 		
 		lista = jdbc.query(sql, new Object[]{},new RowMapperRss());
 		
