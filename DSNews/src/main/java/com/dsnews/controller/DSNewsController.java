@@ -1,6 +1,7 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,9 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.rometools.rome.io.SyndFeedInput;
+import com.rometools.rome.io.XmlReader;
+
 import dao.DAOArticle;
+import dao.DAOArticleRss;
+import dao.DAOArticleRssImpl;
+import dao.DAORss;
+import dao.DAORssImpl;
 import dao.DAOUser;
 import modelos.Article;
+import modelos.ArticleRss;
+import modelos.Rss;
 import modelos.User;
 
 @Controller
@@ -26,12 +38,51 @@ public class DSNewsController {
 	DAOUser daou;
 	@Autowired
 	DAOArticle daoa;
+
+	@Autowired
+	DAORss daorss;
+
+	@Autowired
+	DAOArticleRss daoarss;
+	
 	
 	@RequestMapping(value = {"/", "index"})
 	public ModelAndView index(){
 		
-		ModelAndView mv = new ModelAndView("index");
+		boolean ok = false;
+        
+		List<Rss> lista = daorss.listar();
 		
+		for (Rss rss : lista) {
+		
+			try {
+                URL feedUrl = new URL(rss.getLink());
+                int rssId = rss.getId();
+                SyndFeedInput input = new SyndFeedInput();
+                SyndFeed feed = input.build(new XmlReader(feedUrl));
+
+                for (SyndEntry entrada: feed.getEntries()) 
+                {
+					
+                	String link = entrada.getLink();
+                	String title = entrada.getTitle();
+                	String description = entrada.getDescription().getValue();
+                	Date pubDate= entrada.getPublishedDate();
+                	                	
+                	ArticleRss arss = new ArticleRss(link,title,description,pubDate,rssId);
+                	daoarss.create(arss);	
+				}
+                
+                ok = true;
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                System.out.println("ERROR: "+ex.getMessage());
+            }
+		}
+		
+		
+		ModelAndView mv = new ModelAndView("index");
 		return mv;
 	}
 	

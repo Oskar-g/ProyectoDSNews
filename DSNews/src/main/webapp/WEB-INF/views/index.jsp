@@ -9,6 +9,9 @@
 <body>
 
 Visionado de noticias y demás Contenido de noticias
+<div class="">
+asdasdjasdkjasdh 
+</div>
 </body>
 
 </html>
