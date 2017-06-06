@@ -19,7 +19,7 @@
 	</tr>
 	<tr>
 		<td><spring:message code="link_RSS" /></td>
-		<td><spring:message code="seccion_ID" /></td>
+		<td><spring:message code="id_seccion" /></td>
 	</tr>
 	<c:forEach items="${lista}" var="rss">
 		<tr>
