@@ -12,6 +12,14 @@
 HOLA <c:out value="${user.name}"/> HAS LOGUEADO 
 Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${user.id}"/> COMO ID
 <p></p>
+<form action="buscarIndex" method="post">
+	<input type="radio" name="filter" value="titular"> Titular
+	<input type="radio" name="filter" value="content"> Contenido 
+	<input type="radio" name="filter" value="id"> Id 
+	<input tye="text" name="keyword"/>
+	<input type="submit"/>
+
+</form>
 <table>
 	<tr>
 		<td>BIENVENIDO <c:out value="${user.name}"/></td>
@@ -38,5 +46,7 @@ Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${us
 </table>
 
 <td><a href="formCrear"><button>Nueva noticia</button></a></td>
+<td><a href="formAddRSS"><button>Añadir por rss</button></a></td>
+
  </body>
 </html>
