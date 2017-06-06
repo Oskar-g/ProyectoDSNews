@@ -46,5 +46,7 @@ Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${us
 </table>
 
 <td><a href="formCrear"><button>Nueva noticia</button></a></td>
+<td><a href="formAddRSS"><button>Añadir por rss</button></a></td>
+
  </body>
 </html>
