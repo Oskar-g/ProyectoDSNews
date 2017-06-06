@@ -8,7 +8,12 @@
 <title><spring:message code="titulo.paginaAdmin" /></title>
 </head>
 <body>
-<spring:message code="welcome"/>
+<spring:message code="welcome" arguments=""/>
+
+<spring:message code="welcome"
+       arguments="${user.name};"
+       htmlEscape="false"
+       argumentSeparator=";"/>
  
 Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${user.id}"/> COMO ID
 <p></p>
