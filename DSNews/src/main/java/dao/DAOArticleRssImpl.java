@@ -22,7 +22,8 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 					rs.getString("title"),
 					rs.getString("description"),
 					rs.getDate("pubDate"),
-					rs.getInt("idRss")
+					rs.getInt("idRss"),
+					rs.getString("cover")
 					);
 			return a;
 		}	
@@ -60,12 +61,12 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
 		
-		String sql = "insert into article_rss(link,title,description,pub_date,id_rss)"
-				+ "values (?,?,?,?,?)";
+		String sql = "insert into article_rss(link,title,description,pub_date,id_rss,cover)"
+				+ "values (?,?,?,?,?,?)";
 		
 		try{
 			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),
-					art.getPubDate(),art.getIdRss()});
+					art.getPubDate(),art.getIdRss(),art.getCover()});
 			result = true;
 		}catch(DataAccessException dae){
 			dae.printStackTrace();
@@ -82,6 +83,8 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 				+"title = ?,"
 				+"description = ?,"
 				+"pub_date = ?,"
+				+"cover = ?,"
+				
 				+"where id = ?";
 		
 		try{
