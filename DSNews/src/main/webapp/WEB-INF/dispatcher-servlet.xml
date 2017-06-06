@@ -26,5 +26,10 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="0"/>
 
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="ISO-8859-1" />
+	</bean>
 
 </beans>
