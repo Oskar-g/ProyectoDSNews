@@ -10,6 +10,7 @@ public class ArticleRss {
 	private String description;
 	private Date pubDate;
 	private int idRss;
+	private String cover;
 
 	//Constructores
 	//Constructor vacio
@@ -17,16 +18,17 @@ public class ArticleRss {
 	
 	
 	
-	public ArticleRss(String link, String title, String description, Date pubDate, int idRss) {
+	public ArticleRss(String link, String title, String description, Date pubDate, int idRss,String cover) {
 		super();
 		this.link = link;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
 		this.idRss = idRss;	
+		this.cover = cover;	
 	}
 
-	public ArticleRss(int id, String link, String title, String description, Date pubDate, int idRss) {
+	public ArticleRss(int id, String link, String title, String description, Date pubDate, int idRss,String cover) {
 		super();
 		this.link = link;
 		this.id = id;
@@ -34,6 +36,7 @@ public class ArticleRss {
 		this.description = description;
 		this.pubDate = pubDate;
 		this.idRss = idRss;	
+		this.cover = cover;	
 	}
 
 
@@ -76,7 +79,15 @@ public class ArticleRss {
 		return idRss;
 	}
 	public void setIdRss(int idRss) {
-		idRss = idRss;
+		this.idRss = idRss;
+	}
+
+	public String getCover() {
+		return cover;
+	}
+
+	public void setCover(String cover) {
+		this.cover = cover;
 	}
 
 	

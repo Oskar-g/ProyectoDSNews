@@ -26,10 +26,12 @@ import dao.DAOArticleRss;
 import dao.DAOArticleRssImpl;
 import dao.DAORss;
 import dao.DAORssImpl;
+import dao.DAOSection;
 import dao.DAOUser;
 import modelos.Article;
 import modelos.ArticleRss;
 import modelos.Rss;
+import modelos.Section;
 import modelos.User;
 
 @Controller
@@ -38,23 +40,19 @@ public class DSNewsController {
 	DAOUser daou;
 	@Autowired
 	DAOArticle daoa;
-
 	@Autowired
 	DAORss daorss;
-
 	@Autowired
 	DAOArticleRss daoarss;
-	
+	@Autowired
+	DAOSection daosec;
 	
 	@RequestMapping(value = {"/", "index"})
 	public ModelAndView index(){
-		
 		boolean ok = false;
+        List<Rss> lista = daorss.listar();
         
-		List<Rss> lista = daorss.listar();
-		
 		for (Rss rss : lista) {
-		
 			try {
                 URL feedUrl = new URL(rss.getLink());
                 int rssId = rss.getId();
@@ -64,12 +62,21 @@ public class DSNewsController {
                 for (SyndEntry entrada: feed.getEntries()) 
                 {
 					
+                	String cover= "";
                 	String link = entrada.getLink();
                 	String title = entrada.getTitle();
                 	String description = entrada.getDescription().getValue();
                 	Date pubDate= entrada.getPublishedDate();
+                	try{
+                		cover = entrada.getEnclosures().get(0).getUrl();
+                	}catch (Exception e) {
+						System.out.println("ERROR NO TIENE IMAGEN");
+					}
+                	
+                	//String cover = entrada.getEnclosures().get(0).getUrl();
+                	System.out.println(entrada);
                 	                	
-                	ArticleRss arss = new ArticleRss(link,title,description,pubDate,rssId);
+                	ArticleRss arss = new ArticleRss(link,title,description,pubDate,rssId,cover);
                 	daoarss.create(arss);	
 				}
                 
@@ -81,8 +88,9 @@ public class DSNewsController {
             }
 		}
 		
-		
+		List<Section> sectionList = daosec.listar();
 		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("sectionList",sectionList);
 		return mv;
 	}
 	
