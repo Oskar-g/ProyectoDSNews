@@ -8,7 +8,16 @@
 </head>
 <body>
 
-Visionado de noticias y demás Contenido de noticias
+<table>
+	<tr>
+		<td>Visionado de noticias y demás Contenido de noticias</td>
+	</tr>
+	<c:forEach items="${sectionList}" var="sectionList">
+		<tr>
+			<td><c:out value="${sectionList.name}"/></td>				
+		</tr>
+	</c:forEach>
+</table>
 <div class="">
 asdasdjasdkjasdh 
 </div>

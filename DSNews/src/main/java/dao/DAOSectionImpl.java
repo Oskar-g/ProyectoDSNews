@@ -43,7 +43,7 @@ public class DAOSectionImpl implements DAOSection {
 	public List<Section> listar() {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Section> lista;
-		String sql = "select name from section order by id";
+		String sql = "select * from section order by id";
 		
 		lista = jdbc.query(sql,new RowMapperSection());
 		return lista;
