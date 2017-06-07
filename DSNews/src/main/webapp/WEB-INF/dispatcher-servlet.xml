@@ -24,7 +24,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		</property>
 	</bean>
 	
-	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="0"/>
+	<mvc:resources mapping="/recursos/**" location="/recursos/" cache-period="0"/>
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
