@@ -8,19 +8,20 @@
 </head>
 <body>
 
-<table>
-	<tr>
-		<td>Visionado de noticias y demás Contenido de noticias</td>
-	</tr>
-	<c:forEach items="${sectionList}" var="sectionList">
+<form action="inicio" method="POST">
+	<table>
 		<tr>
-			<td><c:out value="${sectionList.name}"/></td>				
+			<td><label for="periodico">SELECCIONE EL PERIODICO, AMADO LECTOR</label>
+				<select name="periodico">
+					<option value="El pais">El pais</option>
+				</select>
+			</td>
 		</tr>
-	</c:forEach>
-</table>
-<div class="">
-asdasdjasdkjasdh 
-</div>
+		<tr>
+			<td><button>Seleccionar</button></td>
+		</tr>
+	</table>
+</form>
 </body>
 
 </html>
