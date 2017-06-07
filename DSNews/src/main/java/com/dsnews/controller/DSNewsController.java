@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,12 +25,14 @@ import com.rometools.rome.io.XmlReader;
 import dao.DAOArticle;
 import dao.DAOArticleRss;
 import dao.DAOArticleRssImpl;
+import dao.DAOListadoIndex;
 import dao.DAORss;
 import dao.DAORssImpl;
 import dao.DAOSection;
 import dao.DAOUser;
 import modelos.Article;
 import modelos.ArticleRss;
+import modelos.ListadoIndex;
 import modelos.Rss;
 import modelos.Section;
 import modelos.User;
@@ -46,51 +49,75 @@ public class DSNewsController {
 	DAOArticleRss daoarss;
 	@Autowired
 	DAOSection daosec;
+	@Autowired
+	DAOListadoIndex daoli;
 	
 	@RequestMapping(value = {"/", "index"})
 	public ModelAndView index(){
-		boolean ok = false;
-        List<Rss> lista = daorss.listar();
-        
-		for (Rss rss : lista) {
-			try {
-                URL feedUrl = new URL(rss.getLink());
-                int rssId = rss.getId();
-                SyndFeedInput input = new SyndFeedInput();
-                SyndFeed feed = input.build(new XmlReader(feedUrl));
 
-                for (SyndEntry entrada: feed.getEntries()) 
-                {
-					
-                	String cover= "";
-                	String link = entrada.getLink();
-                	String title = entrada.getTitle();
-                	String description = entrada.getDescription().getValue();
-                	Date pubDate= entrada.getPublishedDate();
-                	try{
-                		cover = entrada.getEnclosures().get(0).getUrl();
-                	}catch (Exception e) {
-						System.out.println("ERROR NO TIENE IMAGEN");
-					}
-                	
-                	//String cover = entrada.getEnclosures().get(0).getUrl();
-                	System.out.println(entrada);
-                	                	
-                	ArticleRss arss = new ArticleRss(link,title,description,pubDate,rssId,cover);
-                	daoarss.create(arss);	
+		ModelAndView mv = new ModelAndView("index");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = {"inicio"})
+	public ModelAndView inicio(@RequestParam(value="periodico")String periodico){
+//		boolean ok = false;
+//        List<Rss> lista = daorss.listar();
+//        
+//		for (Rss rss : lista) {
+//			try {
+//                URL feedUrl = new URL(rss.getLink());
+//                int rssId = rss.getId();
+//                SyndFeedInput input = new SyndFeedInput();
+//                SyndFeed feed = input.build(new XmlReader(feedUrl));
+//
+//                for (SyndEntry entrada: feed.getEntries()) 
+//                {
+//					
+//                	String cover= "";
+//                	String link = entrada.getLink();
+//                	String title = entrada.getTitle();
+//                	String description = entrada.getDescription().getValue();
+//                	Date pubDate= entrada.getPublishedDate();
+//                	try{
+//                		cover = entrada.getEnclosures().get(0).getUrl();
+//                	}catch (Exception e) {
+//						System.out.println("ERROR NO TIENE IMAGEN");
+//					}
+//                	
+//                	//String cover = entrada.getEnclosures().get(0).getUrl();
+//                	System.out.println(entrada);
+//                	                	
+//                	ArticleRss arss = new ArticleRss(link,title,description,pubDate,rssId,cover);
+//                	daoarss.create(arss);	
+//				}
+//                
+//                ok = true;
+//            }
+//            catch (Exception ex) {
+//                ex.printStackTrace();
+//                System.out.println("ERROR: "+ex.getMessage());
+//            }
+//		}
+		
+		//Test debug, (sólo para probar esto iría con una request del selector del index)
+				
+				
+		List<Section> sectionList = daosec.listar();
+		
+		//Sólo periodico y categoría
+		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
+		for (Section categoria : sectionList) {
+			ListadoIndex listaArticulos = daoli.create(periodico, categoria.getId());
+
+				if (listaArticulos != null ){
+					listadoCompleto.add(listaArticulos);			
 				}
-                
-                ok = true;
-            }
-            catch (Exception ex) {
-                ex.printStackTrace();
-                System.out.println("ERROR: "+ex.getMessage());
-            }
 		}
 		
-		List<Section> sectionList = daosec.listar();
-		ModelAndView mv = new ModelAndView("index");
-		mv.addObject("sectionList",sectionList);
+		ModelAndView mv = new ModelAndView("inicio");
+		mv.addObject("listadoCompleto",listadoCompleto);
 		return mv;
 	}
 	

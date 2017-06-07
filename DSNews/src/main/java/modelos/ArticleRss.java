@@ -11,13 +11,24 @@ public class ArticleRss {
 	private Date pubDate;
 	private int idRss;
 	private String cover;
-
+	private String categoria;
+	
 	//Constructores
 	//Constructor vacio
 	public ArticleRss (){	}
 	
 	
 	
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover, String categoria) {
+		super();
+		this.link = link;
+		this.title = title;
+		this.description = description;
+		this.pubDate = pubDate;
+		this.cover = cover;
+		this.categoria = categoria;
+	}
+
 	public ArticleRss(String link, String title, String description, Date pubDate, int idRss,String cover) {
 		super();
 		this.link = link;
@@ -39,8 +50,6 @@ public class ArticleRss {
 		this.cover = cover;	
 	}
 
-
-	
 
 	//Metodos
 	//Getters y setters
@@ -88,6 +97,14 @@ public class ArticleRss {
 
 	public void setCover(String cover) {
 		this.cover = cover;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	
