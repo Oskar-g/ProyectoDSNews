@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `dsnews_content`
 --
-Drop DATABASE dsnews_content;
+Drop DATABASE IF EXISTS dsnews_content ;
 CREATE DATABASE IF NOT EXISTS `dsnews_content` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `dsnews_content`;
 

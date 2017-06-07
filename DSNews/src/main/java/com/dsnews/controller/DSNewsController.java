@@ -1,7 +1,7 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
-import java.net.URL;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,15 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
 
 import dao.DAOArticle;
 import dao.DAOArticleRss;
 import dao.DAOArticleRssImpl;
 import dao.DAOListadoIndex;
+import dao.DAONewspaper;
+import dao.DAONewspaperImpl;
 import dao.DAORss;
 import dao.DAORssImpl;
 import dao.DAOSection;
@@ -33,6 +31,7 @@ import dao.DAOUser;
 import modelos.Article;
 import modelos.ArticleRss;
 import modelos.ListadoIndex;
+import modelos.Newspaper;
 import modelos.Rss;
 import modelos.Section;
 import modelos.User;
@@ -40,17 +39,19 @@ import modelos.User;
 @Controller
 public class DSNewsController {
 	@Autowired
-	DAOUser daou;
+	DAOUser daouser;
 	@Autowired
-	DAOArticle daoa;
+	DAOArticle daoarticle;
 	@Autowired
 	DAORss daorss;
 	@Autowired
-	DAOArticleRss daoarss;
+	DAOArticleRss daoarticlerss;
 	@Autowired
-	DAOSection daosec;
+	DAOSection daosection;
 	@Autowired
-	DAOListadoIndex daoli;
+	DAONewspaper daonewspaper;
+	@Autowired
+	DAOListadoIndex daolindex;
 	
 	@RequestMapping(value = {"/", "index"})
 	public ModelAndView index(){
@@ -61,63 +62,31 @@ public class DSNewsController {
 	}
 	
 	@RequestMapping(value = {"inicio"})
-	public ModelAndView inicio(@RequestParam(value="periodico")String periodico){
-//		boolean ok = false;
-//        List<Rss> lista = daorss.listar();
-//        
-//		for (Rss rss : lista) {
-//			try {
-//                URL feedUrl = new URL(rss.getLink());
-//                int rssId = rss.getId();
-//                SyndFeedInput input = new SyndFeedInput();
-//                SyndFeed feed = input.build(new XmlReader(feedUrl));
-//
-//                for (SyndEntry entrada: feed.getEntries()) 
-//                {
-//					
-//                	String cover= "";
-//                	String link = entrada.getLink();
-//                	String title = entrada.getTitle();
-//                	String description = entrada.getDescription().getValue();
-//                	Date pubDate= entrada.getPublishedDate();
-//                	try{
-//                		cover = entrada.getEnclosures().get(0).getUrl();
-//                	}catch (Exception e) {
-//						System.out.println("ERROR NO TIENE IMAGEN");
-//					}
-//                	
-//                	//String cover = entrada.getEnclosures().get(0).getUrl();
-//                	System.out.println(entrada);
-//                	                	
-//                	ArticleRss arss = new ArticleRss(link,title,description,pubDate,rssId,cover);
-//                	daoarss.create(arss);	
-//				}
-//                
-//                ok = true;
-//            }
-//            catch (Exception ex) {
-//                ex.printStackTrace();
-//                System.out.println("ERROR: "+ex.getMessage());
-//            }
-//		}
+	//public ModelAndView inicio(@RequestParam(value="periodico")String newspaper){
+	public ModelAndView inicio(){
+		
 		
 		//Test debug, (sólo para probar esto iría con una request del selector del index)
+		daonewspaper.getNewspaper(1);
+		Newspaper newspaper = daonewspaper.getNewspaper(1);		
 				
-				
-		List<Section> sectionList = daosec.listar();
+		List<Section> sectionList = daosection.listar();
 		
 		//Sólo periodico y categoría
 		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
 		for (Section categoria : sectionList) {
-			ListadoIndex listaArticulos = daoli.create(periodico, categoria.getId());
-
+			
+			List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
+			listaArticulos = daolindex.listar(newspaper.getId(), categoria.getId());
+			
 				if (listaArticulos != null ){
-					listadoCompleto.add(listaArticulos);			
+					listadoCompleto.add(new ListadoIndex(categoria.getName(), listaArticulos));			
 				}
 		}
 		
-		ModelAndView mv = new ModelAndView("inicio");
+		ModelAndView mv = new ModelAndView("index");
 		mv.addObject("listadoCompleto",listadoCompleto);
+		mv.addObject("sectionList",sectionList);
 		return mv;
 	}
 	
@@ -134,11 +103,12 @@ public class DSNewsController {
 			@RequestParam(value="name")String name,
 			@RequestParam(value="password")String password){
 				ModelAndView mv = null;
-				User u = new User(name);
+				User u = new User();
+				u.setName(name);
 				
-				boolean ok = daou.login(u, password);
+				boolean ok = daouser.login(u, password);
 				if(ok){
-					User us = daou.getUser(name);
+					User us = daouser.getUser(name);
 					sesion.setAttribute("user", us);
 					mv = new ModelAndView("loginTrue");
 				}else{
@@ -153,30 +123,42 @@ public class DSNewsController {
 		ModelAndView mv = null;
 		
 		User user = (User)sesion.getAttribute("user");
-		if(user!=null){
-			if(user.getRole().equals("admin")){
-				List<Article> lista = daoa.listar(user);
-				mv = new ModelAndView("paginaAdmin");
-				mv.addObject("lista", lista);
-			}else if (user.getRole().equals("dios")){
-				List<Article> lista = daoa.listarSuperUser(user);
-				mv = new ModelAndView("paginaAdmin");
-				mv.addObject("lista", lista);
-			}
-		}else{
+		if(user==null){
 			try {
 				rs.sendRedirect("formLogin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		
+		} else {
+			if(user.getRole().equals("admin")){
+				List<Article> lista = daoarticle.listar(user);
+				mv = new ModelAndView("paginaAdmin");
+				mv.addObject("lista", lista);
+			}else if (user.getRole().equals("dios")){
+				List<Article> lista = daoarticle.listarSuperUser(user);
+				mv = new ModelAndView("paginaAdmin");
+				mv.addObject("lista", lista);
+			}
 		}
+
 		return mv;
 	}
 	
 	@RequestMapping(value = {"formCrear"})
-	public ModelAndView formCrear(HttpSession sesion){
-		ModelAndView mv = new ModelAndView("formCrear");
+	public ModelAndView formCrear(HttpSession sesion, HttpServletResponse rs){
+		ModelAndView mv = null;
+		User user = (User)sesion.getAttribute("user");
+		if(user==null){
+			try {
+				rs.sendRedirect("formLogin");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		
+		} else {
+			mv = new ModelAndView("formCrear");
+		}
 		return mv;
 	}
 	
@@ -215,7 +197,7 @@ public class DSNewsController {
 		
         Article a = new Article( link,  title,  content,  date,  description,  keywords,
     			 userid,  channelid,  sectionid);
-        boolean crear = daoa.create(a,us);
+        boolean crear = daoarticle.create(a,us);
         
         if(crear){
             System.out.println("creada la noticia");
@@ -224,16 +206,16 @@ public class DSNewsController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-        }else{
-        	mv = new ModelAndView("errorDatos");
         }
+        	mv = new ModelAndView("errorDatos");
+        
         return mv;
 	}
 	
 	@RequestMapping(value = {"formEditar"})
 	public ModelAndView formEditar(HttpSession sesion,
 			@RequestParam("guid")int guid){
-		Article a = daoa.read(guid);
+		Article a = daoarticle.read(guid);
 		
 		ModelAndView mv = new ModelAndView("formEditar");
 		mv.addObject("guid",guid);
@@ -277,7 +259,7 @@ public class DSNewsController {
 		
         Article a = new Article(guid, link,  title,  content,  date,  description,  keywords,
     			 userid,  channelid, sectionid);
-        boolean modificar = daoa.update(a,us);
+        boolean modificar = daoarticle.update(a,us);
         
         if(modificar){
         	try {
@@ -295,7 +277,7 @@ public class DSNewsController {
 	@RequestMapping(value = {"borrar"})
 	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("guid")int guid){
-		boolean ok = daoa.delete(guid);
+		boolean ok = daoarticle.delete(guid);
 		ModelAndView mv = null;
 
 		
