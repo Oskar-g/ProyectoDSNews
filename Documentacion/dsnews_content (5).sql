@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2017 a las 11:58:47
+-- Tiempo de generación: 06-06-2017 a las 09:10:57
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -19,7 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `dsnews_content`
 --
-DROP DATABASE dsnews_content;
 CREATE DATABASE IF NOT EXISTS `dsnews_content` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `dsnews_content`;
 
@@ -48,16 +47,15 @@ CREATE TABLE `article` (
 --
 
 INSERT INTO `article` (`guid`, `link`, `title`, `content`, `pub_date`, `description`, `keywords`, `user_id`, `channel_id`, `section_id`) VALUES
-(2, 'rwetwetsdff', 'asfdsadfasdfasdf', '<p>wtqwretqwrtqwertr</p>', '2017-06-03', 'defgwegfyu', 'wghuherehwigu', 1, 1, 1),
 (3, 'www.elmundo.es', 'COREA INVADE COREA', 'gfhwrueghiquwerhgiuqhwegriuohouihwrouig', '2017-06-09', 'pos eso, nada mas que decir', 'corea invade', 2, 1, 1),
 (4, 'fqwyegfyugfeyqw', 'PLATA LA MAS FEA', '<p>fgjwqefiygwqeifeuwgqwieuf</p>', '2017-06-03', 'pos es', 'plata', 1, 1, 1),
 (13, 'fqwyegfyugfeyqw', 'PLATA LA MAS GUAPA', '<p>fgjwqefiygwqeifeuwgqwieuf</p>', '2000-12-31', 'pos es', 'plata', 1, 1, 1),
 (14, 'dasdfgfafgadfsg', 'adgfdfgadfgadfg', '<p>gadsfgfdgdfgasdfgadfgadsfgad</p>', '2006-06-23', 'dfgsdfgsdfg', 'gadrg', 2, 1, 1),
 (15, 'noticia de jesus', 'noticia de jesus', '<p>ewfihqweoiugfhqwoui&ntilde;erhgo&ntilde;uqwheg&ntilde;o</p>', '2017-06-09', 'ninguna', 'jesus', 3, 1, 1),
-(16, 'fqwyegfyugfeyqw', 'PLATA LA MAS culo', '<p>fgjwqefiygwqeifeuwgqwieuf</p>', '2000-12-31', 'pos es', 'plata', 1, 1, 1),
 (17, 'dfwiuohfow', 'segunda noticia de jesus', '<p>qwefqwefqwefwqef</p>', '2017-06-01', '2da venida', 'MILAGRO', 3, 1, 1),
 (18, '3ra noticia de jesus', 'probando el error de datos', '<p>fqwefqwefqwefqwef</p>', '2017-06-01', 'qwerqwerqwerqwer', 'wdfqwf', 3, 1, 1),
-(19, 'ghwihjywegfw', 'DIA VIERNES', '<p>fwqegfqwetqwetqwetqwetqwetqwetqwet</p>', '0006-06-23', 'rehgiigiruqg', 'viernes', 3, 1, 1);
+(19, 'ghwihjywegfw', 'DIA VIERNES', '<p>fwqegfqwetqwetqwetqwetqwetqwetqwet</p>', '0006-06-23', 'rehgiigiruqg', 'viernes', 3, 1, 1),
+(20, 'ufhweiygfyuw', 'PLATA LA MAS NORML', '<p>rgiwehargiuhergh</p>', '2006-10-01', 'dhiuewfgyfeyw', 'SDGFWG', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -86,7 +84,12 @@ CREATE TABLE `channel` (
 --
 
 INSERT INTO `channel` (`channel_id`, `link`, `title`, `last_build_date`, `language`, `description`, `copyright`, `title_image`, `url_image`, `link_image`, `width_image`, `height_image`) VALUES
-(1, 'EL PAIS', 'El pais', '2017-06-02', 'ES', 'Periodico el pais', 'Blablabla', 'rwighoiwerhgoñq', 'fghqwuioghfiuoqwrhgiu', 'efiohgwouehgruqwhrgh', 150, 150);
+(1, 'http://elpais.com/', 'El pais', '2017-06-02', 'ES', 'Periodico el pais', 'Blablabla', 'rwighoiwerhgoñq', 'fghqwuioghfiuoqwrhgiu', 'efiohgwouehgruqwhrgh', 150, 150),
+(2, 'http://www.elmundo.es', 'El mundo', '2017-06-05', 'ES', 'Periodico El Mundo', 'wfqwefwqefwqef', 'wqfwqefqwefqwe', 'fwqefqwefqwefqwf', 'qwefqwefqwefqwef', 150, 150),
+(3, 'http://www.20minutos.es/', '20 minutos', '2017-06-05', 'ES', 'Periodico 20 minutos', 'fwuigfiwiqgeffi', 'fjqiowhfiuqhwiugfh', 'aerhgiuqewwrehqgui', 'fqwerhwreughuiqwerrh', 150, 150),
+(4, 'http://www.larazon.es/', 'La Razon', '2017-06-05', 'ES', 'Periodico La Razon', 'giufiuwrtgqw3t', 'w2euihfguoi', 'wwrtqwtqw', 'ehghqwtqwt', 150, 150),
+(5, 'http://www.publico.es/', 'Publico', '2017-06-05', 'ES', 'Periodico Publico', 'wefhiwqegfyigq', 'efyi', 'wqefhwhefiuwghfig', 'wfhwgqifgywegfy8', 150, 150),
+(6, 'http://www.abc.es/', 'ABC', '2017-06-05', 'ES', 'Peridico ABC', 'wefiwgefygqwwguf', 'fqwefhuwifhui', 'wfihqwuefhqwughqwg', 'awdgfghqwwruliqguihqwr', 150, 150);
 
 -- --------------------------------------------------------
 
@@ -108,6 +111,29 @@ CREATE TABLE `media` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `rss`
+--
+
+DROP TABLE IF EXISTS `rss`;
+CREATE TABLE `rss` (
+  `id` int(11) NOT NULL,
+  `link` text COLLATE utf8_spanish_ci NOT NULL,
+  `section_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `rss`
+--
+
+INSERT INTO `rss` (`id`, `link`, `section_id`) VALUES
+(1, 'http://ep00.epimg.net/rss/elpais/portada.xml', 1),
+(2, 'http://ep00.epimg.net/rss/deportes/portada.xml', 7),
+(3, 'http://ep00.epimg.net/rss/cultura/television.xml', 8),
+(4, 'http://estaticos.elmundo.es/elmundo/rss/economia.xml', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `section`
 --
 
@@ -123,7 +149,15 @@ CREATE TABLE `section` (
 --
 
 INSERT INTO `section` (`id`, `name`, `description`) VALUES
-(1, 'Deportes', 'fgqwregqwregqwer');
+(1, 'España', 'Seccion naccional'),
+(2, 'Internacional', 'Seccion internacional'),
+(3, 'Economia', 'Seccion economia'),
+(4, 'Ciencia', 'Seccion ciencia'),
+(5, 'Tecnologia', 'Seccion tecnologia'),
+(6, 'Cultura', 'Seccion cultura'),
+(7, 'Deportes', 'Seccion deportes'),
+(8, 'Television', 'Seccion Television'),
+(9, 'Sociedad', 'Seccion sociedad');
 
 -- --------------------------------------------------------
 
@@ -176,6 +210,13 @@ ALTER TABLE `media`
   ADD KEY `article_id` (`article_id`);
 
 --
+-- Indices de la tabla `rss`
+--
+ALTER TABLE `rss`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `section_id` (`section_id`);
+
+--
 -- Indices de la tabla `section`
 --
 ALTER TABLE `section`
@@ -195,22 +236,27 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `article`
 --
 ALTER TABLE `article`
-  MODIFY `guid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `guid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `channel`
 --
 ALTER TABLE `channel`
-  MODIFY `channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `channel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `rss`
+--
+ALTER TABLE `rss`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT de la tabla `section`
 --
 ALTER TABLE `section`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
@@ -234,10 +280,12 @@ ALTER TABLE `article`
 ALTER TABLE `media`
   ADD CONSTRAINT `media_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `article` (`guid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
+--
+-- Filtros para la tabla `rss`
+--
+ALTER TABLE `rss`
+  ADD CONSTRAINT `rss_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `section` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-CREATE USER 'jesus'@'localhost' IDENTIFIED BY 'hijodedios';
-GRANT ALL ON dsnews_content.* TO 'jesus'@'localhost';

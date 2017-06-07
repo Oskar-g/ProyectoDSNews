@@ -2,16 +2,24 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title><spring:message code="titulo.paginaAdmin" /></title>
 </head>
 <body>
-HOLA <c:out value="${user.name}"/> HAS LOGUEADO 
+<spring:message code="welcome"/>
+ 
 Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${user.id}"/> COMO ID
 <p></p>
+<form action="buscarIndex" method="post">
+	<input type="radio" name="filter" value="titular"> Titular
+	<input type="radio" name="filter" value="content"> Contenido 
+	<input type="radio" name="filter" value="id"> Id 
+	<input type="text" name="keyword"/>
+	<input type="submit"/>
+
+</form>
 <table>
 	<tr>
 		<td>BIENVENIDO <c:out value="${user.name}"/></td>
@@ -38,5 +46,7 @@ Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${us
 </table>
 
 <td><a href="formCrear"><button>Nueva noticia</button></a></td>
+<td><a href="formAddRSS"><button>Añadir por rss</button></a></td>
+
  </body>
 </html>

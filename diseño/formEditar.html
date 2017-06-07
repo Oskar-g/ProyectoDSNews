@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Editar noticia</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="author" content="Equipo DopeTrope">
+		<meta name="description" content="DeSoft ha creado un periódico digital con noticias desde todos los puntos de vista totalmente actualizadas">
+		<meta name="keywords" content="deSoft, noticias, periódico digital, prensa">
+		<link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  		<script>tinymce.init({ selector:'textarea' });</script>
+	</head>
+	<body class="left-sidebar">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div id="header">
+					
+
+			<!-- Main -->
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="4u 12u(mobile)">
+
+								<!-- Sidebar -->
+									<section class="box">
+										<a href="#" class="image featured"><img src="images/editar.jpg" alt="" /></a>
+										<header>
+											<h3>Administrador</h3>
+										</header>
+
+								
+										<footer>
+											
+										</footer>
+									</section>
+
+									
+
+							</div>
+							<div class="8u 12u(mobile) important(mobile)">
+
+								<!-- Content -->
+									<article class="box post">
+									
+										<header>
+										<h2>Editar noticia</h2>
+										</header>
+
+										<form action="editar">
+<input type="hidden" name = "guid" value="${guid}">
+<table>
+	<tr>
+		<td><label for="link">Link</label></td>
+		<td><input type="text" name="link" value="${article.link}"></td>
+	</tr>
+	<tr>
+		<td><label for="title">Titular</label></td>
+		<td><input type="text" name="title" value="${article.title}"></td>
+	</tr>
+	<tr>
+		<td><label for="content">Contenido</label></td>
+ 		<td><textarea name="content">${article.content}</textarea></td>
+	<tr>
+		<td><label for="pubDate">Fecha publicacion</label></td>
+		<td><input type="Date" name="pubDate" value="${article.pubDate}"></td>
+	</tr>
+	<tr>
+		<td><label for="description">Descripcion</label></td>
+		<td><input type="text" name="description" value="${article.description}"></td>
+	</tr>
+	<tr>
+		<td><label for="channelid">Id periodico</label></td>
+		<td><input type="number" name="channelid" value="${article.channelId}"></td>
+	</tr>
+	<tr>
+		<td><label for="sectionid">Id seccion</label></td>
+		<td><input type="number" name="sectionid" value="${article.sectionId}"></td>
+	</tr>
+	<tr>
+		<td><label for="keywords">Palabras clave</label></td>
+		<td><input type="text" name="keywords" value="${article.keywords}"></td>
+	</tr>
+	<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+	<tr>
+		<td></td><td><button>TERMINAR EDICION</button></td>
+	</tr>
+</table>
+
+</form>
+
+										
+									</article>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/skel-viewport.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
