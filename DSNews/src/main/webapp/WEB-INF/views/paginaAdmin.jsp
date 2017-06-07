@@ -8,28 +8,35 @@
 <title><spring:message code="titulo.paginaAdmin" /></title>
 </head>
 <body>
-<spring:message code="welcome"/>
+
+<spring:message code="saludo"
+       arguments="${user.name};${user.role};${user.id}"
+       htmlEscape="false"
+       argumentSeparator=";"/>
  
-Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${user.id}"/> COMO ID
 <p></p>
 <form action="buscarIndex" method="post">
-	<input type="radio" name="filter" value="titular"> Titular
-	<input type="radio" name="filter" value="content"> Contenido 
-	<input type="radio" name="filter" value="id"> Id 
+	<input type="radio" name="filter" value="titular"> <spring:message code="titular" />
+	<input type="radio" name="filter" value="content"> <spring:message code="contenido" /> 
+	<input type="radio" name="filter" value="id"> <spring:message code="id" />  
 	<input type="text" name="keyword"/>
 	<input type="submit"/>
 
 </form>
 <table>
 	<tr>
-		<td>BIENVENIDO <c:out value="${user.name}"/></td>
+	
+		<td>
+		<spring:message code="saludo"
+       	arguments="${user.name}"
+       	htmlEscape="false"/></td>
 	</tr>
 	<tr>
-		<td>Id Usuario</td>
-		<td>Id articulo</td>
-		<td>SectionId</td>
-		<td>Title</td>
-		<td>Fecha publicacion</td>
+		<td><spring:message code="id_usuario" /></td>
+		<td><spring:message code="id_articulo" /></td>
+		<td><spring:message code="id_seccion" /></td>
+		<td><spring:message code="titular" /></td>
+		<td><spring:message code="fecha_publicacion" /></td>
 		<td></td>
 	</tr>
 	<c:forEach items="${lista}" var="article">
@@ -39,14 +46,17 @@ Y TU ROL ES EL DE UN MISERO <c:out value="${user.role}"/> CON <c:out value="${us
 			<td><c:out value="${article.sectionId}"/></td>
 			<td><c:out value="${article.title}"/></td>
 			<td><c:out value="${article.pubDate}"/></td>
-			<td><a href="formEditar?guid=${article.guid}"><button>Modificar noticia</button></a></td>
-			<td><a href="borrar?guid=${article.guid}"><button>Borrar noticia</button></a></td>				
+			<td><a href="formEditar?guid=${article.guid}"><button><spring:message code="modificar" /></button></a></td>
+			<td><a href="borrar?guid=${article.guid}"><button><spring:message code="borrar" /></button></a></td>				
 		</tr>
 	</c:forEach>
 </table>
+<table>
 
-<td><a href="formCrear"><button>Nueva noticia</button></a></td>
-<td><a href="formAddRSS"><button>Añadir por rss</button></a></td>
-
+	<tr>
+		<td><a href="formCrear"><button><spring:message code="crear_noticia" /></button></a></td>
+		<td><a href="formAddRSS"><button><spring:message code="anadir_RSS" /></button></a></td>
+	</tr>
+</table>
  </body>
 </html>
