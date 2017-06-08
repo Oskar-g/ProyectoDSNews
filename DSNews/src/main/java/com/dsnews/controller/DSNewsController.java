@@ -390,8 +390,13 @@ public class DSNewsController {
 		}
 		
 		
-				
+		List<Section> sectionList = daosection.listar();
+		List<Newspaper> newspapers = daonewspaper.listar();
+
+			
 		ModelAndView mv = new ModelAndView("noticias");
+		mv.addObject("sectionList",sectionList);
+		mv.addObject("newspapers",newspapers);	
 		mv.addObject("listadoCompleto",listadoCompleto);
 
 		return mv;

@@ -76,7 +76,7 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 		String sql = 
 				"SELECT pub_date, cover, title, description, "+this.mainTable+".link "
 				+ "FROM "+this.mainTable+" "
-				+"Inner JOIN "+this.joinTable1+" ON rss_id = rss.id "
+				+"Inner JOIN "+this.joinTable1+" ON rss_id = "+this.joinTable1+".id "
 				+"WHERE newspaper_id = ? "
 				+"AND section_id = ? "
 				+"AND pub_date = ?;";
