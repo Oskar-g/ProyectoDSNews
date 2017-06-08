@@ -293,5 +293,35 @@ public class DSNewsController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value = {"formAddPeriodico"})
+	public ModelAndView formAddPeriodico(HttpSession sesion){
+		
+		ModelAndView mv = new ModelAndView("addPeriodico");
+		
+		return mv;
+	}
+	
+	
+	@RequestMapping(value = {"addPeriodico"})
+	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
+			@RequestParam("name")String name,
+			@RequestParam("logo")String logo){
+		
+		Newspaper n = new Newspaper(name, logo);
+		ModelAndView mv = null;
 
+		boolean ok = daonewspaper.create(n);
+		if(ok){
+			try {
+				rs.sendRedirect("formAddRSS");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			mv = new ModelAndView("errorDatos");
+		}
+		return mv;
+	}
 }

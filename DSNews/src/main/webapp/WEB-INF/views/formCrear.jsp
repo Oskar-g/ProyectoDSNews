@@ -57,8 +57,7 @@
 										<header>
 										<h2><spring:message code="crear_noticia" /></h2>
 										</header>
-
-										<form action="crear">
+<form action="crear">
 <table>
 	<tr>
 		<td><label for="link"><spring:message code="link" /></label></td>

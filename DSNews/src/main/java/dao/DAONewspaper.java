@@ -31,5 +31,18 @@ public interface DAONewspaper {
 	 * 				almacenados en la base de datos
 	 */
 	List<Newspaper> listar();
+
+	// ------------------------------------------------------------------
+	
+	/**
+	 * Listar Periodicos
+	 * 
+	 * Obtener los datos de todas los periodicos almacenados
+	 * en la base de datos
+	 *  
+	 * @return		Lista de Objetos Periodico con los datos 
+	 * 				almacenados en la base de datos
+	 */
+	public boolean create(Newspaper n);
 	
 }//Fin de DAONewspaper

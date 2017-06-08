@@ -7,7 +7,9 @@ import javax.sql.DataSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import modelos.Article;
 import modelos.Newspaper;
+import modelos.User;
 import rowmappers.RowMapperNewspaper;
 
 public class DAONewspaperImpl implements DAONewspaper{
@@ -88,5 +90,35 @@ public class DAONewspaperImpl implements DAONewspaper{
 			return lista;
 		
 	}//Fin de List
+	
+
+	/*
+	 *----------------------------------------------------------
+	 * LIST		(Métodos CRUD) 
+	 * ---------------------------------------------------------
+	 */
+	
+	/*
+	 * Crear Periodicos
+	 * 
+	 * (non-Javadoc)
+	 * @see dao.DAOSection#crear()
+	 */
+	public boolean create(Newspaper n) {
+		
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		boolean result = false;
+		
+		String sql = "insert into "+mainTable+"(name,logo)"
+				+ "values (?,?)";
+		
+		try{
+			jdbc.update(sql, new Object[]{n.getName(),n.getLogo()});
+			result = true;
+		}catch(DataAccessException dae){
+			dae.printStackTrace();
+		}
+		return result;
+	}//Fin de Create
 	
 }//Fin de DAONewspaperImpl
