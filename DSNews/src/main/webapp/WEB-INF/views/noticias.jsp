@@ -94,7 +94,7 @@
 										</header>
 <!-- FIN ENCABEZADOS DE NOTICIA -->	
 <!-- CUERPO NOTICIAS -->			
-										<c:forEach items="${listadoCompleto.getArticulos()}" var="listadoArticulos">
+										<c:forEach items="${listadoCompleto.getArticulos()}" var="listadoArticulos" begin="1" end="9">
 										
 								<%  if (i == 0) { 
 										openrow = true;
@@ -118,16 +118,17 @@
 												</section>
 											</div>
 <!--FIN ITEM NOTICIA -->	
-								<% 	i++; 
+								<% 	i++;
 								 	if (i == 3) { %>
 										</div class="row">
-								<%  
+								<%  	openrow = false;
+
 										i = 0; } 
 								%>											
 										</c:forEach>
 				
 									</section>
-								<% 	i++; 
+								<% 	i++;
 								 	if (openrow) { 
 								 	
 								 	System.out.println(i+" items, row sin cerrar");
