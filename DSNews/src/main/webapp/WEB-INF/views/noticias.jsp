@@ -80,7 +80,7 @@
 					<div class="container">
 						<div class="row">
 							<div class="12u">
-
+								<p><img alt="${name}" src="${logo}"></p>
 								<c:forEach items="${listadoCompleto}" var="listadoCompleto">
 <!-- ENCABEZADOS DE NOTICIA -->
 								<%  

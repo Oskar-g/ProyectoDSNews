@@ -69,7 +69,10 @@ public class DSNewsController {
 		//Test debug, (sólo para probar esto iría con una request del selector del index)
 		daonewspaper.getNewspaper(1);
 		Newspaper newspaper = daonewspaper.getNewspaper(1);		
-				
+		String logo = newspaper.getLogo();
+		String name = newspaper.getName();
+
+		
 		List<Section> sectionList = daosection.listar();
 		List<Newspaper> newspapers = daonewspaper.listar();
 		
@@ -86,6 +89,8 @@ public class DSNewsController {
 		}
 		
 		ModelAndView mv = new ModelAndView("noticias");
+		mv.addObject("logo",logo);
+		mv.addObject("name",name);
 		mv.addObject("listadoCompleto",listadoCompleto);
 		mv.addObject("sectionList",sectionList);
 		mv.addObject("newspapers",newspapers);
@@ -389,12 +394,18 @@ public class DSNewsController {
 			listadoCompleto.add(new ListadoIndex(section.getName(), listaArticulos));			
 		}
 		
+		Newspaper n = daonewspaper.getNewspaper(periodico);
+		String logo = n.getLogo();
+		String name = n.getName();
+
 		
 		List<Section> sectionList = daosection.listar();
 		List<Newspaper> newspapers = daonewspaper.listar();
 
 			
 		ModelAndView mv = new ModelAndView("noticias");
+		mv.addObject("name",name);
+		mv.addObject("logo",logo);
 		mv.addObject("sectionList",sectionList);
 		mv.addObject("newspapers",newspapers);	
 		mv.addObject("listadoCompleto",listadoCompleto);
