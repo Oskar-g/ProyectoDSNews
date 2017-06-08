@@ -26,10 +26,10 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 					rs.getString("link"),
 					rs.getString("title"),
 					rs.getString("description"),
-					rs.getDate("pubDate"),
+					rs.getDate("pub_date"),
 					rs.getString("cover"),
-					rs.getInt("idRss"),
-					rs.getInt("numEntry")
+					rs.getInt("rss_id"),
+					rs.getInt("num_entry")
 					);
 			return a;
 		}	

@@ -80,7 +80,8 @@ public class DSNewsControllerRSS {
 	            SyndFeedInput input = new SyndFeedInput();
 	            SyndFeed feed = input.build(new XmlReader(feedUrl));
 	            
-	            int size = feed.getEntries().size();
+	            
+	            int size = feed.getEntries().size() + daoarss.listar().size();
             	System.out.println(size);	            
             	
             	for (SyndEntry entrada: feed.getEntries()) {
