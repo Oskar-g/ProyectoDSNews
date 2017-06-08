@@ -59,6 +59,7 @@
 										
 										<td><button type="submit"><spring:message code="buscar"/></button></td>
 										</tr>
+										
 										</table>
 									</form>
 								</header>

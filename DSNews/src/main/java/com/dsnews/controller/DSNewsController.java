@@ -289,7 +289,6 @@ public class DSNewsController {
 			try {
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
@@ -370,19 +369,28 @@ public class DSNewsController {
 		Date date = null;
         
 	
-		List<ArticleRss> listadoCompleto = new ArrayList<ArticleRss>();
+		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
+		List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
 
+		Section section = daosection.getSection(seccion);
+		
 		if(pubDate.trim().equals("")){
-			listadoCompleto = daolindex.listar(periodico, seccion);
+			listaArticulos = daolindex.listar(periodico, seccion);
 		}else{
 			try {
 	            date = formatter.parse(pubDate);
 	        } catch (ParseException pe) {
 	            pe.printStackTrace();
 	        }
-			listadoCompleto = daolindex.listar(periodico, seccion,date);
+			listaArticulos = daolindex.listar(periodico, seccion,date);
 		}
-			
+		
+		if (! listaArticulos.isEmpty()){
+			listadoCompleto.add(new ListadoIndex(section.getName(), listaArticulos));			
+		}
+		
+		
+				
 		ModelAndView mv = new ModelAndView("noticias");
 		mv.addObject("listadoCompleto",listadoCompleto);
 
