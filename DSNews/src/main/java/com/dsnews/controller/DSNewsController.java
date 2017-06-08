@@ -61,7 +61,7 @@ public class DSNewsController {
 		return mv;
 	}
 	
-	@RequestMapping(value = {"inicio"})
+	@RequestMapping(value = {"noticias"})
 	//public ModelAndView inicio(@RequestParam(value="periodico")String newspaper){
 	public ModelAndView inicio(){
 		
@@ -84,7 +84,7 @@ public class DSNewsController {
 			}
 		}
 		
-		ModelAndView mv = new ModelAndView("index");
+		ModelAndView mv = new ModelAndView("noticias");
 		mv.addObject("listadoCompleto",listadoCompleto);
 		mv.addObject("sectionList",sectionList);
 		return mv;
