@@ -94,7 +94,7 @@
 										</header>
 <!-- FIN ENCABEZADOS DE NOTICIA -->	
 <!-- CUERPO NOTICIAS -->			
-										<c:forEach items="${listadoCompleto.getArticulos()}" var="listadoArticulos" begin="1" end="9">
+										<c:forEach items="${listadoCompleto.getArticulos()}" var="listadoArticulos" begin="0" end="8">
 										
 								<%  if (i == 0) { 
 										openrow = true;
@@ -107,13 +107,13 @@
 											<div class="4u 12u(mobile)">
 																						
 												<section class="box">
-													<a href="${listadoArticulos.getLink()}" class="image featured"><img class="item_portada" src="${listadoArticulos.getCover()}" alt="${listadoArticulos.getTitle()}" /></a>
+													<a target="_BLANK" href="${listadoArticulos.getLink()}" class="image featured"><img class="item_portada" src="${listadoArticulos.getCover()}" alt="${listadoArticulos.getTitle()}" /></a>
 													<header class="newTitle">
 														<h3>${listadoArticulos.getTitle()}</h3>
 													</header>
 														<p>${listadoArticulos.getDescription()}</p>
 													<footer>
-														<a href="${listadoArticulos.getLink()}" class="button alt"><spring:message code="leermas"/></a>
+														<a target="_BLANK" href="${listadoArticulos.getLink()}" class="button alt"><spring:message code="leermas"/></a>
 													</footer>
 												</section>
 											</div>
