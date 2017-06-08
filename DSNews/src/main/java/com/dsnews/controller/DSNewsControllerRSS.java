@@ -23,10 +23,12 @@ import com.rometools.rome.io.XmlReader;
 import dao.DAOArticle;
 import dao.DAOArticleRss;
 import dao.DAOListadoIndex;
+import dao.DAONewspaperImpl;
 import dao.DAORss;
 import dao.DAOSection;
 import dao.DAOUser;
 import modelos.ArticleRss;
+import modelos.Newspaper;
 import modelos.Rss;
 
 
@@ -46,13 +48,19 @@ public class DSNewsControllerRSS {
 	DAOSection daosec;
 	@Autowired
 	DAOListadoIndex daoli;
+	@Autowired
+	DAONewspaperImpl daon;
 	
 	//Envia al jsp para añadir un rss
 	@RequestMapping("formAddRSS")
 	public ModelAndView formAddRSS(){
 		
 		List<Rss> lista = daor.listar();
+		List<Newspaper> listaPeriodicos = daon.listar();
+		
 		ModelAndView mv = new ModelAndView("addRSS");
+		
+		mv.addObject("listaPeriodicos", listaPeriodicos);		
 		mv.addObject("lista", lista);		
 		
 		return mv;

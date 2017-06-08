@@ -63,6 +63,7 @@
 									<tr>
 									<th><spring:message code="link_RSS" /></th>
 									<th><spring:message code="id_seccion" /></th>
+									<th><spring:message code="periodico" /></th>
 									</tr>
 
 									<c:forEach items="${lista}" var="rss">
@@ -70,6 +71,8 @@
 									<tr>
 									<td><c:out value="${rss.link}"/></td>
 									<td><c:out value="${rss.sectionId}"/></td>
+									<td><c:out value="${rss.getNewspaperId}"/></td>
+									
 									</tr>
 	
 									</c:forEach>
@@ -79,7 +82,7 @@
 											<header>
 												<h3></h3>
 											</header>
-											<form action="addRSS">
+<form action="addRSS">
 	<table class="rss">
 		<tr>
 			<td><label for="link"><spring:message code="link" /></label><input type="text" name="link"></td>
@@ -98,6 +101,29 @@
 					<option value="9"><spring:message code="9" /></option>
 				</select>
 			</td>
+			
+			<td><label for="periodico"><spring:message code="periodico" /></label>
+				<select name="periodico" id="periodicos" onchange="selector()">
+					<c:forEach items="${listaPeriodicos}" var="listaPeriodicos">
+						<option value="${listaPeriodicos.getId()}"><c:out value="${listaPeriodicos.getName()}"></c:out></option>
+					</c:forEach>
+					<option value="new">Crear nuevo Periodico</option>
+					
+				</select>
+			</td>
+				
+				<script type="text/javascript">
+					function selector(){
+						var value = document.getElementById("periodicos").value
+						
+						if (value == "new"){
+							alert(value)
+							window.location="formAddPeriodico";
+						}
+						
+					}
+				</script>
+			
 		</tr>
 		<tr><td colspan="2">&nbsp;</td></tr>
 		<tr>
