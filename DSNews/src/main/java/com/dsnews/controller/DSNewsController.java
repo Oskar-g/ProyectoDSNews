@@ -79,9 +79,9 @@ public class DSNewsController {
 			List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
 			listaArticulos = daolindex.listar(newspaper.getId(), categoria.getId());
 			
-				if (listaArticulos != null ){
-					listadoCompleto.add(new ListadoIndex(categoria.getName(), listaArticulos));			
-				}
+			if (! listaArticulos.isEmpty()){
+				listadoCompleto.add(new ListadoIndex(categoria.getName(), listaArticulos));			
+			}
 		}
 		
 		ModelAndView mv = new ModelAndView("index");

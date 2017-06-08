@@ -55,7 +55,7 @@
 										<h2><spring:message code="editar_noticia" /></h2>
 										</header>
 
-										<form action="editar">
+<form action="editar">
 <input type="hidden" name = "guid" value="${guid}">
 <table>
 	<tr>
@@ -74,7 +74,7 @@
 		<td><input type="Date" name="pubDate" value="${article.pubDate}"></td>
 	</tr>
 	<tr>
-		<td><label for="description"><spring:message code="descricion" /></label></td>
+		<td><label for="description"><spring:message code="descripcion" /></label></td>
 		<td><input type="text" name="description" value="${article.description}"></td>
 	</tr>
 	<tr>
