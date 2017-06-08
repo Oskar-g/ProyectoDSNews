@@ -74,7 +74,7 @@ public class DAOArticleImpl implements DAOArticle {
 	}
 	
 	//Listar para el superuser
-	public List<Article> listarSuperUser(User u) {
+	public List<Article> listarSuperUser() {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
 		String sql = "select * from "+mainTable+" order by user_id";
@@ -167,6 +167,20 @@ public class DAOArticleImpl implements DAOArticle {
 		lista = jdbc.query(sql,new Object[]{keyword},new RowMapperArticleUser());
 		return lista;
 	}
-	
+	//Buscar por palabra clave y filtro y user
+	public List<Article> buscar(String filter, String keyword, int userId) {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<Article> lista;
+		
+		keyword = "%" + keyword + "%";
+		
+		System.out.println(filter);
+		System.out.println(keyword);
+		
+		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? AND user_id = ?;";
+		
+		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticleUser());
+		return lista;
+	}
 	
 }

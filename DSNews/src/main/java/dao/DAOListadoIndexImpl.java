@@ -64,7 +64,7 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 	// ---------------------------------------------------------------------------------------------------
 
 	/*
-	 * Listar ArticlesRss por periodico y categoría
+	 * Listar ArticlesRss por periodico,categoría y fecha
 	 * 
 	 * (non-Javadoc)
 	 * @see dao.DAOListadoIndex#listar(java.lang.String, int)
@@ -76,7 +76,7 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 		String sql = 
 				"SELECT pub_date, cover, title, description, "+this.mainTable+".link "
 				+ "FROM "+this.mainTable+" "
-				+"Inner JOIN "+this.joinTable1+" ON rss_id = rss.id "
+				+"Inner JOIN "+this.joinTable1+" ON rss_id = "+this.joinTable1+".id "
 				+"WHERE newspaper_id = ? "
 				+"AND section_id = ? "
 				+"AND pub_date = ?;";
@@ -84,4 +84,5 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 		lista = jdbc.query(sql, new Object[]{periodico, section,pubDate}, new RowMapperListadoIndex());
 		return lista;
 	}
+	
 }
