@@ -302,7 +302,6 @@ public class DSNewsController {
 		return mv;
 	}
 	
-	
 	@RequestMapping(value = {"addPeriodico"})
 	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("name")String name,
@@ -316,7 +315,6 @@ public class DSNewsController {
 			try {
 				rs.sendRedirect("formAddRSS");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
@@ -324,4 +322,30 @@ public class DSNewsController {
 		}
 		return mv;
 	}
+
+	@RequestMapping(value = {"buscarIndex"})
+	public ModelAndView buscarIndex(HttpSession sesion, HttpServletResponse rs,
+			@RequestParam("filter")String filter,
+			@RequestParam("keyword")String keyword){
+		
+		User user = (User)sesion.getAttribute("user");
+		ModelAndView mv = null;
+		
+		if(filter.equals("id")){
+			int keywordparsed;
+			try{
+				keywordparsed = Integer.parseInt(keyword);
+			}catch (Exception e) {
+				mv = new ModelAndView("errorDatos");
+			}
+		}
+		
+		List<Article>lista = daoarticle.buscar(filter, keyword);
+		
+		mv = new ModelAndView("paginaAdmin");
+		mv.addObject("lista", lista);
+
+		return mv;
+	}
+
 }

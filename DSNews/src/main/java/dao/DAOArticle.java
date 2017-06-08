@@ -12,5 +12,7 @@ public interface DAOArticle {
 	public boolean update(Article a,User u);
 	public Article read(int guid);
 	public boolean delete(int guid);
+	public List<Article> buscar(String filter, String keyword);
+
 
 }
