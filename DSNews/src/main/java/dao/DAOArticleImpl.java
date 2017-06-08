@@ -14,7 +14,7 @@ import modelos.Article;
 import modelos.User;
 
 public class DAOArticleImpl implements DAOArticle {
-	
+
 	String mainTable = "articles_desoft";
 	
 	//Mapeo de la base de datos
@@ -77,7 +77,7 @@ public class DAOArticleImpl implements DAOArticle {
 	public List<Article> listarSuperUser(User u) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
-		String sql = "select * from article order by user_id";
+		String sql = "select * from "+mainTable+" order by user_id";
 		
 		lista = jdbc.query(sql,new RowMapperArticleSuperUser());
 		return lista;
@@ -108,7 +108,7 @@ public class DAOArticleImpl implements DAOArticle {
 	public boolean update (Article a,User u){
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
 		boolean result = false;
-		String sql = "update article set "
+		String sql = "update "+mainTable+" set "
 				+"link = ?,"
 				+"title = ?,"
 				+"content = ?,"

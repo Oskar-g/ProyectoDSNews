@@ -61,7 +61,7 @@ public class DSNewsController {
 		return mv;
 	}
 	
-	@RequestMapping(value = {"inicio"})
+	@RequestMapping(value = {"noticias"})
 	//public ModelAndView inicio(@RequestParam(value="periodico")String newspaper){
 	public ModelAndView inicio(){
 		
@@ -79,12 +79,12 @@ public class DSNewsController {
 			List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
 			listaArticulos = daolindex.listar(newspaper.getId(), categoria.getId());
 			
-				if (listaArticulos != null ){
-					listadoCompleto.add(new ListadoIndex(categoria.getName(), listaArticulos));			
-				}
+			if (! listaArticulos.isEmpty()){
+				listadoCompleto.add(new ListadoIndex(categoria.getName(), listaArticulos));			
+			}
 		}
 		
-		ModelAndView mv = new ModelAndView("index");
+		ModelAndView mv = new ModelAndView("noticias");
 		mv.addObject("listadoCompleto",listadoCompleto);
 		mv.addObject("sectionList",sectionList);
 		return mv;
