@@ -8,20 +8,11 @@
 </head>
 <body>
 
-<form action="inicio" method="POST">
-	<table>
-		<tr>
-			<td><label for="periodico">SELECCIONE EL PERIODICO, AMADO LECTOR</label>
-				<select name="periodico">
-					<option value="El pais">El pais</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td><button>Seleccionar</button></td>
-		</tr>
-	</table>
-</form>
+<table>
+	<tr>
+		<td>Visionado de noticias y demás Contenido de noticias</td>
+	</tr>
+</table>
 </body>
 
 </html>
