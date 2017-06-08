@@ -8,9 +8,7 @@ public class User {
 	
 	//Constructores 
 	//Constructor vacio
-	public User(){
-		
-	}
+	public User(){ }
 	
 	//Constructores con parametros
 	public User(int id,String name, String role){
@@ -18,9 +16,6 @@ public class User {
 		this.name= name;
 		this.role= role;
 		
-	}
-	public User(String name) {
-		this.name=name;
 	}
 
 	//Getters y setters

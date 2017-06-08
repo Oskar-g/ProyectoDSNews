@@ -14,6 +14,9 @@ import modelos.Article;
 import modelos.User;
 
 public class DAOArticleImpl implements DAOArticle {
+
+	String mainTable = "articles_desoft";
+	
 	//Mapeo de la base de datos
 	class RowMapperArticleUser implements RowMapper<Article>{
 		public Article mapRow(ResultSet rs, int numRow) throws SQLException{
@@ -64,7 +67,7 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
-		String sql = "select guid,section_id,title,pub_date,user_id from article where user_id = ? order by pub_date";
+		String sql = "select guid,section_id,title,pub_date,user_id from "+mainTable+" where user_id = ? order by pub_date";
 		
 		lista = jdbc.query(sql, new Object[]{u.getId()},new RowMapperArticleUser());
 		return lista;
@@ -74,7 +77,7 @@ public class DAOArticleImpl implements DAOArticle {
 	public List<Article> listarSuperUser(User u) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
-		String sql = "select * from article order by user_id";
+		String sql = "select * from "+mainTable+" order by user_id";
 		
 		lista = jdbc.query(sql,new RowMapperArticleSuperUser());
 		return lista;
@@ -88,7 +91,7 @@ public class DAOArticleImpl implements DAOArticle {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
 		
-		String sql = "insert into article(link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
+		String sql = "insert into "+mainTable+"(link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
 				+ "values (?,?,?,?,?,?,?,?,?)";
 		
 		try{
@@ -105,7 +108,7 @@ public class DAOArticleImpl implements DAOArticle {
 	public boolean update (Article a,User u){
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
 		boolean result = false;
-		String sql = "update article set "
+		String sql = "update "+mainTable+" set "
 				+"link = ?,"
 				+"title = ?,"
 				+"content = ?,"
@@ -130,7 +133,7 @@ public class DAOArticleImpl implements DAOArticle {
 	
 	//Read article
 	public Article read(int guid){
-		String sql= "select * from article where guid = ?";
+		String sql= "select * from "+mainTable+" where guid = ?";
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		
 		Article a = jdbc.queryForObject(sql, new Object[]{guid}, new RowMapperArticleSuperUser());
@@ -139,7 +142,7 @@ public class DAOArticleImpl implements DAOArticle {
 	}
 	//Borrar article
 	public boolean delete(int guid){
-		String sql = "delete from article where guid = ?";
+		String sql = "delete from "+mainTable+" where guid = ?";
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		
 		int i = jdbc.update(sql, new Object[]{guid});

@@ -1,26 +1,75 @@
 package modelos;
 
 public class Rss {
-	//Datos o propiedades
+	/*
+	 * ------------------------------------------------
+	 * Attributos
+	 *------------------------------------------------ 
+	 */
 	private int id;
 	private String link;
 	private int sectionId;
+	private int newspaperId;
 	
-	//Constructores
-	//Constructor vacio
-	public Rss(){
-		
-	}
-	//Con parametros
+	/*------------------------------------------------
+	 * Objetos Relacionados
+	 */
+	private Section section;
+	private Newspaper newspaper;
+	
+	/*
+	 *------------------------------------------------
+	 * Constructores
+	 *------------------------------------------------ 
+	 */
+	public Rss(){ }
 
-	public Rss(String link, int sectionId) {
+	// ------------------------------------------------ 
+	
+	public Rss(int id, String link) {
 		super();
+		this.id = id;
+		this.link = link;
+	}
+
+	// ------------------------------------------------ 
+	
+	public Rss(int id, String link, int sectionId, int newspaperId) {
+		super();
+		this.id = id;
 		this.link = link;
 		this.sectionId = sectionId;
+		this.newspaperId = newspaperId;
 	}
 
-	//Metodos
-	//Getters y setters
+	// ------------------------------------------------ 
+	
+	public Rss(int id, String link, Section section, Newspaper newspaper) {
+		super();
+		this.id = id;
+		this.link = link;
+		this.section = section;
+		this.newspaper = newspaper;
+	}
+
+	// ------------------------------------------------ 
+	
+	public Rss(int id, String link, int sectionId, int newspaperId, Section section, Newspaper newspaper) {
+		super();
+		this.id = id;
+		this.link = link;
+		this.sectionId = sectionId;
+		this.newspaperId = newspaperId;
+		this.section = section;
+		this.newspaper = newspaper;
+	}
+
+	/*
+	 *------------------------------------------------
+	 * Getters & Setters
+	 *------------------------------------------------ 
+	 */
+	
 	public int getId() {
 		return id;
 	}
@@ -43,6 +92,30 @@ public class Rss {
 
 	public void setSectionId(int sectionId) {
 		this.sectionId = sectionId;
+	}
+
+	public int getNewspaperId() {
+		return newspaperId;
+	}
+
+	public void setNewspaperId(int newspaperId) {
+		this.newspaperId = newspaperId;
+	}
+
+	public Section getSection() {
+		return section;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
+	}
+
+	public Newspaper getNewspaper() {
+		return newspaper;
+	}
+
+	public void setNewspaper(Newspaper newspaper) {
+		this.newspaper = newspaper;
 	}
 	
 }

@@ -26,4 +26,23 @@ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<bean id="DAORss" class="dao.DAORssImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="DAOArticleRss" class="dao.DAOArticleRssImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="DAOSection" class="dao.DAOSectionImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="DAONewspaper" class="dao.DAONewspaperImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+	<bean id="DAOListadoIndex" class="dao.DAOListadoIndexImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
 </beans>

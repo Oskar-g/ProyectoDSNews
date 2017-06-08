@@ -1,33 +1,29 @@
 package dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+
 
 import modelos.User;
+import rowmappers.RowMapperUser;
 
 public class DAOUserImpl implements DAOUser {
-	
-	//Creamos el row mapper para nuestra base de datos
-	class RowMapperUser implements RowMapper<User>{
-		public User mapRow (ResultSet rs, int rowNum) throws SQLException{
-			User user = new User (
-					rs.getInt("id"),
-					rs.getString("name"),
-					rs.getString("role"));
-			return user;
-		}
-	}
-	
-	//CReamos el dataSource con sus getters y setters
+		
+	/*
+	 * ----------------------------------------------------------
+	 * Atributos
+	 * ----------------------------------------------------------
+	 */
+	private String mainTable = "users";
 	private DataSource dataSource;
 	
-	//Getters y setters
+	/*
+	 *----------------------------------------------------------
+	 * Getters & Settes
+	 * ----------------------------------------------------------
+	 */
 	public DataSource getDataSource() {
 		return dataSource;
 	}
@@ -36,35 +32,65 @@ public class DAOUserImpl implements DAOUser {
 		this.dataSource = dataSource;
 	}
 	
-	//Metodos
-	//Login de user
+	/*
+	 *----------------------------------------------------------
+	 * READ		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
+	
+	/* 
+	 * Hacer login de usuario
+	 * 
+	 * (non-Javadoc)
+	 * @see dao.DAOUser#login(modelos.User, java.lang.String)
+	 */
 	public boolean login(User u, String pass) {
 		
-		String sql = "select id,name,role from users where name = ? and password=md5(?)";
-		User us = null;
+		String sql = "SELECT id,name,role "
+					+ "FROM "+this.mainTable+" "
+					+ "WHERE name = ? "
+					+ "AND password = md5(?)";
+		
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
 
 		try{
-			us = jdbc.queryForObject(sql, new Object[]{u.getName(), pass},new RowMapperUser());
+			jdbc.queryForObject(sql, new Object[]{u.getName(), pass},new RowMapperUser());
 			return true;
+			
 		}catch(DataAccessException dae){
 			dae.printStackTrace();
-			return false;
 		}
-	}
+		
+		return false;
+		
+	}//Fin de login
 	
+	// ----------------------------------------------------------
+		
+	/* 
+	 * Obtener datos de usuario por su nombre
+	 *  
+	 * (non-Javadoc)
+	 * @see dao.DAOUser#getUser(java.lang.String)
+	 */
 	public User getUser(String name){
-		String sql = "select id,name,role from users where name = ?";
+
+		String sql = "SELECT id, name, role "
+					+ "FROM "+this.mainTable+" "
+					+ "WHERE name = ?";
+		
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
-		int id = 0;
-		String role = null;
-		User u = new User(id,name,role);
-
-		u = jdbc.queryForObject(sql, new Object[]{u.getName()},new RowMapperUser());
-		return u;
-	}
-
+		
+		try{
+			User user = jdbc.queryForObject(sql, new Object[]{name},new RowMapperUser());	
+			return user;
+			
+		}catch(DataAccessException dae){
+			dae.printStackTrace();
+		}
+		
+		return null;
+		
+	}//Finde getUser
 	
-	
-
-}
+}//Fin de DAOUserImpl
