@@ -17,7 +17,7 @@ public interface DAOSection {
 	 * @return		Objeto Section con los datos del registro 
 	 * 				coincidente
 	 */
-	Section getSection(int id);
+	public Section getSection(int id);
 	
 	// ------------------------------------------------------------------
 	
@@ -30,6 +30,6 @@ public interface DAOSection {
 	 * @return		Lista de Objetos Section con los datos 
 	 * 				almacenados en la base de datos
 	 */
-	List<Section> listar();
+	public List<Section> listar();
 	
 }//Fin de DAOSection

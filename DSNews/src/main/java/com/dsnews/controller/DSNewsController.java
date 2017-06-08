@@ -129,18 +129,19 @@ public class DSNewsController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
 		} else {
+			
 			if(user.getRole().equals("admin")){
 				List<Article> lista = daoarticle.listar(user);
 				mv = new ModelAndView("paginaAdmin");
 				mv.addObject("lista", lista);
 			}else if (user.getRole().equals("dios")){
-				List<Article> lista = daoarticle.listarSuperUser(user);
+				List<Article> lista = daoarticle.listarSuperUser();
 				mv = new ModelAndView("paginaAdmin");
 				mv.addObject("lista", lista);
 			}
 		}
+	
 
 		return mv;
 	}
@@ -155,8 +156,8 @@ public class DSNewsController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
-		} else {
+		}
+		else {
 			mv = new ModelAndView("formCrear");
 		}
 		return mv;
@@ -329,7 +330,9 @@ public class DSNewsController {
 			@RequestParam("keyword")String keyword){
 		
 		User user = (User)sesion.getAttribute("user");
-		ModelAndView mv = null;
+		ModelAndView mv = new ModelAndView("paginaAdmin");
+
+		List<Article>lista = null; 
 		
 		if(filter.equals("id")){
 			int keywordparsed;
@@ -338,11 +341,17 @@ public class DSNewsController {
 			}catch (Exception e) {
 				mv = new ModelAndView("errorDatos");
 			}
+		}else{
+			if(keyword.trim().equals("") || keyword.trim().isEmpty() || keyword == null){
+				mv = new ModelAndView("errorDatos");
+			}
+			if (user.getRole().equals("dios") ){
+				lista = daoarticle.buscar(filter, keyword);
+			}
+			else{
+				lista = daoarticle.buscar(filter, keyword,user.getId());
+			}
 		}
-		
-		List<Article>lista = daoarticle.buscar(filter, keyword);
-		
-		mv = new ModelAndView("paginaAdmin");
 		mv.addObject("lista", lista);
 
 		return mv;

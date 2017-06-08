@@ -42,7 +42,7 @@
 									<input type="radio" name="filter" value="title" checked> <spring:message code="titular" />
 									<input type="radio" name="filter" value="content"> <spring:message code="contenido" /> 
 									<input type="radio" name="filter" value="guid"> <spring:message code="id" />  
-									<input type="text" name="keyword"/>
+									<input type="text" name="keyword" required/>
 									
 									<footer>
 										<input type="submit"/>
