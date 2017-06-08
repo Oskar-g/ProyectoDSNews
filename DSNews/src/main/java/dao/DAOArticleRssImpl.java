@@ -10,10 +10,15 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import dao.DAOArticleImpl.RowMapperArticleUser;
+import modelos.Article;
 import modelos.ArticleRss;
 
 
 public class DAOArticleRssImpl implements DAOArticleRss {
+	
+	String mainTable = "articles_rss";
+
 	//Mapeo de la base de datos
 	class RowMapperArticleRss implements RowMapper<ArticleRss>{
 		public ArticleRss mapRow(ResultSet rs, int numRow) throws SQLException{
@@ -125,6 +130,4 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		int i = jdbc.update(sql, new Object[]{id});
 		return (i == 0);
 	}
-
-	
 }

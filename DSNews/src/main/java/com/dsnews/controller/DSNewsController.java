@@ -63,7 +63,7 @@ public class DSNewsController {
 	
 	@RequestMapping(value = {"noticias"})
 	//public ModelAndView inicio(@RequestParam(value="periodico")String newspaper){
-	public ModelAndView inicio(){
+	public ModelAndView noticias(){
 		
 		
 		//Test debug, (sólo para probar esto iría con una request del selector del index)
@@ -71,6 +71,7 @@ public class DSNewsController {
 		Newspaper newspaper = daonewspaper.getNewspaper(1);		
 				
 		List<Section> sectionList = daosection.listar();
+		List<Newspaper> newspapers = daonewspaper.listar();
 		
 		//Sólo periodico y categoría
 		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
@@ -87,6 +88,8 @@ public class DSNewsController {
 		ModelAndView mv = new ModelAndView("noticias");
 		mv.addObject("listadoCompleto",listadoCompleto);
 		mv.addObject("sectionList",sectionList);
+		mv.addObject("newspapers",newspapers);
+
 		return mv;
 	}
 	
@@ -356,5 +359,34 @@ public class DSNewsController {
 
 		return mv;
 	}
+	
+	@RequestMapping(value = {"buscarNoticias"})
+	public ModelAndView buscarNoticias(HttpServletResponse rs,
+			@RequestParam("newspapers")int periodico,
+			@RequestParam("secciones")int seccion,
+			@RequestParam("date")String pubDate){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
+		Date date = null;
+        
+	
+		List<ArticleRss> listadoCompleto = new ArrayList<ArticleRss>();
 
+		if(pubDate.trim().equals("")){
+			listadoCompleto = daolindex.listar(periodico, seccion);
+		}else{
+			try {
+	            date = formatter.parse(pubDate);
+	        } catch (ParseException pe) {
+	            pe.printStackTrace();
+	        }
+			listadoCompleto = daolindex.listar(periodico, seccion,date);
+		}
+			
+		ModelAndView mv = new ModelAndView("noticias");
+		mv.addObject("listadoCompleto",listadoCompleto);
+
+		return mv;
+
+		}		
 }

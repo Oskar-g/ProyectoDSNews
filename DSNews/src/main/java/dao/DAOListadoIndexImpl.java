@@ -64,7 +64,7 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 	// ---------------------------------------------------------------------------------------------------
 
 	/*
-	 * Listar ArticlesRss por periodico y categoría
+	 * Listar ArticlesRss por periodico,categoría y fecha
 	 * 
 	 * (non-Javadoc)
 	 * @see dao.DAOListadoIndex#listar(java.lang.String, int)
@@ -84,4 +84,5 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 		lista = jdbc.query(sql, new Object[]{periodico, section,pubDate}, new RowMapperListadoIndex());
 		return lista;
 	}
+	
 }

@@ -167,7 +167,7 @@ public class DAOArticleImpl implements DAOArticle {
 		lista = jdbc.query(sql,new Object[]{keyword},new RowMapperArticleUser());
 		return lista;
 	}
-	
+	//Buscar por palabra clave y filtro y user
 	public List<Article> buscar(String filter, String keyword, int userId) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;

@@ -18,59 +18,49 @@
 	</head>
 	<body class="homepage">
 		<div id="page-wrapper">
-
 			<!-- Header -->
 				<div id="header-wrapper">
 					<div id="header">
-						<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
-						
-							
+						<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">	
 						<!-- Banner -->
 							<section id="banner">
 								<header>
 									<h2><spring:message code="bienvenido.index"/></h2>
+									
+									<form action="buscarNoticias" method="post">
 									<table>
-<tr>
-    <th><spring:message code="periodico"/></th>
-    <th><spring:message code="secciones"/></th> 
-    <th><spring:message code="fecha"/></th>
-    <th></th>
-  </tr>
-  
-<tr>
-<td>
-<form method="POST">
-<select name="periodicos">
-<option value="mundo">El Mundo</option>
-<option value="pais">El País</option>
-<option value="abc">ABC</option>
-<option value="tribuna">La Tribuna</option>
-<option value="razon">La Razón</option>
-<option value="as">AS</option>
-<option value="marca">Marca</option>
-</select>
-</form>
-</td>
-
-<td>
-<form method="POST">
-<select name="secciones">
-	<c:forEach items="${sectionList}" var="section">
-		<option value="${section.getId()}"><spring:message code="${section.getId()}" /></option>
-	</c:forEach>
-</select>
-</form>
-</td>
-
-<td>
-<form method="POST">
-  <input type="date" name="date">
-</form>
-</td>
-
-<td><button type="submit"><spring:message code="buscar"/></button></td>
+										<tr>
+										    <th><spring:message code="periodico"/></th>
+										    <th><spring:message code="secciones"/></th> 
+										    <th><spring:message code="fecha"/></th>
+										    <th></th>
 										</tr>
-									</table>
+							 
+										<tr>
+										<td>										
+										<select name="newspapers">
+											<c:forEach items="${newspapers}" var="newspapers">
+												<option value="${newspapers.getId()}"><c:out value="${newspapers.getName()}" /></option>
+											</c:forEach>
+										</select>
+										</td>
+										
+										<td>
+										<select name="secciones">
+											<c:forEach items="${sectionList}" var="section">
+												<option value="${section.getId()}"><spring:message code="${section.getId()}" /></option>
+											</c:forEach>
+										</select>
+										</td>
+										
+										<td>
+										  <input type="Date" name="date">
+										</td>
+										
+										<td><button type="submit"><spring:message code="buscar"/></button></td>
+										</tr>
+										</table>
+									</form>
 								</header>
 							</section>
 
