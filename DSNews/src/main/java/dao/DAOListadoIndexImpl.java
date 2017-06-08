@@ -56,7 +56,7 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 				+"Inner JOIN "+this.joinTable1+" ON rss_id = "+this.joinTable1+".id "
 				+"WHERE newspaper_id = ? "
 				+"AND section_id = ? "
-				+"order by pub_date DESC";
+				+"order by num_entry DESC";
 		
 		lista = jdbc.query(sql, new Object[]{periodico, section}, new RowMapperListadoIndex());
 		return lista;
@@ -81,7 +81,7 @@ public class DAOListadoIndexImpl implements DAOListadoIndex{
 				+"WHERE newspaper_id = ? "
 				+"AND section_id = ? "
 				+"AND pub_date = ? "
-				+ "order by pub_date DESC";
+				+ "order by num_entry DESC";
 
 		
 		lista = jdbc.query(sql, new Object[]{periodico, section,pubDate}, new RowMapperListadoIndex());

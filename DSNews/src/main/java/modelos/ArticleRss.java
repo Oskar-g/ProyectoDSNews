@@ -14,6 +14,7 @@ public class ArticleRss {
 	private Date pubDate;
 	private String cover;
 	private int rssId;
+	private int numEntry;
 	
 	/*------------------------------------------------
 	 * Objetos Relacionados
@@ -40,7 +41,7 @@ public class ArticleRss {
 	
 	// ------------------------------------------------
 	
-	public ArticleRss(String link, String title, String description, Date pubDate, String cover, int rssId) {
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover, int rssId,int numEntry) {
 		super();
 		this.link = link;
 		this.title = title;
@@ -48,6 +49,7 @@ public class ArticleRss {
 		this.pubDate = pubDate;
 		this.cover = cover;
 		this.rssId = rssId;
+		this.numEntry= numEntry;
 	}
 	
 	// ------------------------------------------------
@@ -122,7 +124,12 @@ public class ArticleRss {
 	public void setRss(Rss rss) {
 		this.rss = rss;
 	}
-	
+	public int getNumEntry(){
+		return numEntry;
+	}
+	public void setNumEntry(int numEntry){
+		this.numEntry= numEntry;
+	}
 
 
 }

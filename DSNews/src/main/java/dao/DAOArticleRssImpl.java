@@ -28,7 +28,8 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 					rs.getString("description"),
 					rs.getDate("pubDate"),
 					rs.getString("cover"),
-					rs.getInt("idRss")
+					rs.getInt("idRss"),
+					rs.getInt("numEntry")
 					);
 			return a;
 		}	
@@ -51,7 +52,7 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<ArticleRss> lista;
-		String sql = "select * from articles_rssss order by pub_date";
+		String sql = "select * from articles_rss order by pub_date";
 		
 		lista = jdbc.query(sql, new RowMapperArticleRss());
 		return lista;
@@ -67,21 +68,22 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		boolean result = false;
 		
 		String sql = 
-				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id) "
-				+ "VALUES (?,?,?,?,?,?) "
+				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id,num_entry) "
+				+ "VALUES (?,?,?,?,?,?,?) "
 				+ "ON DUPLICATE KEY UPDATE "
 					+ "title = ?, "
 					+ "description = ?, "
 					+ "pub_date = ?, "
 					+ "cover = ?, "
-					+ "rss_id = ? ;";
+					+ "rss_id = ?, "
+					+ "num_entry = ? ;";
 		
 		try{
 			jdbc.update(sql, new Object[]{
 				//On Insert
-					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),
+					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),art.getNumEntry(),
 				//On Update	
-					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId()
+					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),art.getNumEntry()
 			});
 			result = true;
 		}catch(DataAccessException dae){
