@@ -117,7 +117,6 @@
 						var value = document.getElementById("periodicos").value
 						
 						if (value == "new"){
-							alert(value)
 							window.location="formAddPeriodico";
 						}
 						
