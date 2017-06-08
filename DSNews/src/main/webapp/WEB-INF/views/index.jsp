@@ -13,6 +13,7 @@
 		<meta name="keywords" content="deSoft, noticias, periÛdico digital, prensa">
 		<link rel="shortcut icon" type="image/x-icon" href="recursos/images/logo.ico" />
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
+		<link rel="stylesheet" href="recursos/assets/css/dsnews.css" />
 	
 	</head>
 	<body class="homepage">
@@ -54,15 +55,9 @@
 <td>
 <form method="POST">
 <select name="secciones">
-<option value="nacional"><spring:message code="1"/></option>
-<option value="internacional"><spring:message code="2"/></option>
-<option value="economia"><spring:message code="3"/></option>
-<option value="ciencia"><spring:message code="4"/></option>
-<option value="tecnologia"><spring:message code="5"/></option>
-<option value="cultura"><spring:message code="6"/></option>
-<option value="deportes"><spring:message code="7"/></option>
-<option value="tv"><spring:message code="8"/></option>
-<option value="sociedad"><spring:message code="9"/></option>
+	<c:forEach items="${sectionList}" var="section">
+		<option value="${section.getId()}"><spring:message code="${section.getId()}" /></option>
+	</c:forEach>
 </select>
 </form>
 </td>
@@ -79,133 +74,63 @@
 								</header>
 							</section>
 
-						
+						<!--CONSTRUIR NOTICIAS CON ESTO
 
+<table>
+	<tr>
+		<td>Visionado de noticias y dem√°s Contenido de noticias</td>
+	</tr>
+	
+</table>
+
+						-->
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
 						<div class="row">
 							<div class="12u">
 
-								<!-- Portfolio -->
+								<c:forEach items="${listadoCompleto}" var="listadoCompleto">
+<!-- ENCABEZADOS DE NOTICIA -->
 									<section>
 										<header class="major">
-											<h2><spring:message code="noticias"/></h2>
+											<h2>${listadoCompleto.getCategoria()}</h2>
 										</header>
+<!-- FIN ENCABEZADOS DE NOTICIA -->	
+<!-- CUERPO NOTICIAS -->			
+								<%  int i = 0;  %>
+										<c:forEach items="${listadoCompleto.getArticulos()}" var="listadoArticulos">
+										
+								<%  if (i == 0) { %>
 										<div class="row">
+								<%  } %>
+<!-- ITEM NOTICIA -->										
+								
 											<div class="4u 12u(mobile)">
+																						
 												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic02.jpg" alt="" /></a>
-													<header>
-														<h3>Ipsum feugiat et dolor</h3>
+													<a href="${listadoArticulos.getLink()}" class="image featured"><img class="item_portada" src="${listadoArticulos.getCover()}" alt="${listadoArticulos.getTitle()}" /></a>
+													<header class="newTitle">
+														<h3>${listadoArticulos.getTitle()}</h3>
 													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
+														<p>${listadoArticulos.getDescription()}</p>
 													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
+														<a href="${listadoArticulos.getLink()}" class="button alt"><spring:message code="leermas"/></a>
 													</footer>
 												</section>
 											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic03.jpg" alt="" /></a>
-													<header>
-														<h3>Sed etiam lorem nulla</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic04.jpg" alt="" /></a>
-													<header>
-														<h3>Consequat et tempus</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-										</div>
-										<div class="row">
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic05.jpg" alt="" /></a>
-													<header>
-														<h3>Blandit sed adipiscing</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic07.jpg" alt="" /></a>
-													<header>
-														<h3>Dolore nisl feugiat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-										</div>
+<!--FIN ITEM NOTICIA -->	
+							<% 	i++; 
+							 	if (i == 3) { %>
+									<div class="row">
+							<%  
+									i = 0; } 
+							%>											
+										</c:forEach>
+				
 									</section>
-
+</c:forEach>
+<!-- FIN CUERPO NOTICIAS -->
 							</div>
 						</div>
 						<br>
@@ -287,14 +212,12 @@
 				</div>
 
 		</div>
-
-		<!-- Scripts -->
+	<!-- Scripts -->
 			<script src="recursos/assets/js/jquery.min.js"></script>
 			<script src="recursos/assets/js/jquery.dropotron.min.js"></script>
 			<script src="recursos/assets/js/skel.min.js"></script>
 			<script src="recursos/assets/js/skel-viewport.min.js"></script>
 			<script src="recursos/assets/js/util.js"></script>
 			<script src="recursos/assets/js/main.js"></script>
-
 	</body>
 </html>

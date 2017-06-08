@@ -3,81 +3,126 @@ package modelos;
 import java.util.Date;
 
 public class ArticleRss {
-	//Datos o propiedades
-	private int id;
+	/*
+	 * -----------------------------------------------
+	 * Attributos
+	 *------------------------------------------------ 
+	 */
 	private String link;
 	private String title;
 	private String description;
 	private Date pubDate;
-	private int idRss;
+	private String cover;
+	private int rssId;
+	
+	/*------------------------------------------------
+	 * Objetos Relacionados
+	 */
+	private Rss rss ;
 
-	//Constructores
-	//Constructor vacio
+	/*
+	 * ------------------------------------------------
+	 * Constructores
+	 *------------------------------------------------ 
+	 */
 	public ArticleRss (){	}
 	
+	// ------------------------------------------------
 	
-	
-	public ArticleRss(String link, String title, String description, Date pubDate, int idRss) {
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover) {
 		super();
 		this.link = link;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
-		this.idRss = idRss;	
+		this.cover = cover;
 	}
-
-	public ArticleRss(int id, String link, String title, String description, Date pubDate, int idRss) {
+	
+	// ------------------------------------------------
+	
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover, int rssId) {
 		super();
 		this.link = link;
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
-		this.idRss = idRss;	
+		this.cover = cover;
+		this.rssId = rssId;
 	}
-
-
 	
+	// ------------------------------------------------
 
-	//Metodos
-	//Getters y setters
-	public int getId() {
-		return id;
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover, Rss rss) {
+		super();
+		this.link = link;
+		this.title = title;
+		this.description = description;
+		this.pubDate = pubDate;
+		this.cover = cover;
+		this.rss = rss;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
+	/*
+	 * ------------------------------------------------
+	 * Getters & Setters
+	 *------------------------------------------------ 
+	 */
 	public String getLink() {
 		return link;
 	}
+
 	public void setLink(String link) {
 		this.link = link;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Date getPubDate() {
 		return pubDate;
 	}
+
 	public void setPubDate(Date pubDate) {
 		this.pubDate = pubDate;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getIdRss() {
-		return idRss;
-	}
-	public void setIdRss(int idRss) {
-		idRss = idRss;
+
+	public String getCover() {
+		return cover;
 	}
 
+	public void setCover(String cover) {
+		this.cover = cover;
+	}
+
+	public int getRssId() {
+		return rssId;
+	}
+
+	public void setRssId(int rssId) {
+		this.rssId = rssId;
+	}
+
+	public Rss getRss() {
+		return rss;
+	}
+
+	public void setRss(Rss rss) {
+		this.rss = rss;
+	}
 	
+
+
 }

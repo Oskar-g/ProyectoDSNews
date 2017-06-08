@@ -22,6 +22,7 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 					rs.getString("title"),
 					rs.getString("description"),
 					rs.getDate("pubDate"),
+					rs.getString("cover"),
 					rs.getInt("idRss")
 					);
 			return a;
@@ -45,7 +46,7 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<ArticleRss> lista;
-		String sql = "select * from article_rss order by pub_date";
+		String sql = "select * from articles_rssss order by pub_date";
 		
 		lista = jdbc.query(sql, new RowMapperArticleRss());
 		return lista;
@@ -60,12 +61,23 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
 		
-		String sql = "insert into article_rss(link,title,description,pub_date,id_rss)"
-				+ "values (?,?,?,?,?)";
+		String sql = 
+				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id) "
+				+ "VALUES (?,?,?,?,?,?) "
+				+ "ON DUPLICATE KEY UPDATE "
+					+ "title = ?, "
+					+ "description = ?, "
+					+ "pub_date = ?, "
+					+ "cover = ?, "
+					+ "rss_id = ? ;";
 		
 		try{
-			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),
-					art.getPubDate(),art.getIdRss()});
+			jdbc.update(sql, new Object[]{
+				//On Insert
+					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),
+				//On Update	
+					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId()
+			});
 			result = true;
 		}catch(DataAccessException dae){
 			dae.printStackTrace();
@@ -78,15 +90,16 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
 		boolean result = false;
 		String sql = "update article set "
-				+"link = ?,"
 				+"title = ?,"
 				+"description = ?,"
 				+"pub_date = ?,"
-				+"where id = ?";
+				+"cover = ?,"
+				
+				+"where link = ?";
 		
 		try{
 			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),
-					art.getPubDate(),art.getId()});
+					art.getPubDate(),art.getLink()});
 			result = true;
 		}catch (DataAccessException dae) {
 			dae.printStackTrace();
@@ -96,7 +109,7 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 	
 	//Read article
 	public ArticleRss read(int id){
-		String sql= "select * from article_rss where id = ?";
+		String sql= "select * from articles_rss where id = ?";
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		
 		ArticleRss art = jdbc.queryForObject(sql, new Object[]{id}, new RowMapperArticleRss());
