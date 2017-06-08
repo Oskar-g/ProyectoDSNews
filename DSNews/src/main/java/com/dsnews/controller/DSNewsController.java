@@ -293,5 +293,59 @@ public class DSNewsController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value = {"formAddPeriodico"})
+	public ModelAndView formAddPeriodico(HttpSession sesion){
+		
+		ModelAndView mv = new ModelAndView("addPeriodico");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = {"addPeriodico"})
+	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
+			@RequestParam("name")String name,
+			@RequestParam("logo")String logo){
+		
+		Newspaper n = new Newspaper(name, logo);
+		ModelAndView mv = null;
+
+		boolean ok = daonewspaper.create(n);
+		if(ok){
+			try {
+				rs.sendRedirect("formAddRSS");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			mv = new ModelAndView("errorDatos");
+		}
+		return mv;
+	}
+
+	@RequestMapping(value = {"buscarIndex"})
+	public ModelAndView buscarIndex(HttpSession sesion, HttpServletResponse rs,
+			@RequestParam("filter")String filter,
+			@RequestParam("keyword")String keyword){
+		
+		User user = (User)sesion.getAttribute("user");
+		ModelAndView mv = null;
+		
+		if(filter.equals("id")){
+			int keywordparsed;
+			try{
+				keywordparsed = Integer.parseInt(keyword);
+			}catch (Exception e) {
+				mv = new ModelAndView("errorDatos");
+			}
+		}
+		
+		List<Article>lista = daoarticle.buscar(filter, keyword);
+		
+		mv = new ModelAndView("paginaAdmin");
+		mv.addObject("lista", lista);
+
+		return mv;
+	}
 
 }

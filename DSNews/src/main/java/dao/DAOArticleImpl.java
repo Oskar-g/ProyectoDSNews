@@ -152,6 +152,21 @@ public class DAOArticleImpl implements DAOArticle {
 			return true;
 		}
 	}
+	//Buscar por palabra clave y filtro
+	public List<Article> buscar(String filter, String keyword) {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<Article> lista;
+		
+		keyword = "%" + keyword + "%";
+		
+		System.out.println(filter);
+		System.out.println(keyword);
+		
+		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? ;";
+		
+		lista = jdbc.query(sql,new Object[]{keyword},new RowMapperArticleUser());
+		return lista;
+	}
 	
 	
 }

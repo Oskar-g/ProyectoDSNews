@@ -39,16 +39,16 @@
 										</header>
 
 								<form action="buscarIndex" method="post">
-									<input type="radio" name="filter" value="titular"> <spring:message code="titular" />
+									<input type="radio" name="filter" value="title" checked> <spring:message code="titular" />
 									<input type="radio" name="filter" value="content"> <spring:message code="contenido" /> 
-									<input type="radio" name="filter" value="id"> <spring:message code="id" />  
+									<input type="radio" name="filter" value="guid"> <spring:message code="id" />  
 									<input type="text" name="keyword"/>
 									
+									<footer>
+										<input type="submit"/>
+									</footer>
 
 								</form>
-										<footer>
-											<input type="submit"/>
-										</footer>
 									</section>
 
 									
