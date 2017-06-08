@@ -82,17 +82,24 @@
 
 								<c:forEach items="${listadoCompleto}" var="listadoCompleto">
 <!-- ENCABEZADOS DE NOTICIA -->
+								<%  
+								int i = 0; 
+								boolean openrow = false;
+								%>
+								
 									<section>
 										<header class="major">
 											<h2>${listadoCompleto.getCategoria()}</h2>
 										</header>
 <!-- FIN ENCABEZADOS DE NOTICIA -->	
 <!-- CUERPO NOTICIAS -->			
-								<%  int i = 0;  %>
 										<c:forEach items="${listadoCompleto.getArticulos()}" var="listadoArticulos">
 										
-								<%  if (i == 0) { %>
+								<%  if (i == 0) { 
+										openrow = true;
+								%>
 										<div class="row">
+										
 								<%  } %>
 <!-- ITEM NOTICIA -->										
 								
@@ -110,16 +117,26 @@
 												</section>
 											</div>
 <!--FIN ITEM NOTICIA -->	
-							<% 	i++; 
-							 	if (i == 3) { %>
-									<div class="row">
-							<%  
-									i = 0; } 
-							%>											
+								<% 	i++; 
+								 	if (i == 3) { %>
+										</div class="row">
+								<%  
+										i = 0; } 
+								%>											
 										</c:forEach>
 				
 									</section>
-</c:forEach>
+								<% 	i++; 
+								 	if (openrow) { 
+								 	
+								 	System.out.println(i+" items, row sin cerrar");
+								 	%>
+										</div class="row">
+								<%  
+									 } 
+								%>						
+									
+							</c:forEach>
 <!-- FIN CUERPO NOTICIAS -->
 							</div>
 						</div>
