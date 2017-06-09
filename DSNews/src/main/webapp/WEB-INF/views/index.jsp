@@ -8,7 +8,11 @@
 </head>
 <body>
 
-Visionado de noticias y demás Contenido de noticias
+<table>
+	<tr>
+		<td>Visionado de noticias y demás Contenido de noticias</td>
+	</tr>
+</table>
 </body>
 
 </html>
