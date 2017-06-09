@@ -6,3 +6,16 @@
 	height: 250;	
 }
 
+.portada{
+	width: 25%;
+	vertical-align: middle;
+	margin-bottom: auto;
+}
+
+.logos{
+	width:100%;
+
+	text-align: center;
+	padding-bottom: 3px;
+}
+

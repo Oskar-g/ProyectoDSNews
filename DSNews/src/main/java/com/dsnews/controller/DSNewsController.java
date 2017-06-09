@@ -58,17 +58,21 @@ public class DSNewsController {
 
 		ModelAndView mv = new ModelAndView("index");
 		
+		List<Newspaper> newspapers = daonewspaper.listar();
+		System.out.println(newspapers.size());
+		mv.addObject("newspapers",newspapers);
 		return mv;
 	}
 	
 	@RequestMapping(value = {"noticias"})
-	//public ModelAndView inicio(@RequestParam(value="periodico")String newspaper){
-	public ModelAndView noticias(){
+	public ModelAndView inicio(@RequestParam(value="periodico")int periodico){
+	//public ModelAndView noticias(){
 		
 		
 		//Test debug, (sólo para probar esto iría con una request del selector del index)
-		daonewspaper.getNewspaper(1);
-		Newspaper newspaper = daonewspaper.getNewspaper(1);		
+		//daonewspaper.getNewspaper(newspaper);
+		//daonewspaper.getNewspaper(1);
+		Newspaper newspaper = daonewspaper.getNewspaper(periodico);	
 		String logo = newspaper.getLogo();
 		String name = newspaper.getName();
 
