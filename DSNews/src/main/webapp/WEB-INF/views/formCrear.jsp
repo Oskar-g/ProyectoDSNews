@@ -27,6 +27,14 @@
 				<div id="header-wrapper">
 					<div id="header">
 						
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="index.html">Home</a></li>		
+									<li><spring:message code="saludo" /></li>
+									<li class="current"><a href="admin.html">Logout</a></li>
+								</ul>
+							</nav>
 
 			<!-- Main -->
 				<div id="main-wrapper">
@@ -93,7 +101,8 @@
 	</tr>
 	<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
 	<tr>
-		<td colspan="2"><button><spring:message code="crear" /></button></td>
+		<td><button><spring:message code="crear" /></button></td>
+		<td><button><spring:message code="atras" /></button></td>
 	</tr>
 </table>
 

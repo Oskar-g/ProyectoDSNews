@@ -33,7 +33,7 @@
 									<h2><spring:message code="mensaje_error"/></h2>
 									
 								</header>
-					<script>window.setTimeout('window.location="formCrear";',3000);</script>
+					<script>window.setTimeout('window.location="formCrear";',100);</script>
 								
 							</article>
 

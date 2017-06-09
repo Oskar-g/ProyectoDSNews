@@ -23,6 +23,15 @@
 				<div id="header-wrapper">
 					<div id="header">
 					
+					<!-- Nav -->
+					<nav id="nav">
+								<ul>
+									<li class="current"><a href="index.html">Home</a></li>		
+									<li><spring:message code="saludo" /></li>
+									<li class="current"><a href="admin.html">Logout</a></li>
+								</ul>
+							</nav>
+					
 
 			<!-- Main -->
 				<div id="main-wrapper">
@@ -39,7 +48,7 @@
 
 								
 										<footer>
-											
+											<a href="paginaAdmin.html"><button><spring:message code="atras" /></button></a>
 										</footer>
 									</section>
 

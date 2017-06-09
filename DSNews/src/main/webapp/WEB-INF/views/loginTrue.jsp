@@ -37,7 +37,7 @@
 									<h2><spring:message code="cuerpo.loginTrue" /></h2>
 									
 								</header>
-					<script>window.setTimeout('window.location="formCrear";',3000);</script>
+					<script>window.setTimeout('window.location="paginaAdmin";',100);</script>
 							</article>
 					</div>
 				</div>

@@ -1,8 +1,10 @@
 
-
-
 .item_portada{
 	width: 360px;
 	height: 250;	
 }
 
+.portada{
+	width: 200px;
+	height: 60px;
+}
