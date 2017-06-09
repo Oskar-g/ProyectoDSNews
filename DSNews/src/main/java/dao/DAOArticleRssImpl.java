@@ -73,9 +73,7 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		}catch(DataAccessException dae){
 			dae.printStackTrace();
 		}
-		
-		System.out.println(n);
-		
+				
 		String sql = 
 				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id,num_entry) "
 				+ "VALUES (?,?,?,?,?,?,?) "

@@ -72,49 +72,49 @@ public class DSNewsControllerRSS {
 	@RequestMapping("downloadArticles")
 	public ModelAndView updateRssArticles(){
 		
-//      List<Rss> lista = daorss.listar();
-//      
-//		for (Rss rss : lista) {
-//			try {
-//				URL feedUrl = new URL(rss.getLink());
-//				int rssId = rss.getId();
-//              
-//              
-//	            SyndFeedInput input = new SyndFeedInput();
-//	            SyndFeed feed = input.build(new XmlReader(feedUrl));
-//	            
-//	            
-//            	
-//            	for (SyndEntry entrada: feed.getEntries()) {
-//	            		            	
-//					String cover= "";
-//					String link = entrada.getLink();
-//					String title = entrada.getTitle();
-//					String description = entrada.getDescription().getValue();
-//					Date pubDate= entrada.getPublishedDate();
-//					
-//
-//				try{
-//					cover = entrada.getEnclosures().get(0).getUrl();
-//				}catch (Exception e) {
-//						System.out.println("ERROR NO TIENE IMAGEN");
-//				}
-//				
-//				//String cover = entrada.getEnclosures().get(0).getUrl();
-//				//System.out.println(entrada);
-//				                	
-//				ArticleRss arss = new ArticleRss(link,title,description,pubDate,cover,rss.getId(),0);
-//				daoarss.create(arss);	
-//				
-//				System.out.println("Artículos RSS Actualizados!");
-//				}
-//          
-//          }
-//          catch (Exception ex) {
-//              ex.printStackTrace();
-//              System.out.println("ERROR: "+ex.getMessage());
-//          }
-//		}
+      List<Rss> lista = daorss.listar();
+      
+		for (Rss rss : lista) {
+			try {
+				URL feedUrl = new URL(rss.getLink());
+				int rssId = rss.getId();
+              
+              
+	            SyndFeedInput input = new SyndFeedInput();
+	            SyndFeed feed = input.build(new XmlReader(feedUrl));
+	            
+	            
+            	
+            	for (SyndEntry entrada: feed.getEntries()) {
+	            		            	
+					String cover= "";
+					String link = entrada.getLink();
+					String title = entrada.getTitle();
+					String description = entrada.getDescription().getValue();
+					Date pubDate= entrada.getPublishedDate();
+					
+
+				try{
+					cover = entrada.getEnclosures().get(0).getUrl();
+				}catch (Exception e) {
+						System.out.println("ERROR NO TIENE IMAGEN");
+				}
+				
+				//String cover = entrada.getEnclosures().get(0).getUrl();
+				//System.out.println(entrada);
+				                	
+				ArticleRss arss = new ArticleRss(link,title,description,pubDate,cover,rss.getId(),0);
+				daoarss.create(arss);	
+				
+				System.out.println("Artículos RSS Actualizados!");
+				}
+          
+          }
+          catch (Exception ex) {
+              ex.printStackTrace();
+              System.out.println("ERROR: "+ex.getMessage());
+          }
+		}
 		
 		return new ModelAndView("index");
 	}
