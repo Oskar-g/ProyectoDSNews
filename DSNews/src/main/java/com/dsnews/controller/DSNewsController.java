@@ -58,19 +58,27 @@ public class DSNewsController {
 
 		ModelAndView mv = new ModelAndView("index");
 		
+		List<Newspaper> newspapers = daonewspaper.listar();
+		System.out.println(newspapers.size());
+		mv.addObject("newspapers",newspapers);
 		return mv;
 	}
 	
 	@RequestMapping(value = {"noticias"})
-	//public ModelAndView inicio(@RequestParam(value="periodico")String newspaper){
-	public ModelAndView inicio(){
+	public ModelAndView inicio(@RequestParam(value="periodico")int periodico){
+	//public ModelAndView noticias(){
 		
 		
 		//Test debug, (sólo para probar esto iría con una request del selector del index)
-		daonewspaper.getNewspaper(1);
-		Newspaper newspaper = daonewspaper.getNewspaper(1);		
-				
+		//daonewspaper.getNewspaper(newspaper);
+		//daonewspaper.getNewspaper(1);
+		Newspaper newspaper = daonewspaper.getNewspaper(periodico);	
+		String logo = newspaper.getLogo();
+		String name = newspaper.getName();
+
+		
 		List<Section> sectionList = daosection.listar();
+		List<Newspaper> newspapers = daonewspaper.listar();
 		
 		//Sólo periodico y categoría
 		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
@@ -85,8 +93,12 @@ public class DSNewsController {
 		}
 		
 		ModelAndView mv = new ModelAndView("noticias");
+		mv.addObject("logo",logo);
+		mv.addObject("name",name);
 		mv.addObject("listadoCompleto",listadoCompleto);
 		mv.addObject("sectionList",sectionList);
+		mv.addObject("newspapers",newspapers);
+
 		return mv;
 	}
 	
@@ -105,7 +117,7 @@ public class DSNewsController {
 				ModelAndView mv = null;
 				User u = new User();
 				u.setName(name);
-				
+
 				boolean ok = daouser.login(u, password);
 				if(ok){
 					User us = daouser.getUser(name);
@@ -129,18 +141,19 @@ public class DSNewsController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
 		} else {
+			
 			if(user.getRole().equals("admin")){
 				List<Article> lista = daoarticle.listar(user);
 				mv = new ModelAndView("paginaAdmin");
 				mv.addObject("lista", lista);
 			}else if (user.getRole().equals("dios")){
-				List<Article> lista = daoarticle.listarSuperUser(user);
+				List<Article> lista = daoarticle.listarSuperUser();
 				mv = new ModelAndView("paginaAdmin");
 				mv.addObject("lista", lista);
 			}
 		}
+	
 
 		return mv;
 	}
@@ -155,8 +168,8 @@ public class DSNewsController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		
-		} else {
+		}
+		else {
 			mv = new ModelAndView("formCrear");
 		}
 		return mv;
@@ -285,7 +298,6 @@ public class DSNewsController {
 			try {
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}else{
@@ -329,7 +341,9 @@ public class DSNewsController {
 			@RequestParam("keyword")String keyword){
 		
 		User user = (User)sesion.getAttribute("user");
-		ModelAndView mv = null;
+		ModelAndView mv = new ModelAndView("paginaAdmin");
+
+		List<Article>lista = null; 
 		
 		if(filter.equals("id")){
 			int keywordparsed;
@@ -338,14 +352,83 @@ public class DSNewsController {
 			}catch (Exception e) {
 				mv = new ModelAndView("errorDatos");
 			}
+		}else{
+			if(keyword.trim().equals("") || keyword.trim().isEmpty() || keyword == null){
+				mv = new ModelAndView("errorDatos");
+			}
+			if (user.getRole().equals("dios") ){
+				lista = daoarticle.buscar(filter, keyword);
+			}
+			else{
+				lista = daoarticle.buscar(filter, keyword,user.getId());
+			}
 		}
-		
-		List<Article>lista = daoarticle.buscar(filter, keyword);
-		
-		mv = new ModelAndView("paginaAdmin");
 		mv.addObject("lista", lista);
 
 		return mv;
 	}
+	
+	@RequestMapping(value = {"buscarNoticias"})
+	public ModelAndView buscarNoticias(HttpServletResponse rs,
+			@RequestParam("newspapers")int periodico,
+			@RequestParam("secciones")int seccion,
+			@RequestParam("date")String pubDate){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
+		Date date = null;
+        
+	
+		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
+		List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
 
+		Section section = daosection.getSection(seccion);
+		
+		if(pubDate.trim().equals("")){
+			listaArticulos = daolindex.listar(periodico, seccion);
+		}else{
+			try {
+	            date = formatter.parse(pubDate);
+	        } catch (ParseException pe) {
+	            pe.printStackTrace();
+	        }
+			listaArticulos = daolindex.listar(periodico, seccion,date);
+		}
+		
+		if (! listaArticulos.isEmpty()){
+			listadoCompleto.add(new ListadoIndex(section.getName(), listaArticulos));			
+		}
+		
+		Newspaper n = daonewspaper.getNewspaper(periodico);
+		String logo = n.getLogo();
+		String name = n.getName();
+
+		
+		List<Section> sectionList = daosection.listar();
+		List<Newspaper> newspapers = daonewspaper.listar();
+
+			
+		ModelAndView mv = new ModelAndView("noticias");
+		mv.addObject("name",name);
+		mv.addObject("logo",logo);
+		mv.addObject("sectionList",sectionList);
+		mv.addObject("newspapers",newspapers);	
+		mv.addObject("listadoCompleto",listadoCompleto);
+
+		return mv;
+
+		}		
+	
+	@RequestMapping(value = {"logout"})
+	public ModelAndView logout(HttpSession sesion, HttpServletResponse rs){
+		
+		sesion.invalidate();
+		
+		try {
+			rs.sendRedirect("noticias")	;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

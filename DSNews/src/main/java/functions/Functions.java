@@ -1,14 +1,15 @@
 package functions;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import modelos.User;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class Functions 
 {
+	
+	public static final DateFormat DATE_PARSER =
+             new SimpleDateFormat("yyyy-MM-dd");
+
+	
 	public static String AcortarString(String texto, int size){
 		String shortDescription = "", finalDescription = texto;
 			
@@ -18,11 +19,5 @@ public class Functions
 		
 		return finalDescription;
 	}	
-	
-	public static void estoyLogueado(HttpSession sesion,HttpServletResponse rs) throws IOException{
-		User user = (User)sesion.getAttribute("user");		
-		if (user==null){
-			rs.sendRedirect("formLogin");
-		}
-	}
+
 }

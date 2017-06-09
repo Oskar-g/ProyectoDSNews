@@ -94,7 +94,7 @@ public class DAONewspaperImpl implements DAONewspaper{
 
 	/*
 	 *----------------------------------------------------------
-	 * LIST		(Métodos CRUD) 
+	 * CREATE		(Métodos CRUD) 
 	 * ---------------------------------------------------------
 	 */
 	

@@ -15,13 +15,14 @@
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
 	
 	</head>
+	
 	<body class="left-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
 				<div id="header-wrapper">
 					<div id="header">
-						
+						<a href="logout">Log Out</a>
 					</div>
 				</div>
 
@@ -42,7 +43,7 @@
 									<input type="radio" name="filter" value="title" checked> <spring:message code="titular" />
 									<input type="radio" name="filter" value="content"> <spring:message code="contenido" /> 
 									<input type="radio" name="filter" value="guid"> <spring:message code="id" />  
-									<input type="text" name="keyword"/>
+									<input type="text" name="keyword" required/>
 									
 									<footer>
 										<input type="submit"/>
@@ -92,7 +93,7 @@
 											<td><c:out value="${article.title}"/></td>
 											<td><c:out value="${article.pubDate}"/></td>
 											<td><a href="formEditar?guid=${article.guid}"><button><spring:message code="modificar" /></button></a>
-											<a href="borrar?guid=${article.guid}"><button><spring:message code="borrar" /></button></a></td>				
+											<a href="borrar?guid=${article.guid}"><button><spring:message code="borrar" /></td>				
 											</tr>
 
 											</c:forEach>
@@ -103,9 +104,9 @@
 											<header>
 												<h3></h3>
 											</header>
-											<p><a href="formCrear"><button><spring:message code="crear_noticia" /></button></a></p>
-											<p><a href="formAddRSS"><button><spring:message code="anadir_RSS" /></button></a></p>
-											
+											<p><a href="formCrear"><button><spring:message code="crear_noticia" /></button></a>
+											<a href="formAddRSS"><button><spring:message code="anadir_RSS" /></button></a>
+											<a href="paginaAdmin"><button><spring:message code="listar" /></button></a></p>
 										</section>
 										
 									</article>
