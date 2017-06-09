@@ -176,5 +176,15 @@ public class DAOArticleImpl implements DAOArticle {
 		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticleUser());
 		return lista;
 	}
+
+	public List<Article> listarRss(int section) {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<Article> lista;
+				
+		String sql = "SELECT * FROM "+mainTable+" where section_id = ? ORDER BY UNIX_TIMESTAMP(pub_date) DESC;";
+		
+		lista = jdbc.query(sql,new Object[]{section},new RowMapperArticleSuperUser());
+		return lista;
+	}
 	
 }

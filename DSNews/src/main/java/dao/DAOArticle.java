@@ -14,6 +14,7 @@ public interface DAOArticle {
 	public boolean delete(int guid);
 	public List<Article> buscar(String filter, String keyword);
 	public List<Article> buscar(String filter, String keyword,int userId);
+	public List<Article> listarRss(int section);
 
 
 }
