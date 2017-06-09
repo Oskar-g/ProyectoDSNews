@@ -91,7 +91,8 @@ public class DSNewsControllerRSS {
 					String title = entrada.getTitle();
 					String description = entrada.getDescription().getValue();
 					Date pubDate= entrada.getPublishedDate();
-					int numEntry = size--;
+					int numEntry = size;
+					size--;
 				
 				try{
 					cover = entrada.getEnclosures().get(0).getUrl();
