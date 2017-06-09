@@ -13,6 +13,7 @@
 		<meta name="keywords" content="deSoft, noticias, periódico digital, prensa">
 		<link rel="shortcut icon" type="image/x-icon" href="recursos/images/logo.ico" />
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
+		<link rel="stylesheet" href="recursos/assets/css/dsnews.css" />
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -51,20 +52,11 @@
 
 							</div>-->
 
-							<div class="8u 12u(mobile) important(mobile)">
+							<div class="12 12u(mobile) important(mobile)">
 								<div class="logos">
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
+									<c:forEach items="${newspapers}" var="newspaper">
+										<a href="noticias?periodico=${newspaper.getId()}"><img src="${newspaper.getLogo()}" alt="${newspaper.getName()}" class="portada"></a>
+									</c:forEach>
 								
 								</div>
 							</div>
