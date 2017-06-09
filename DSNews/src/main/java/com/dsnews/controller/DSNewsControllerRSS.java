@@ -123,21 +123,13 @@ public class DSNewsControllerRSS {
 		HttpServletResponse rs,
 		@RequestParam(value="link")String link,
 		@RequestParam(value="section_id")int sectionId,
-		@RequestParam(value="newspaper")String newspaper){
+		@RequestParam(value="newspaper")int newspaperid){
 		
 		ModelAndView mv = null;
 		Rss r = new Rss();
 		r.setLink(link);
 		r.setSectionId(sectionId);
-		
-//		Para crear un rss con un periodico que aun no existe.
-//		Hay que hacer el método que compruebe si el periodico existe o no...
-//		si no existe, crear un nuevo periodico en su tabla correspondiente
-//		obtener el id de ese periodico nuevo.
-//		y ahora crear el rss con el id obtenido y los valores de los request.
-//		exista o no, se necesita el id del periodico para crear el rss...
-//		como todo en esta vida para probar funcionalidad se puede trampear estableciendo aqui
-//		un id fijo
+		r.setNewspaperId(newspaperid);
 		
 		boolean crear = daor.create(r);
 		
