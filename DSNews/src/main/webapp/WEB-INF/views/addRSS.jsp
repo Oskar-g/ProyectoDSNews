@@ -20,6 +20,7 @@
 
 			<!-- Header -->
 				<div id="header-wrapper">
+					<a href="logout">Log Out</a>
 					<div id="header">
 					</div>
 				</div>

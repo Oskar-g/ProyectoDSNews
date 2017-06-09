@@ -21,6 +21,6 @@
 				<td colspan="2"><button>CREAR</button></td>
 			</tr>
 		</table>
-</form>
+	</form>
 </body>
 </html>

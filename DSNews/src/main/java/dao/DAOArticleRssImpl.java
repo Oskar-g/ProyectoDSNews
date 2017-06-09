@@ -66,6 +66,15 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
+		int n = 0;
+		String sql1 = "Select max(num_entry)+1 as n from articles_rss";
+		try{
+			n = jdbc.queryForInt(sql1);
+		}catch(DataAccessException dae){
+			dae.printStackTrace();
+		}
+		
+		System.out.println(n);
 		
 		String sql = 
 				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id,num_entry) "
@@ -76,14 +85,14 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 					+ "pub_date = ?, "
 					+ "cover = ?, "
 					+ "rss_id = ?, "
-					+ "num_entry = ? ;";
+					+ "num_entry = ?";
 		
 		try{
 			jdbc.update(sql, new Object[]{
 				//On Insert
-					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),art.getNumEntry(),
+					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),n,
 				//On Update	
-					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),art.getNumEntry()
+					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),n
 			});
 			result = true;
 		}catch(DataAccessException dae){

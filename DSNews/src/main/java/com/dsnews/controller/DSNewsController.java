@@ -113,7 +113,7 @@ public class DSNewsController {
 				ModelAndView mv = null;
 				User u = new User();
 				u.setName(name);
-				
+
 				boolean ok = daouser.login(u, password);
 				if(ok){
 					User us = daouser.getUser(name);
@@ -413,4 +413,18 @@ public class DSNewsController {
 		return mv;
 
 		}		
+	
+	@RequestMapping(value = {"logout"})
+	public ModelAndView logout(HttpSession sesion, HttpServletResponse rs){
+		
+		sesion.invalidate();
+		
+		try {
+			rs.sendRedirect("noticias")	;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

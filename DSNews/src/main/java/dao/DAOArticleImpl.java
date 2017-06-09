@@ -159,9 +159,6 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		keyword = "%" + keyword + "%";
 		
-		System.out.println(filter);
-		System.out.println(keyword);
-		
 		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? ;";
 		
 		lista = jdbc.query(sql,new Object[]{keyword},new RowMapperArticleUser());
@@ -173,10 +170,7 @@ public class DAOArticleImpl implements DAOArticle {
 		List<Article> lista;
 		
 		keyword = "%" + keyword + "%";
-		
-		System.out.println(filter);
-		System.out.println(keyword);
-		
+				
 		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? AND user_id = ?;";
 		
 		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticleUser());

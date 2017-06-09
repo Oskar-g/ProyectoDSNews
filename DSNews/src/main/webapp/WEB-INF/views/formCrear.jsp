@@ -25,7 +25,8 @@
 
 			<!-- Header -->
 				<div id="header-wrapper">
-					<div id="header">
+					<a href="logout">Log Out</a>
+				<div id="header">
 						
 
 			<!-- Main -->

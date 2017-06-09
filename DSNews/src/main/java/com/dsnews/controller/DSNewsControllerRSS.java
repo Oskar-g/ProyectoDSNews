@@ -81,8 +81,6 @@ public class DSNewsControllerRSS {
 	            SyndFeed feed = input.build(new XmlReader(feedUrl));
 	            
 	            
-	            int size = feed.getEntries().size() + daoarss.listar().size();
-            	System.out.println(size);	            
             	
             	for (SyndEntry entrada: feed.getEntries()) {
 	            		            	
@@ -91,9 +89,8 @@ public class DSNewsControllerRSS {
 					String title = entrada.getTitle();
 					String description = entrada.getDescription().getValue();
 					Date pubDate= entrada.getPublishedDate();
-					int numEntry = size;
-					size--;
-				
+					
+
 				try{
 					cover = entrada.getEnclosures().get(0).getUrl();
 				}catch (Exception e) {
@@ -103,7 +100,7 @@ public class DSNewsControllerRSS {
 				//String cover = entrada.getEnclosures().get(0).getUrl();
 				//System.out.println(entrada);
 				                	
-				ArticleRss arss = new ArticleRss(link,title,description,pubDate,cover,rss.getId(),numEntry);
+				ArticleRss arss = new ArticleRss(link,title,description,pubDate,cover,rss.getId(),0);
 				daoarss.create(arss);	
 				
 				System.out.println("Artículos RSS Actualizados!");
