@@ -19,3 +19,40 @@
 	padding-bottom: 3px;
 }
 
+#newsform td{
+	height: 40px;
+	}
+	
+#newsform select,#newsform input{
+height: 100%;
+	}	
+ #newsoft select{
+ 	padding-top:4px;
+ }
+	
+#newsform select *,#newsform input *{
+	padding: 0;
+	margin: 0;
+}
+
+
+#app_header {
+	float:right;
+	text-align: right;
+	width: 100%;
+	height: 150px;
+}
+
+#app_header {
+	color:!important pink;
+	text-align:!important  right;
+	z-index:!important  10000;
+	background-color:!important black ;
+	border-bottom:!important  2px solid grey;
+	outline: 3px solid green;
+}
+#app_header a{
+	color:white;
+	z-index: 100;
+	float: right;
+}

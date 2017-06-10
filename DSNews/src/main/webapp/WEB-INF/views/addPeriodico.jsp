@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -16,22 +17,12 @@
 	
 	</head>
 	
-	
 	<body class="left-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-						
-						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li class="current"><a href="index.html">Home</a></li>		
-									<li><spring:message code="saludo" /></li>
-									<li class="current"><a href="admin.html">Logout</a></li>
-								</ul>
-							</nav>
+			<jsp:include page="common/loged_head.jsp"/>
+				
 
 			<!-- Main -->
 				<div id="main-wrapper">
@@ -41,14 +32,14 @@
 
 								<!-- Sidebar -->
 									<section class="box">
-										<a href="#" class="image featured"><img src="recursos/images/periodico.jpg" alt="" /></a>
+										<a href="#" class="image featured"><img src="recursos/images/newspaper.jpg" alt="" /></a>
 										<header>
 											<h3><spring:message code="titulo.periodico" /></h3>
 										</header>
 
 								
-										<footer>
-											
+											<footer>
+											<button onclick="javascript:history.back()"><spring:message code="volver" /></button>
 										</footer>
 									</section>
 

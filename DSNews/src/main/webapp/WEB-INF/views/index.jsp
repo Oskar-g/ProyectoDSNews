@@ -62,9 +62,6 @@
 							</div>
 						</div>
 
-						<br>
-						<br>
-						<br>
 
 						<!--Footer-->
 						<div class="row">

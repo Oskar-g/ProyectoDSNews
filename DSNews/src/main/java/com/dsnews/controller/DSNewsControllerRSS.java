@@ -43,6 +43,7 @@ import modelos.Article;
 import modelos.ArticleRss;
 import modelos.Newspaper;
 import modelos.Rss;
+import modelos.User;
 import servicios.*;
 
 
@@ -70,15 +71,31 @@ public class DSNewsControllerRSS {
 	
 	//Envia al jsp para añadir un rss
 	@RequestMapping("formAddRSS")
-	public ModelAndView formAddRSS(){
+	public ModelAndView formAddRSS(HttpSession session, HttpServletResponse rs){
 		
-		List<Rss> lista = daor.listar();
-		List<Newspaper> listaPeriodicos = daon.listar();
+		ModelAndView mv = null;
 		
-		ModelAndView mv = new ModelAndView("addRSS");
+		User user = (User)session.getAttribute("user");
+
+		//Verificar que el usuario está conectado...
+		if(user==null){
+			
+			try {
+				rs.sendRedirect("formLogin");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
 		
-		mv.addObject("listaPeriodicos", listaPeriodicos);		
-		mv.addObject("lista", lista);		
+			List<Rss> lista = daor.listar();
+			List<Newspaper> listaPeriodicos = daon.listar();
+			
+			mv = new ModelAndView("addRSS");
+			
+			mv.addObject("listaPeriodicos", listaPeriodicos);		
+			mv.addObject("lista", lista);	
+		}
 		
 		return mv;
 	}
@@ -107,7 +124,6 @@ public class DSNewsControllerRSS {
 					String description = entrada.getDescription().getValue();
 					Date pubDate= entrada.getPublishedDate();
 					
-
 				try{
 					cover = entrada.getEnclosures().get(0).getUrl();
 				}catch (Exception e) {
@@ -153,7 +169,7 @@ public class DSNewsControllerRSS {
 		if(crear){
 			System.out.println("Creado el rss");
 			try {
-				rs.sendRedirect("paginaAdmin");
+				rs.sendRedirect("formAddRSS");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

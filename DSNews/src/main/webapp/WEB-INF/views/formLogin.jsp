@@ -17,10 +17,8 @@
 	<body class="left-sidebar">
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-						
+
+
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
@@ -34,10 +32,6 @@
 											<h3><spring:message code="titulo.paginaAdmin"/></h3>
 										</header>
 
-								
-										<footer>
-											
-										</footer>
 									</section>
 
 							</div>
@@ -55,7 +49,7 @@
 	<table>
 		<tr>
 			<td><label for="name"><spring:message code="usuario" /></label></td>
-			<td><input type="text" name ="name"></td>
+			<td><input type="text" name ="name" autofocus></td>
 		</tr>
 		<tr>
 			<td><label for="password"><spring:message code="password" /></label></td>
@@ -67,12 +61,7 @@
 	<button type="submit"><spring:message code="entrar" /></button>
 		</form>
 
-										<section>
-											<header>
-												<h3></h3>
-											</header>
-											
-										</section>
+									
 										
 									</article>
 

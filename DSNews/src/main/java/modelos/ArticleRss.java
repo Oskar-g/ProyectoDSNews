@@ -26,7 +26,7 @@ public class ArticleRss {
 	 * Constructores
 	 *------------------------------------------------ 
 	 */
-	public ArticleRss (){	}
+	public ArticleRss (){ }
 	
 	// ------------------------------------------------
 	
