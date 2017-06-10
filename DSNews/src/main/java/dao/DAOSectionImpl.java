@@ -1,34 +1,30 @@
 package dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import modelos.Section;
+import rowmappers.RowMapperSection;
 
 public class DAOSectionImpl implements DAOSection {
-
-
-	//Creamos el row mapper para nuestra base de datos
-	class RowMapperSection implements RowMapper<Section>{
-		public Section mapRow (ResultSet rs, int rowNum) throws SQLException{
-			Section section = new Section(
-					rs.getInt("id"),
-					rs.getString("name"),
-					rs.getString("description"));
-			return section;
-		}
-	}
 	
-	//CReamos el dataSource con sus getters y setters
+	/*
+	 * ----------------------------------------------------------
+	 * Atributos
+	 * ----------------------------------------------------------
+	 */
+	private String mainTable = "sections";
 	private DataSource dataSource;
 	
-	//Getters y setters
+	/*
+	 *----------------------------------------------------------
+	 * Getters & Settes
+	 * ----------------------------------------------------------
+	 */
 	public DataSource getDataSource() {
 		return dataSource;
 	}
@@ -36,17 +32,61 @@ public class DAOSectionImpl implements DAOSection {
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+
+	/*
+	 *----------------------------------------------------------
+	 * READ		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
 	
+	/*
+	 * Obtener Sección
+	 * 
+	 * (non-Javadoc)
+	 * @see dao.DAOSection#getSection(int)
+	 */
+	public Section getSection(int id) {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		String sql = "SELECT * "
+				+ "FROM "+this.mainTable+" "
+				+ "WHERE id = ?";
+			
+		try{
+			Section section = jdbc.queryForObject(sql, new Object[]{id}, new RowMapperSection());	
+			return section;
+			
+		}catch(DataAccessException dae){
+			dae.printStackTrace();
+		}
+		
+		return null;
+		
+	}//Fin de getSection
 	
-	//Metodos
-	//Listar
+	/*
+	 *----------------------------------------------------------
+	 * LIST		(Métodos CRUD) 
+	 * ---------------------------------------------------------
+	 */
+	
+	/*
+	 * Listar Secciones
+	 * 
+	 * (non-Javadoc)
+	 * @see dao.DAOSection#listar()
+	 */
 	public List<Section> listar() {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		List<Section> lista;
-		String sql = "select * from section order by id";
+
+		String sql = "SELECT * "
+				+ "FROM "+this.mainTable+" "
+				+ "ORDER BY id";		
 		
-		lista = jdbc.query(sql,new RowMapperSection());
-		return lista;
-	}
+			List<Section> lista = jdbc.query(sql,new RowMapperSection());
+			
+			return lista;
+		
+	}//Fin de List
 	
-}
+}//Fin de DAOSectionImpl

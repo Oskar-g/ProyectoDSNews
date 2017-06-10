@@ -7,10 +7,14 @@ import modelos.User;
 
 public interface DAOArticle {
 	public List<Article> listar(User u);
-	public List<Article> listarSuperUser(User u);
+	public List<Article> listarSuperUser();
 	public boolean create(Article a, User u);
 	public boolean update(Article a,User u);
 	public Article read(int guid);
 	public boolean delete(int guid);
+	public List<Article> buscar(String filter, String keyword);
+	public List<Article> buscar(String filter, String keyword,int userId);
+	public List<Article> listarRss(int section);
+
 
 }

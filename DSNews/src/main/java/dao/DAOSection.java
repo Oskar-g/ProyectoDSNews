@@ -5,5 +5,31 @@ import java.util.List;
 import modelos.Section;
 
 public interface DAOSection {
-	List<Section> listar();
-}
+	
+	/**
+	 * Obtener Sección
+	 * 
+	 * Obtener los datos de una Section específica buscando su
+	 * id por la base de datos
+	 * 
+	 * @param id	Id a buscar 
+	 * 
+	 * @return		Objeto Section con los datos del registro 
+	 * 				coincidente
+	 */
+	public Section getSection(int id);
+	
+	// ------------------------------------------------------------------
+	
+	/**
+	 * Listar Secciones
+	 * 
+	 * Obtener los datos de todas las secciones almacenadas
+	 * en la base de datos
+	 *  
+	 * @return		Lista de Objetos Section con los datos 
+	 * 				almacenados en la base de datos
+	 */
+	public List<Section> listar();
+	
+}//Fin de DAOSection

@@ -1,17 +1,23 @@
 package functions;
 
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
-import com.rometools.rome.feed.synd.SyndEntry;
-import com.rometools.rome.feed.synd.SyndFeed;
-import com.rometools.rome.io.SyndFeedInput;
-import com.rometools.rome.io.XmlReader;
-
-import modelos.*;
-import dao.*;
 public class Functions 
 {
-	 
+	
+	public static final DateFormat DATE_PARSER =
+             new SimpleDateFormat("yyyy-MM-dd");
+
+	
+	public static String AcortarString(String texto, int size){
+		String shortDescription = "", finalDescription = texto;
+			
+		if (texto.length() > 100) { finalDescription = shortDescription = texto.substring(0, size); }
+		if (shortDescription.length() == 100) { finalDescription += "..."; }
+		if (texto.length() == 0) { finalDescription = "No hay contenido actualmente";	}
+		
+		return finalDescription;
+	}	
+
 }

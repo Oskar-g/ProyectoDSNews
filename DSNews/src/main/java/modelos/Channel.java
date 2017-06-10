@@ -14,8 +14,6 @@ public class Channel {
 	private String titleImage;
 	private String urlImage;
 	private String linkImage;
-	private String widthImage;
-	private String heightImage;
 
 	//Constructores
 	//Constructor Vacio
@@ -25,7 +23,7 @@ public class Channel {
 	//Constructores con parámetros
 	public Channel(int channelId, String link, String title, Date lastBuildDate, 
 			String language, String description,String copyright, String titleImage, 
-			String urlImage, String linkImage, String widthImage,String heightImage) {
+			String urlImage, String linkImage) {
 		super();
 		this.channelId = channelId;
 		this.link = link;
@@ -37,8 +35,6 @@ public class Channel {
 		this.titleImage = titleImage;
 		this.urlImage = urlImage;
 		this.linkImage = linkImage;
-		this.widthImage = widthImage;
-		this.heightImage = heightImage;
 	}
 	//
 	//Metodos
@@ -102,17 +98,5 @@ public class Channel {
 	}
 	public void setLinkImage(String linkImage) {
 		this.linkImage = linkImage;
-	}
-	public String getWidthImage() {
-		return widthImage;
-	}
-	public void setWidthImage(String widthImage) {
-		this.widthImage = widthImage;
-	}
-	public String getHeightImage() {
-		return heightImage;
-	}
-	public void setHeightImage(String heightImage) {
-		this.heightImage = heightImage;
 	}
 }

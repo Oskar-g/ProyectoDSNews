@@ -25,7 +25,8 @@
 
 			<!-- Header -->
 				<div id="header-wrapper">
-					<div id="header">
+					<a href="logout">Log Out</a>
+				<div id="header">
 						
 
 			<!-- Main -->
@@ -57,8 +58,7 @@
 										<header>
 										<h2><spring:message code="crear_noticia" /></h2>
 										</header>
-
-										<form action="crear">
+<form action="crear">
 <table>
 	<tr>
 		<td><label for="link"><spring:message code="link" /></label></td>

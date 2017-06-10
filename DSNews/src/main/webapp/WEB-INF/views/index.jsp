@@ -1,229 +1,72 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title><spring:message code="titulo.index" /></title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="author" content="Equipo DopeTrope">
-		<meta name="description" content="DeSoft ha creado un periódico digital con noticias desde todos los puntos de vista totalmente actualizadas">
-		<meta name="keywords" content="deSoft, noticias, periódico digital, prensa">
+		<meta name="description" content="DeSoft ha creado un periÃ³dico digital con noticias desde todos los puntos de vista totalmente actualizadas">
+		<meta name="keywords" content="deSoft, noticias, periÃ³dico digital, prensa">
 		<link rel="shortcut icon" type="image/x-icon" href="recursos/images/logo.ico" />
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
-	
+		<link rel="stylesheet" href="recursos/assets/css/dsnews.css" />
 	</head>
-	<body class="homepage">
+	<body class="left-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
 				<div id="header-wrapper">
 					<div id="header">
 						<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
-						
-							
+
+
 						<!-- Banner -->
 							<section id="banner">
 								<header>
-									<h2><spring:message code="bienvenido.index"/></h2>
-									<table>
-<tr>
-    <th><spring:message code="periodico"/></th>
-    <th><spring:message code="secciones"/></th> 
-    <th><spring:message code="fecha"/></th>
-    <th></th>
-  </tr>
-  
-<tr>
-<td>
-<form method="POST">
-<select name="periodicos">
-<option value="mundo">El Mundo</option>
-<option value="pais">El País</option>
-<option value="abc">ABC</option>
-<option value="tribuna">La Tribuna</option>
-<option value="razon">La Razón</option>
-<option value="as">AS</option>
-<option value="marca">Marca</option>
-</select>
-</form>
-</td>
-
-<td>
-<form method="POST">
-<select name="secciones">
-<option value="nacional"><spring:message code="1"/></option>
-<option value="internacional"><spring:message code="2"/></option>
-<option value="economia"><spring:message code="3"/></option>
-<option value="ciencia"><spring:message code="4"/></option>
-<option value="tecnologia"><spring:message code="5"/></option>
-<option value="cultura"><spring:message code="6"/></option>
-<option value="deportes"><spring:message code="7"/></option>
-<option value="tv"><spring:message code="8"/></option>
-<option value="sociedad"><spring:message code="9"/></option>
-</select>
-</form>
-</td>
-
-<td>
-<form method="POST">
-  <input type="date" name="date">
-</form>
-</td>
-
-<td><button type="submit"><spring:message code="buscar"/></button></td>
-										</tr>
-									</table>
+									<h2>Bienvenido a noticias</h2>
+									<p>Haga click en su periodico favorito</p>
 								</header>
 							</section>
-
-						<!--CONSTRUIR NOTICIAS CON ESTO
-
-<table>
-	<tr>
-		<td>Visionado de noticias y demÃ¡s Contenido de noticias</td>
-	</tr>
-	<c:forEach items="${sectionList}" var="sectionList">
-		<tr>
-			<td><c:out value="${sectionList.name}"/></td>				
-		</tr>
-	</c:forEach>
-</table>
-
-						-->
-
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
 						<div class="row">
-							<div class="12u">
+							<!--<div class="4u 12u(mobile)">
 
-								<!-- Portfolio -->
-									<section>
-										<header class="major">
-											<h2><spring:message code="noticias"/></h2>
+								 Sidebar 
+									<section class="box">
+										<a href="#" class="image featured"><img src="recursos/images/login.png" alt="" /></a>
+										<header>
+											<h3><spring:message code="titulo.paginaAdmin"/></h3>
 										</header>
-										<div class="row">
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic02.jpg" alt="" /></a>
-													<header>
-														<h3>Ipsum feugiat et dolor</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic03.jpg" alt="" /></a>
-													<header>
-														<h3>Sed etiam lorem nulla</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic04.jpg" alt="" /></a>
-													<header>
-														<h3>Consequat et tempus</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-										</div>
-										<div class="row">
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic05.jpg" alt="" /></a>
-													<header>
-														<h3>Blandit sed adipiscing</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic07.jpg" alt="" /></a>
-													<header>
-														<h3>Dolore nisl feugiat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-											<div class="4u 12u(mobile)">
-												<section class="box">
-													<a href="#" class="image featured"><img src="recursos/images/pic06.jpg" alt="" /></a>
-													<header>
-														<h3>Etiam nisl consequat</h3>
-													</header>
-													<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-													<footer>
-														<a href="#" class="button alt"><spring:message code="leermas"/></a>
-													</footer>
-												</section>
-											</div>
-										</div>
+
+								
+										<footer>
+											
+										</footer>
 									</section>
 
+							</div>-->
+
+							<div class="12 12u(mobile) important(mobile)">
+								<div class="logos">
+									<c:forEach items="${newspapers}" var="newspaper">
+										<a href="noticias?periodico=${newspaper.getId()}"><img src="${newspaper.getLogo()}" alt="${newspaper.getName()}" class="portada"></a>
+									</c:forEach>
+								
+								</div>
 							</div>
 						</div>
+
 						<br>
 						<br>
 						<br>
+
+						<!--Footer-->
 						<div class="row">
 							<div class="4u 12u(mobile)">
 								<section>
@@ -269,7 +112,7 @@
 											<p>
 												Plaza de Arcipreste, 3  <br />
 												13700 Tomelloso<br />
-												Ciudad Real, España
+												Ciudad Real, EspaÃ±a
 											</p>
 										</li>
 										<li>
@@ -278,7 +121,7 @@
 										</li>
 										<li>
 											<h3><spring:message code="telefono"/></h3>
-											<p>926 50 11 60 (4 líneas)</p>
+											<p>926 50 11 60 (4 lÃ­neas)</p>
 										</li>
 									</ul>
 								</section>
@@ -300,12 +143,17 @@
 				</div>
 
 		</div>
-	<!-- Scripts -->
+					</div>
+				</div>
+
+		
+		<!-- Scripts -->
 			<script src="recursos/assets/js/jquery.min.js"></script>
 			<script src="recursos/assets/js/jquery.dropotron.min.js"></script>
 			<script src="recursos/assets/js/skel.min.js"></script>
 			<script src="recursos/assets/js/skel-viewport.min.js"></script>
 			<script src="recursos/assets/js/util.js"></script>
 			<script src="recursos/assets/js/main.js"></script>
+
 	</body>
 </html>

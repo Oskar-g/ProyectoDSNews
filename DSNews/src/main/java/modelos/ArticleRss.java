@@ -3,92 +3,102 @@ package modelos;
 import java.util.Date;
 
 public class ArticleRss {
-	//Datos o propiedades
-	private int id;
+	/*
+	 * -----------------------------------------------
+	 * Attributos
+	 *------------------------------------------------ 
+	 */
 	private String link;
 	private String title;
 	private String description;
 	private Date pubDate;
-	private int idRss;
 	private String cover;
-	private String categoria;
+	private int rssId;
+	private int numEntry;
 	
-	//Constructores
-	//Constructor vacio
+	/*------------------------------------------------
+	 * Objetos Relacionados
+	 */
+	private Rss rss ;
+
+	/*
+	 * ------------------------------------------------
+	 * Constructores
+	 *------------------------------------------------ 
+	 */
 	public ArticleRss (){	}
 	
+	// ------------------------------------------------
 	
-	
-	public ArticleRss(String link, String title, String description, Date pubDate, String cover, String categoria) {
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover) {
 		super();
 		this.link = link;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
 		this.cover = cover;
-		this.categoria = categoria;
 	}
-
-	public ArticleRss(String link, String title, String description, Date pubDate, int idRss,String cover) {
+	
+	// ------------------------------------------------
+	
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover, int rssId,int numEntry) {
 		super();
 		this.link = link;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
-		this.idRss = idRss;	
-		this.cover = cover;	
+		this.cover = cover;
+		this.rssId = rssId;
+		this.numEntry= numEntry;
 	}
+	
+	// ------------------------------------------------
 
-	public ArticleRss(int id, String link, String title, String description, Date pubDate, int idRss,String cover) {
+	public ArticleRss(String link, String title, String description, Date pubDate, String cover, Rss rss) {
 		super();
 		this.link = link;
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.pubDate = pubDate;
-		this.idRss = idRss;	
-		this.cover = cover;	
+		this.cover = cover;
+		this.rss = rss;
 	}
 
-
-	//Metodos
-	//Getters y setters
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	/*
+	 * ------------------------------------------------
+	 * Getters & Setters
+	 *------------------------------------------------ 
+	 */
 	public String getLink() {
 		return link;
 	}
+
 	public void setLink(String link) {
 		this.link = link;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Date getPubDate() {
 		return pubDate;
 	}
+
 	public void setPubDate(Date pubDate) {
 		this.pubDate = pubDate;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getIdRss() {
-		return idRss;
-	}
-	public void setIdRss(int idRss) {
-		this.idRss = idRss;
 	}
 
 	public String getCover() {
@@ -99,13 +109,27 @@ public class ArticleRss {
 		this.cover = cover;
 	}
 
-	public String getCategoria() {
-		return categoria;
+	public int getRssId() {
+		return rssId;
 	}
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
+	public void setRssId(int rssId) {
+		this.rssId = rssId;
 	}
 
-	
+	public Rss getRss() {
+		return rss;
+	}
+
+	public void setRss(Rss rss) {
+		this.rss = rss;
+	}
+	public int getNumEntry(){
+		return numEntry;
+	}
+	public void setNumEntry(int numEntry){
+		this.numEntry= numEntry;
+	}
+
+
 }

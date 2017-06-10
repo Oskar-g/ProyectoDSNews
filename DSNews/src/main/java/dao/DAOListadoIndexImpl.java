@@ -1,105 +1,91 @@
 package dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import modelos.ArticleRss;
-import modelos.ListadoIndex;
+import rowmappers.RowMapperListadoIndex;;
 
 public class DAOListadoIndexImpl implements DAOListadoIndex{
 	
-	//Mapeo de la base de datos
-		class RowMapperListadoIndex implements RowMapper<ArticleRss>{
-			public ArticleRss mapRow(ResultSet rs, int numRow) throws SQLException{
-				ArticleRss ArtRss = new ArticleRss(
-					rs.getString("link"),
-					rs.getString("title"),
-					rs.getString("description"),
-					rs.getDate("pub_date"),
-					rs.getString("cover"),
-					rs.getString("name")
-					);
-				return ArtRss;
-			}	
-		}
-			
-	//DATASOURCE
-		private DataSource dataSource;
+	/*
+	 * ----------------------------------------------------------
+	 * Atributos
+	 * ----------------------------------------------------------
+	 */
+	private String mainTable = "articles_rss";
+	private String joinTable1 = "rss_feeds";
+	private DataSource dataSource;
 		
-		public DataSource getDataSource() {
-			return dataSource;
-		}
-		
-		public void setDataSource(DataSource dataSource) {
-			this.dataSource = dataSource;
-		}
-		
-		
-	//Metodos
+	/*
+	 *----------------------------------------------------------
+	 * Getters & Settes
+	 * ----------------------------------------------------------
+	 */
+	public DataSource getDataSource() {
+		return dataSource;
+	}
 
-		public ListadoIndex create(String periodico, int categoria) {
-			ListadoIndex lista = null;
-			List<ArticleRss> listadoArticulos = this.listar(periodico, categoria);
-			if (! listadoArticulos.isEmpty()) {
-				lista = new ListadoIndex(listadoArticulos.get(0).getCategoria(), listadoArticulos); 
-			}
-			
-			return lista;
-		}
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
-		public ListadoIndex create(String periodico, int categoria, Date pubDate) {
-			ListadoIndex lista = null;
-			List<ArticleRss> listadoArticulos = this.listar(periodico, categoria,pubDate);
-			if (! listadoArticulos.isEmpty()) {
-				lista = new ListadoIndex(listadoArticulos.get(0).getCategoria(), listadoArticulos); 
-			}
-			return lista;
-		}
+	/*
+	 *----------------------------------------------------------
+	 * LIST		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
 		
+	/*
+	 * Listar ArticlesRss por periodico y categoría
+	 * 
+	 * (non-Javadoc)
+	 * @see dao.DAOListadoIndex#listar(java.lang.String, int)
+	 */
+	public List<ArticleRss> listar(int periodico, int section) {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<ArticleRss> lista;
+		
+		String sql = 
+				"SELECT pub_date, cover, title, description, "+this.mainTable+".link "
+				+ "FROM "+this.mainTable+" "
+				+"Inner JOIN "+this.joinTable1+" ON rss_id = "+this.joinTable1+".id "
+				+"WHERE newspaper_id = ? "
+				+"AND section_id = ? "
+				+"order by num_entry ASC";
+		
+		lista = jdbc.query(sql, new Object[]{periodico, section}, new RowMapperListadoIndex());
+		return lista;
+	}
 	
+	// ---------------------------------------------------------------------------------------------------
+
+	/*
+	 * Listar ArticlesRss por periodico,categoría y fecha
+	 * 
+	 * (non-Javadoc)
+	 * @see dao.DAOListadoIndex#listar(java.lang.String, int)
+	 */
+	public List<ArticleRss> listar(int periodico, int section, Date pubDate) {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<ArticleRss> lista;
 		
-		//Listar por periodico y categoria
-		public List<ArticleRss> listar(String periodico, int categoria) {
-			JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-			List<ArticleRss> lista;
-			
-			String sql = 
-					"select article_rss.pub_date, article_rss.cover, article_rss.title, article_rss.description, article_rss.link, section.name "
-					+"from article_rss "
-					+"inner join rss on article_rss.id_rss = rss.id "
-					+"inner join section on rss.section_id = section.id "
-					+"where rss.periodico = ? "
-					+"and section.id = ?;";
-			
-			lista = jdbc.query(sql, new Object[]{periodico, categoria}, new RowMapperListadoIndex());
-			return lista;
-		}
-		
-		//Listar por periodico , categoria y pubdate
-			public List<ArticleRss> listar(String periodico, int categoria, Date pubDate) {
-				JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-				List<ArticleRss> lista;
-				
-				String sql = 
-						"select article_rss.pub_date, article_rss.cover, article_rss.title, article_rss.description, article_rss.link, section.name "
-						+"from article_rss "
-						+"inner join rss on article_rss.id_rss = rss.id "
-						+"inner join section on rss.section_id = section.id "
-						+"where rss.periodico = ? "
-						+"and section.id = ? "
-						+"and article_rss.pub_date = ?;";
-				
-				lista = jdbc.query(sql, new Object[]{periodico, categoria}, new RowMapperListadoIndex());
-				return lista;
-			}
+		String sql = 
+				"SELECT pub_date, cover, title, description, "+this.mainTable+".link "
+				+ "FROM "+this.mainTable+" "
+				+"Inner JOIN "+this.joinTable1+" ON rss_id = "+this.joinTable1+".id "
+				+"WHERE newspaper_id = ? "
+				+"AND section_id = ? "
+				+"AND pub_date = ? "
+				+ "order by num_entry ASC";
 
 		
-		
+		lista = jdbc.query(sql, new Object[]{periodico, section,pubDate}, new RowMapperListadoIndex());
+		return lista;
+	}
+	
 }
