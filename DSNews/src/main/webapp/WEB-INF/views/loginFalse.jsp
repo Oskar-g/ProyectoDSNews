@@ -15,41 +15,26 @@
 	</head>
 
 	<body class="no-sidebar">
-		<div id="page-wrapper">
-
-			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-					<img src="images/pic01.png" alt="Foto de deSoft" class="imagen">
-
-						
-
-			<!-- Main -->
-				<div id="main-wrapper">
+	<div id="main-wrapper">
 					<div class="container">
-
 						<!-- Content -->
 							<article class="box post">
 								
 								<header>
 									<h2><spring:message code="cuerpo.loginFalse" /></h2>
-									
+									<script>window.setTimeout('window.location="paginaAdmin";',1000);</script>									
 								</header>
-					<script>window.setTimeout('window.location="formLogin";',3000);</script>
-								
-
-		</div>
-						
-					
-				</div>
-
-					</div>
 							</article>
 					</div>
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div id="header">
+					<img src="images/pic01.png" alt="Foto de deSoft" class="imagen">
+		
 				</div>
-					</div>
-				</div>
-		</div>
+			</div>
+		</div>		
+
 
 		<!-- Scripts -->
 			<script src="recursos/assets/js/jquery.min.js"></script>

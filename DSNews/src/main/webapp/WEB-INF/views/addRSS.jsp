@@ -41,7 +41,7 @@
 
 								
 										<footer>
-											
+											<button onclick="javascript:history.back()"><spring:message code="volver" /></button>
 										</footer>
 									</section>
 
