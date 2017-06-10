@@ -1,7 +1,7 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
-
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -121,11 +121,10 @@ public class DSNewsController {
 		
 		int num = daoarticle.listarSuperUser().size() + 1;
 		Date pubDate = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat df = functions.Functions.DATE_PARSER;
 		String pubdate = df.format(pubDate);
 		pubdate.trim();
 		String link = "http://localhost:8080/DSNews/noticiasDSNews/"+pubdate+"/"+sectionId+"/"+num;
-		System.out.println(link);
 		
         int channelid = 1;
         int userid;
