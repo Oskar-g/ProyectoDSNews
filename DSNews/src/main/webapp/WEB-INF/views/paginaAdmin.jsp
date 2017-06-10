@@ -20,11 +20,8 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-						<a href="logout">Log Out</a>
-					</div>
-				</div>
+			<jsp:include page="common/loged_head.jsp"/>
+				
 
 			<!-- Main -->
 				<div id="main-wrapper">
@@ -59,13 +56,6 @@
 
 								<!-- Content -->
 									<article class="box post">
-									
-										<header>
-										<h2><spring:message code="saludo"
-       										arguments="${user.name};${user.role};${user.id}"
-       										htmlEscape="false"
-       										argumentSeparator=";"/></h2>
-										</header>
 
 										<table>
 
@@ -74,26 +64,34 @@
        														arguments="${user.name}"
        														htmlEscape="false"/></td>
 											</tr>
-
+				
 											<tr>
-											<td><spring:message code="id_usuario" /></td>
+											<c:if test="${role}">
+												<td><spring:message code="usuario" /></td>
+											</c:if>
+											
 											<td><spring:message code="id_articulo" /></td>
 											<td><spring:message code="id_seccion" /></td>
 											<td><spring:message code="titular" /></td>
 											<td><spring:message code="fecha_publicacion" /></td>
-											<td>&nbsp</td>
+											<td colspan="2"><spring:message code="operaciones" /></td>
 											</tr>
 
 											<c:forEach items="${lista}" var="article">
 
 											<tr>
-											<td><c:out value="${article.userId}"/></td>
+											
+											<c:if test="${role}">
+												<td><c:out value="${article.getUser().getName()}"/></td>
+											</c:if>
+											
 											<td><c:out value="${article.guid}"/></td>
-											<td><c:out value="${article.sectionId}"/></td>
+											<td><c:out value="${article.getSection().getName()}"/></td>
 											<td><c:out value="${article.title}"/></td>
 											<td><c:out value="${article.pubDate}"/></td>
-											<td><a href="formEditar?guid=${article.guid}"><button><spring:message code="modificar" /></button></a>
-											<a href="borrar?guid=${article.guid}"><button><spring:message code="borrar" /></td>				
+											<td>
+											<a href="formEditar?guid=${article.guid}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></td>				
 											</tr>
 
 											</c:forEach>

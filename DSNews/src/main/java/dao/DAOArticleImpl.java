@@ -11,92 +11,87 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import modelos.Article;
+import modelos.Section;
 import modelos.User;
 
 public class DAOArticleImpl implements DAOArticle {
 
+	
+	/*
+	 * ----------------------------------------------------------
+	 * Atributos
+	 * ----------------------------------------------------------
+	 */
 	String mainTable = "articles_desoft";
+	private DataSource dataSource;
 	
-	//Mapeo de la base de datos
-	class RowMapperArticleUser implements RowMapper<Article>{
-		public Article mapRow(ResultSet rs, int numRow) throws SQLException{
-			Article a = new Article(
-					rs.getInt("guid"),
-					rs.getString("title"),
-					rs.getDate("pub_date"),
-					rs.getInt("section_id"),
-					rs.getInt("user_id")
-					);
-			return a;
-		}	
+	/*
+	 *----------------------------------------------------------
+	 * Getters & Settes
+	 * ----------------------------------------------------------
+	 */	
+	public DataSource getDataSource() {
+		return dataSource;
 	}
-	class RowMapperArticleSuperUser implements RowMapper<Article>{
-		public Article mapRow(ResultSet rs, int numRow) throws SQLException{
-			Article a = new Article(
-					rs.getInt("guid"),
-					rs.getString("link"),
-					rs.getString("title"),
-					rs.getString("content"),
-					rs.getDate("pub_date"),
-					rs.getString("description"),
-					rs.getString("keywords"),
-					rs.getInt("user_id"),
-					rs.getInt("channel_id"),
-					rs.getInt("section_id")
-					);
-			return a;
-		}	
-	}
-	
-	//DATASOURCE
-		private DataSource dataSource;
-		
-		public DataSource getDataSource() {
-			return dataSource;
-		}
 
-		public void setDataSource(DataSource dataSource) {
-			this.dataSource = dataSource;
-		}
-	
-	//Metodos
-	//Listar para el user normal
-	public List<Article> listar(User u) {
-		
-		//Añadir where adicional que dependa de que exista o no (null) la request de filter+keyword [where ?=?]
-		
-		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		List<Article> lista;
-		String sql = "select guid,section_id,title,pub_date,user_id from "+mainTable+" where user_id = ? order by pub_date";
-		
-		lista = jdbc.query(sql, new Object[]{u.getId()},new RowMapperArticleUser());
-		return lista;
-	}
-	
-	//Listar para el superuser
-	public List<Article> listarSuperUser() {
-		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		List<Article> lista;
-		String sql = "select * from "+mainTable+" order by user_id";
-		
-		lista = jdbc.query(sql,new RowMapperArticleSuperUser());
-		return lista;
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 	
 	
-	//CRUD
-	//Cear una nueva noticia
-	public boolean create(Article a, User u) {
+	class RowMapperArticlesUser implements RowMapper<Article>{
+		public Article mapRow(ResultSet rs, int numRow) throws SQLException{
+			
+			Section s = new Section();
+			s.setName(rs.getString("sections.name"));
+
+			User us = new User();
+			us.setName(rs.getString("users.name"));
+			
+			Article a = new Article();
+			a.setGuid(rs.getInt("guid"));
+			a.setTitle(rs.getString("title"));
+			a.setPubDate(rs.getDate("pub_date"));
+			a.setUser(us);
+			a.setSection(s);
+				
+			return a;
+		}	
+	}
+
+	class RowMapperArticles implements RowMapper<Article>{
+		public Article mapRow(ResultSet rs, int numRow) throws SQLException{			
+			Article a = new Article();
+				a.setGuid(rs.getInt("guid"));
+				a.setLink(rs.getString("link"));
+				a.setTitle(rs.getString("title"));
+				a.setContent(rs.getString("content"));
+				a.setPubDate(rs.getDate("pub_date"));
+				a.setDescription(rs.getString("description"));
+				a.setKeywords(rs.getString("keywords"));
+				a.setUserId(rs.getInt("user_id"));
+				a.setChannelId(rs.getInt("channel_id"));
+				a.setSectionId(rs.getInt("section_id"));
+			return a;
+		}	
+	}
+	
+	/*
+	 *----------------------------------------------------------
+	 * CREATE		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
+	public boolean create(Article a) {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
 		
 		String sql = "insert into "+mainTable+"(link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
-				+ "values (?,?,?,?,?,?,?,?,?)";
+				+ "values (?,?,?,now(),?,?,?,?,?)";
 		
 		try{
 			jdbc.update(sql, new Object[]{a.getLink(),a.getTitle(),a.getContent(),
-					a.getPubDate(),a.getDescription(),a.getKeywords(),u.getId(),
+					a.getDescription(),a.getKeywords(),a.getUserId(),
 					a.getChannelId(),a.getSectionId()});
 			result = true;
 		}catch(DataAccessException dae){
@@ -104,26 +99,43 @@ public class DAOArticleImpl implements DAOArticle {
 		}
 		return result;
 	}
-	//Editar nueva noticia
-	public boolean update (Article a,User u){
+	
+	/*
+	 *----------------------------------------------------------
+	 * READ		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
+	public Article read(int guid){
+		String sql= "select * from "+mainTable+" where guid = ?";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		Article a = jdbc.queryForObject(sql, new Object[]{guid}, new RowMapperArticles());
+		
+		return a;
+	}
+	
+	/*
+	 *----------------------------------------------------------
+	 * UPDATE		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
+	public boolean update (Article a){
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
 		boolean result = false;
 		String sql = "update "+mainTable+" set "
 				+"link = ?,"
 				+"title = ?,"
 				+"content = ?,"
-				+"pub_date = ?,"
+				+"pub_date = now(),"
 				+"description = ?,"
 				+"keywords = ?,"
-				+"user_id = ?,"
-				+"channel_id = ?,"
 				+"section_id = ? "
 				+"where guid = ?";
 		
 		try{
 			jdbc.update(sql,new Object[]{a.getLink(),a.getTitle(),a.getContent(),
-					a.getPubDate(),a.getDescription(),a.getKeywords(),
-					u.getId(),a.getChannelId(),a.getSectionId(),a.getGuid()});
+					a.getDescription(),a.getKeywords(),
+					a.getSectionId(),a.getGuid()});
 			result = true;
 		}catch (DataAccessException dae) {
 			dae.printStackTrace();
@@ -131,16 +143,13 @@ public class DAOArticleImpl implements DAOArticle {
 		return result;
 	}
 	
-	//Read article
-	public Article read(int guid){
-		String sql= "select * from "+mainTable+" where guid = ?";
-		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
-		
-		Article a = jdbc.queryForObject(sql, new Object[]{guid}, new RowMapperArticleSuperUser());
-		
-		return a;
-	}
-	//Borrar article
+
+
+	/*
+	 *----------------------------------------------------------
+	 * DELETE		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
 	public boolean delete(int guid){
 		String sql = "delete from "+mainTable+" where guid = ?";
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
@@ -152,19 +161,60 @@ public class DAOArticleImpl implements DAOArticle {
 			return true;
 		}
 	}
-	//Buscar por palabra clave y filtro
+
+	/*
+	 *----------------------------------------------------------
+	 * LIST		(Métodos CRUD) 
+	 * ----------------------------------------------------------
+	 */
+	public List<Article> listarSuperUser() {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<Article> lista;
+		String sql = "SELECT guid, sections.name, title, pub_date, users.name "
+				+ "FROM sections "
+				+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
+				+ "INNER JOIN users ON user_id = users.id "
+				+ "order by pub_date;";
+		
+		lista = jdbc.query(sql,new RowMapperArticlesUser());
+		return lista;
+	}
+	
+	public List<Article> listar(User u) {
+		
+		//Añadir where adicional que dependa de que exista o no (null) la request de filter+keyword [where ?=?]
+		
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		List<Article> lista;
+		String sql = "SELECT guid, sections.name, title, pub_date, users.name "
+					+ "FROM sections "
+					+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
+					+ "INNER JOIN users ON user_id = users.id "
+					+ "WHERE user_id = ? "
+					+ "ORDER BY pub_date;";
+		
+		lista = jdbc.query(sql, new Object[]{u.getId()},new RowMapperArticlesUser());
+		return lista;
+	}
+	
 	public List<Article> buscar(String filter, String keyword) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
 		
 		keyword = "%" + keyword + "%";
 		
-		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? ;";
+		String sql = "SELECT guid, sections.name, title, pub_date, users.name "
+				+ "FROM sections "
+				+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
+				+ "INNER JOIN users ON user_id = users.id "
+				+ "WHERE "+filter+" like ? "
+				+ "ORDER BY pub_date;";
 		
-		lista = jdbc.query(sql,new Object[]{keyword},new RowMapperArticleUser());
+		lista = jdbc.query(sql,new Object[]{keyword},new RowMapperArticlesUser());
 		return lista;
 	}
-	//Buscar por palabra clave y filtro y user
+
+
 	public List<Article> buscar(String filter, String keyword, int userId) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
@@ -173,17 +223,19 @@ public class DAOArticleImpl implements DAOArticle {
 				
 		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? AND user_id = ?;";
 		
-		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticleUser());
+		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticles());
 		return lista;
 	}
 
+	
+	
 	public List<Article> listarRss(int section) {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<Article> lista;
 				
 		String sql = "SELECT * FROM "+mainTable+" where section_id = ? ORDER BY UNIX_TIMESTAMP(pub_date) DESC;";
 		
-		lista = jdbc.query(sql,new Object[]{section},new RowMapperArticleSuperUser());
+		lista = jdbc.query(sql,new Object[]{section},new RowMapperArticles());
 		return lista;
 	}
 	

@@ -10,8 +10,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import dao.DAOArticleImpl.RowMapperArticleUser;
-import modelos.Article;
 import modelos.ArticleRss;
 
 
@@ -76,11 +74,11 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 				
 		String sql = 
 				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id,num_entry) "
-				+ "VALUES (?,?,?,?,?,?,?) "
+				+ "VALUES (?,?,?,now(),?,?,?) "
 				+ "ON DUPLICATE KEY UPDATE "
 					+ "title = ?, "
 					+ "description = ?, "
-					+ "pub_date = ?, "
+					+ "pub_date = now(), "
 					+ "cover = ?, "
 					+ "rss_id = ?, "
 					+ "num_entry = ?";
@@ -88,9 +86,9 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		try{
 			jdbc.update(sql, new Object[]{
 				//On Insert
-					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),n,
+					art.getLink(),art.getTitle(),art.getDescription(),art.getCover(),art.getRssId(),n,
 				//On Update	
-					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),n
+					art.getTitle(),art.getDescription(),art.getCover(),art.getRssId(),n
 			});
 			result = true;
 		}catch(DataAccessException dae){
@@ -106,14 +104,13 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		String sql = "update article set "
 				+"title = ?,"
 				+"description = ?,"
-				+"pub_date = ?,"
+				+"pub_date = now(),"
 				+"cover = ?,"
 				
 				+"where link = ?";
 		
 		try{
-			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),
-					art.getPubDate(),art.getLink()});
+			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),art.getLink()});
 			result = true;
 		}catch (DataAccessException dae) {
 			dae.printStackTrace();

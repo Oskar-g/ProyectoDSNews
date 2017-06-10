@@ -1,7 +1,7 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
-
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,281 +19,279 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import dao.DAOArticle;
-import dao.DAOArticleRss;
-import dao.DAOArticleRssImpl;
-import dao.DAOListadoIndex;
 import dao.DAONewspaper;
-import dao.DAONewspaperImpl;
-import dao.DAORss;
-import dao.DAORssImpl;
 import dao.DAOSection;
-import dao.DAOUser;
 import modelos.Article;
-import modelos.ArticleRss;
-import modelos.ListadoIndex;
 import modelos.Newspaper;
-import modelos.Rss;
 import modelos.Section;
 import modelos.User;
 
 @Controller
 public class DSNewsController {
-	@Autowired
-	DAOUser daouser;
+
 	@Autowired
 	DAOArticle daoarticle;
-	@Autowired
-	DAORss daorss;
-	@Autowired
-	DAOArticleRss daoarticlerss;
 	@Autowired
 	DAOSection daosection;
 	@Autowired
 	DAONewspaper daonewspaper;
-	@Autowired
-	DAOListadoIndex daolindex;
-	
-	@RequestMapping(value = {"/", "index"})
-	public ModelAndView index(){
 
-		ModelAndView mv = new ModelAndView("index");
+	/*
+	 * ---------------------------------------------------------------------
+	 * ModelAndViews
+	 * ---------------------------------------------------------------------
+	 */
 		
-		List<Newspaper> newspapers = daonewspaper.listar();
-		System.out.println(newspapers.size());
-		mv.addObject("newspapers",newspapers);
-		return mv;
-	}
-	
-	@RequestMapping(value = {"noticias"})
-	public ModelAndView inicio(@RequestParam(value="periodico")int periodico){
-	//public ModelAndView noticias(){
-		
-		
-		//Test debug, (sólo para probar esto iría con una request del selector del index)
-		//daonewspaper.getNewspaper(newspaper);
-		//daonewspaper.getNewspaper(1);
-		Newspaper newspaper = daonewspaper.getNewspaper(periodico);	
-		String logo = newspaper.getLogo();
-		String name = newspaper.getName();
-
-		
-		List<Section> sectionList = daosection.listar();
-		List<Newspaper> newspapers = daonewspaper.listar();
-		
-		//Sólo periodico y categoría
-		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
-		for (Section categoria : sectionList) {
-			
-			List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
-			listaArticulos = daolindex.listar(newspaper.getId(), categoria.getId());
-			
-			if (! listaArticulos.isEmpty()){
-				listadoCompleto.add(new ListadoIndex(categoria.getName(), listaArticulos));			
-			}
-		}
-		
-		ModelAndView mv = new ModelAndView("noticias");
-		mv.addObject("logo",logo);
-		mv.addObject("name",name);
-		mv.addObject("listadoCompleto",listadoCompleto);
-		mv.addObject("sectionList",sectionList);
-		mv.addObject("newspapers",newspapers);
-
-		return mv;
-	}
-	
-	@RequestMapping(value = {"formLogin"})
-	public ModelAndView formlogin(){
-		
-		ModelAndView mv = new ModelAndView("formLogin");
-		
-		return mv;
-	}
-	
-	@RequestMapping(value = {"login"})
-	public ModelAndView login(HttpSession sesion,
-			@RequestParam(value="name")String name,
-			@RequestParam(value="password")String password){
-				ModelAndView mv = null;
-				User u = new User();
-				u.setName(name);
-
-				boolean ok = daouser.login(u, password);
-				if(ok){
-					User us = daouser.getUser(name);
-					sesion.setAttribute("user", us);
-					mv = new ModelAndView("loginTrue");
-				}else{
-					sesion.setAttribute("user",null);
-					mv = new ModelAndView("loginFalse");
-				}
-				return mv;
-			}
-	
 	@RequestMapping(value = {"paginaAdmin"})
 	public ModelAndView paginaAdmin(HttpSession sesion, HttpServletResponse rs){
-		ModelAndView mv = null;
+		ModelAndView mv = new ModelAndView("paginaAdmin");
 		
 		User user = (User)sesion.getAttribute("user");
+		
+		//Si el usuario no está logueado...
 		if(user==null){
 			try {
 				rs.sendRedirect("formLogin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			
 		} else {
 			
+			List<Article> lista = new ArrayList<Article>();
+			
 			if(user.getRole().equals("admin")){
-				List<Article> lista = daoarticle.listar(user);
-				mv = new ModelAndView("paginaAdmin");
-				mv.addObject("lista", lista);
+				lista = daoarticle.listar(user);
+				
 			}else if (user.getRole().equals("dios")){
-				List<Article> lista = daoarticle.listarSuperUser();
-				mv = new ModelAndView("paginaAdmin");
-				mv.addObject("lista", lista);
-			}
-		}
+				lista = daoarticle.listarSuperUser();
+				
+			}//Fin de Si Rol de usuario...
+			
+			System.out.println(user.getRole().equals("dios"));
+			mv.addObject("lista", lista);
+			mv.addObject("role", user.getRole().equals("dios"));
+			
+		}//Fin de Si usuario logueado...
 	
-
 		return mv;
 	}
 	
+	// ---------------------------------------------------------------------
+
 	@RequestMapping(value = {"formCrear"})
 	public ModelAndView formCrear(HttpSession sesion, HttpServletResponse rs){
 		ModelAndView mv = null;
+		
 		User user = (User)sesion.getAttribute("user");
+		
+		//Si el usuario no está logueado...
 		if(user==null){
+			
 			try {
-				rs.sendRedirect("formLogin");
+				rs.sendRedirect("formLogin"); //mandar a login
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
-		else {
+			
+		}else {
 			mv = new ModelAndView("formCrear");
+		
+			List<Newspaper> newspapers = daonewspaper.listar();
+			List<Section> sections = daosection.listar();
+			mv.addObject("newspapers", newspapers);
+			mv.addObject("sections", sections);
 		}
+
 		return mv;
 	}
 	
+	// ---------------------------------------------------------------------
+
 	@RequestMapping(value = {"crear"})
 	public ModelAndView crear(HttpSession sesion,HttpServletResponse rs,
-			@RequestParam("link")String link,
 			@RequestParam("title")String title,
 			@RequestParam("content")String content,
-			@RequestParam("pubDate")String pubDateStr,
 			@RequestParam("description")String description,
-			@RequestParam("channelid")String channelidStr,
-			@RequestParam("sectionid")String sectionidStr,
+			@RequestParam("sectionId")int sectionId,
 			@RequestParam("keywords")String keywords){
 		
-		ModelAndView mv = null;
+		ModelAndView mv = new ModelAndView("errorDatos");;
 		User us = (User)sesion.getAttribute("user");
 		
-		//Parseamos los que no son strings
-		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
-		Date date = null;
-        try {
-            date = formatter.parse(pubDateStr);
-        } catch (ParseException pe) {
-            pe.printStackTrace();
-        }
+		int num = daoarticle.listarSuperUser().size() + 1;
+		Date pubDate = new Date();
+		DateFormat df = functions.Functions.DATE_PARSER;
+		String pubdate = df.format(pubDate);
+		pubdate.trim();
+		String link = "http://localhost:8080/DSNews/noticiasDSNews/"+pubdate+"/"+sectionId+"/"+num;
+		
+        int channelid = 1;
+        int userid;
         
-        int userid=0;
-        int channelid = 0;
-        int sectionid = 0;
         try{
-        	channelid = Integer.parseInt(channelidStr);
-        	sectionid = Integer.parseInt(sectionidStr);
+        	userid=us.getId();
         }catch (NumberFormatException nmb) {
         	nmb.printStackTrace();
+        	return mv;
 		}
 		
-        Article a = new Article( link,  title,  content,  date,  description,  keywords,
-    			 userid,  channelid,  sectionid);
-        boolean crear = daoarticle.create(a,us);
+        Article article = new Article( link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
+        boolean crear = daoarticle.create(article);
         
         if(crear){
-            System.out.println("creada la noticia");
+        	
         	try {
+        		System.out.println("creada la noticia");
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
         }
-        	mv = new ModelAndView("errorDatos");
+        
         
         return mv;
 	}
 	
-	@RequestMapping(value = {"formEditar"})
-	public ModelAndView formEditar(HttpSession sesion,
-			@RequestParam("guid")int guid){
-		Article a = daoarticle.read(guid);
+	// ---------------------------------------------------------------------
+
+	
+	@RequestMapping(value = {"buscarIndex"})
+	public ModelAndView buscarIndex(HttpSession sesion, HttpServletResponse rs,
+			@RequestParam("filter")String filter,
+			@RequestParam("keyword")String keyword){
 		
-		ModelAndView mv = new ModelAndView("formEditar");
-		mv.addObject("guid",guid);
-		mv.addObject("article",a);
+		User user = (User)sesion.getAttribute("user");
+		ModelAndView mv = new ModelAndView("paginaAdmin");
+
+		List<Article>lista = new ArrayList<Article>(); 
+		
+		//Si el filtro es la id... (guid)
+		if(filter.equals("id")){
+
+			int keywordparsed;
+			try{
+				//Tratar de parsear el valor para verificar que es entero...
+				keywordparsed = Integer.parseInt(keyword);
+			}catch (Exception e) {
+				mv = new ModelAndView("errorDatos");
+			}
+			
+		}else{
+			
+			//Evitar inyección 
+			if(keyword.trim().equals("") || keyword.trim().isEmpty() || keyword == null){ 
+				mv = new ModelAndView("errorDatos");
+			}
+			
+			//Comprobando el rol de usuario...
+			if (user.getRole().equals("dios") ){
+				lista = daoarticle.buscar(filter, keyword);
+			}
+			else{
+				lista = daoarticle.buscar(filter, keyword,user.getId());
+			}
+			
+		}//Fin de Si el filtro no es la id
+		
+		mv.addObject("lista", lista);
+		mv.addObject("role", user.getRole().equals("dios"));
+				
+		return mv;
+		
+	}//Fin de buscarIndex
+	
+	// ---------------------------------------------------------------------
+	
+	@RequestMapping(value = {"formEditar"})
+	public ModelAndView formEditar(HttpSession session, HttpServletResponse rs,
+		@RequestParam("guid")int guid){
+	
+		ModelAndView mv = null;
+		
+		User user = (User)session.getAttribute("user");
+		List<Section> sections = daosection.listar();
+		
+		//Verificar que el usuario está conectado...
+		if(user==null){
+			
+			try {
+				rs.sendRedirect("formLogin");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+		
+			Article article = daoarticle.read(guid);
+			
+			//Ha tratado de editar un articulo que no le pertenece sin ser dios, mandando error...
+			if (user.getId()!=article.getUserId() && ! user.getRole().equals("dios") ){
+					mv = new ModelAndView("errorDatos");
+					
+			} else {
+					
+				mv = new ModelAndView("formEditar");
+	
+				mv.addObject("article",article);
+				mv.addObject("sections",sections);
+			}
+		}
 		return mv;
 	}
 	
+	// ---------------------------------------------------------------------
+
 	@RequestMapping(value = {"editar"})
 	public ModelAndView editar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("guid")int guid,
 			@RequestParam("link")String link,
 			@RequestParam("title")String title,
 			@RequestParam("content")String content,
-			@RequestParam("pubDate")String pubDateStr,
 			@RequestParam("description")String description,
-			@RequestParam("channelid")String channelidStr,
-			@RequestParam("sectionid")String sectionidStr,
+			@RequestParam("sectionId")int sectionId,
 			@RequestParam("keywords")String keywords){
 		
-		ModelAndView mv = null;
+		ModelAndView mv = new ModelAndView("errorDatos");
+		
 		User us = (User)sesion.getAttribute("user");
 		
-		//Parseamos los que no son strings
-		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
-		Date date = null;
-        try {
-            date = formatter.parse(pubDateStr);
-        } catch (ParseException pe) {
-            pe.printStackTrace();
-        }
-        
         int userid=0;
-        int channelid = 0;
-        int sectionid = 0;
+        
+        //Parsear las ID del canal y sección
         try{
-        	channelid = Integer.parseInt(channelidStr);
-        	sectionid = Integer.parseInt(sectionidStr);
+        	userid = us.getId();
         }catch (NumberFormatException nmb) {
         	nmb.printStackTrace();
 		}
 		
-        Article a = new Article(guid, link,  title,  content,  date,  description,  keywords,
-    			 userid,  channelid, sectionid);
-        boolean modificar = daoarticle.update(a,us);
+        Article article = new Article(guid, link,  title,  content,  new Date(),  description,  keywords,
+    			 userid,  1, sectionId);
+        boolean modificar = daoarticle.update(article);
         
+        //Si se ha aplicado el update...
         if(modificar){
+        	
         	try {
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-        }else{
-        	mv = new ModelAndView("errorDatos");
         }
+        
         return mv;
 		
-	}
+	}//Fin de editar
+	
+	// ---------------------------------------------------------------------
 	
 	@RequestMapping(value = {"borrar"})
 	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("guid")int guid){
+		
 		boolean ok = daoarticle.delete(guid);
 		ModelAndView mv = null;
 
-		
 		if(ok){
 			try {
 				rs.sendRedirect("paginaAdmin");
@@ -303,132 +301,9 @@ public class DSNewsController {
 		}else{
 			mv = new ModelAndView("errorBorrar");
 		}
-		return mv;
-	}
-	
-	@RequestMapping(value = {"formAddPeriodico"})
-	public ModelAndView formAddPeriodico(HttpSession sesion){
-		
-		ModelAndView mv = new ModelAndView("addPeriodico");
 		
 		return mv;
-	}
+		
+	}//Fin de borrar
 	
-	@RequestMapping(value = {"addPeriodico"})
-	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
-			@RequestParam("name")String name,
-			@RequestParam("logo")String logo){
-		
-		Newspaper n = new Newspaper(name, logo);
-		ModelAndView mv = null;
-
-		boolean ok = daonewspaper.create(n);
-		if(ok){
-			try {
-				rs.sendRedirect("formAddRSS");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}else{
-			mv = new ModelAndView("errorDatos");
-		}
-		return mv;
-	}
-
-	@RequestMapping(value = {"buscarIndex"})
-	public ModelAndView buscarIndex(HttpSession sesion, HttpServletResponse rs,
-			@RequestParam("filter")String filter,
-			@RequestParam("keyword")String keyword){
-		
-		User user = (User)sesion.getAttribute("user");
-		ModelAndView mv = new ModelAndView("paginaAdmin");
-
-		List<Article>lista = null; 
-		
-		if(filter.equals("id")){
-			int keywordparsed;
-			try{
-				keywordparsed = Integer.parseInt(keyword);
-			}catch (Exception e) {
-				mv = new ModelAndView("errorDatos");
-			}
-		}else{
-			if(keyword.trim().equals("") || keyword.trim().isEmpty() || keyword == null){
-				mv = new ModelAndView("errorDatos");
-			}
-			if (user.getRole().equals("dios") ){
-				lista = daoarticle.buscar(filter, keyword);
-			}
-			else{
-				lista = daoarticle.buscar(filter, keyword,user.getId());
-			}
-		}
-		mv.addObject("lista", lista);
-
-		return mv;
-	}
-	
-	@RequestMapping(value = {"buscarNoticias"})
-	public ModelAndView buscarNoticias(HttpServletResponse rs,
-			@RequestParam("newspapers")int periodico,
-			@RequestParam("secciones")int seccion,
-			@RequestParam("date")String pubDate){
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
-		Date date = null;
-        
-	
-		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
-		List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
-
-		Section section = daosection.getSection(seccion);
-		
-		if(pubDate.trim().equals("")){
-			listaArticulos = daolindex.listar(periodico, seccion);
-		}else{
-			try {
-	            date = formatter.parse(pubDate);
-	        } catch (ParseException pe) {
-	            pe.printStackTrace();
-	        }
-			listaArticulos = daolindex.listar(periodico, seccion,date);
-		}
-		
-		if (! listaArticulos.isEmpty()){
-			listadoCompleto.add(new ListadoIndex(section.getName(), listaArticulos));			
-		}
-		
-		Newspaper n = daonewspaper.getNewspaper(periodico);
-		String logo = n.getLogo();
-		String name = n.getName();
-
-		
-		List<Section> sectionList = daosection.listar();
-		List<Newspaper> newspapers = daonewspaper.listar();
-
-			
-		ModelAndView mv = new ModelAndView("noticias");
-		mv.addObject("name",name);
-		mv.addObject("logo",logo);
-		mv.addObject("sectionList",sectionList);
-		mv.addObject("newspapers",newspapers);	
-		mv.addObject("listadoCompleto",listadoCompleto);
-
-		return mv;
-
-		}		
-	
-	@RequestMapping(value = {"logout"})
-	public ModelAndView logout(HttpSession sesion, HttpServletResponse rs){
-		
-		sesion.invalidate();
-		
-		try {
-			rs.sendRedirect("noticias")	;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-}
+}//Fin de DSNewsController

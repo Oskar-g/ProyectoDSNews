@@ -8,7 +8,9 @@ import org.springframework.jdbc.core.RowMapper;
 import modelos.Newspaper;
 import modelos.Rss;
 
-public class RowMapperRss{
+public class RowMapperRss {
+	
+	public MapperRss mapperRss = new MapperRss();
 	public class MapperRss implements RowMapper<Rss>{
 		public Rss mapRow(ResultSet rs, int numRow) throws SQLException{
 			Rss r = new Rss(
@@ -20,7 +22,8 @@ public class RowMapperRss{
 			return r;
 		}	
 	}
-	
+
+	public MapperRssPeriodico mapperRssPeriodico = new MapperRssPeriodico();
 	public class MapperRssPeriodico implements RowMapper<Rss>{
 		public Rss mapRow(ResultSet rs, int numRow) throws SQLException{
 			Newspaper n = new Newspaper(rs.getInt("newspaper_id"),rs.getString("name"),rs.getString("logo"));
@@ -32,4 +35,10 @@ public class RowMapperRss{
 			return r;
 		}	
 	}
+	
+	
+
+
+
+	
 }

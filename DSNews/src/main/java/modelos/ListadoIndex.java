@@ -3,21 +3,34 @@ package modelos;
 import java.util.List;
 
 public class ListadoIndex {
+	/*
+	 * ------------------------------------------------
+	 * Attributos
+	 *------------------------------------------------ 
+	 */
 	private String categoria;
 	private List<ArticleRss> articulos;
 
+	/*
+	 * ------------------------------------------------
+	 * Constructores
+	 *------------------------------------------------ 
+	 */
+	public ListadoIndex (){ }
 	
-	//Constructores
-	//Constructor vacio
-	public ListadoIndex (){
-	}
+	// -----------------------------------------------
 	
 	public ListadoIndex(String categoria, List<ArticleRss> articulos) {
 		super();
 		this.categoria = categoria;
 		this.articulos = articulos;
 	}
-	//Getters setters
+
+	/*
+	 * ------------------------------------------------
+	 * Getters & Setters
+	 *------------------------------------------------ 
+	 */
 	
 	public String getCategoria() {
 		return categoria;
