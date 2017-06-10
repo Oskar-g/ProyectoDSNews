@@ -62,17 +62,16 @@ public class DAOArticleImpl implements DAOArticle {
 	class RowMapperArticles implements RowMapper<Article>{
 		public Article mapRow(ResultSet rs, int numRow) throws SQLException{			
 			Article a = new Article();
-					
-			a.setGuid(rs.getInt("guid"));
-			a.setLink(rs.getString("link"));
-			a.setTitle(rs.getString("title"));
-			a.setContent(rs.getString("content"));
-			a.setPubDate(rs.getDate("pub_date"));
-			a.setDescription(rs.getString("description"));
-			a.setUserId(rs.getInt("user_id"));
-			a.setChannelId(rs.getInt("channel_id"));
-			a.setSectionId(rs.getInt("section_id"));
-				
+				a.setGuid(rs.getInt("guid"));
+				a.setLink(rs.getString("link"));
+				a.setTitle(rs.getString("title"));
+				a.setContent(rs.getString("content"));
+				a.setPubDate(rs.getDate("pub_date"));
+				a.setDescription(rs.getString("description"));
+				a.setKeywords(rs.getString("keywords"));
+				a.setUserId(rs.getInt("user_id"));
+				a.setChannelId(rs.getInt("channel_id"));
+				a.setSectionId(rs.getInt("section_id"));
 			return a;
 		}	
 	}

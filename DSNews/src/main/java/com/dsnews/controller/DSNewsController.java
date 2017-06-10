@@ -1,7 +1,7 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
-
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -110,7 +110,6 @@ public class DSNewsController {
 
 	@RequestMapping(value = {"crear"})
 	public ModelAndView crear(HttpSession sesion,HttpServletResponse rs,
-			@RequestParam("link")String link,
 			@RequestParam("title")String title,
 			@RequestParam("content")String content,
 			@RequestParam("description")String description,
@@ -119,8 +118,14 @@ public class DSNewsController {
 		
 		ModelAndView mv = new ModelAndView("errorDatos");;
 		User us = (User)sesion.getAttribute("user");
- 
-        
+		
+		int num = daoarticle.listarSuperUser().size() + 1;
+		Date pubDate = new Date();
+		DateFormat df = functions.Functions.DATE_PARSER;
+		String pubdate = df.format(pubDate);
+		pubdate.trim();
+		String link = "http://localhost:8080/DSNews/noticiasDSNews/"+pubdate+"/"+sectionId+"/"+num;
+		
         int channelid = 1;
         int userid;
         
