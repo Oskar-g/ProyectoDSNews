@@ -110,7 +110,6 @@ public class DSNewsController {
 
 	@RequestMapping(value = {"crear"})
 	public ModelAndView crear(HttpSession sesion,HttpServletResponse rs,
-			@RequestParam("link")String link,
 			@RequestParam("title")String title,
 			@RequestParam("content")String content,
 			@RequestParam("description")String description,
@@ -119,8 +118,15 @@ public class DSNewsController {
 		
 		ModelAndView mv = new ModelAndView("errorDatos");;
 		User us = (User)sesion.getAttribute("user");
- 
-        
+		
+		int num = daoarticle.listarSuperUser().size() + 1;
+		Date pubDate = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String pubdate = df.format(pubDate);
+		pubdate.trim();
+		String link = "http://localhost:8080/DSNews/noticiasDSNews/"+pubdate+"/"+sectionId+"/"+num;
+		System.out.println(link);
+		
         int channelid = 1;
         int userid;
         
