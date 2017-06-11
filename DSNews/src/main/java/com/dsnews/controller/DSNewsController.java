@@ -116,15 +116,20 @@ public class DSNewsController {
 			@RequestParam("sectionId")int sectionId,
 			@RequestParam("keywords")String keywords){
 		
-		ModelAndView mv = new ModelAndView("errorDatos");;
+		ModelAndView mv = new ModelAndView("errorDatos");
 		User us = (User)sesion.getAttribute("user");
-		
-		int num = daoarticle.listarSuperUser().size() + 1;
-		Date pubDate = new Date();
-		DateFormat df = functions.Functions.DATE_PARSER;
-		String pubdate = df.format(pubDate);
-		pubdate.trim();
-		String link = "http://localhost:8080/DSNews/noticiasDSNews/"+pubdate+"/"+sectionId+"/"+num;
+
+		//EL METODO MAS GUARRO DEL MUNDO PARA GENERAR UN LINK ALEATORIO
+		String link= "";
+		List<Article> listar = daoarticle.listarSuperUser();
+		int size = listar.size(); 
+		if (size > 0) {
+			Article a = listar.get(size-1);
+			int tam = a.getGuid()+1;
+			link = "noticiasDSNews?guid="+tam;
+		}else if(size == 0){
+			link = "noticiasDSNews?guid=1";
+		}
 		
         int channelid = 1;
         int userid;
@@ -136,7 +141,8 @@ public class DSNewsController {
         	return mv;
 		}
 		
-        Article article = new Article( link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
+        Article article = new Article(link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
+
         if (article.getTitle().trim().equals("") || article.getContent().trim().equals("") || article.getDescription().trim().equals("") || article.getKeywords().trim().equals("")){
         	return mv;
         }else{
