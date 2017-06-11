@@ -221,9 +221,14 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		keyword = "%" + keyword + "%";
 				
-		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? AND user_id = ?;";
+		String sql = "SELECT guid, sections.name, title, pub_date, users.name "
+				+ "FROM sections "
+				+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
+				+ "INNER JOIN users ON user_id = users.id "
+				+ "WHERE "+filter+" like ? AND user_id = ? "
+				+ "ORDER BY pub_date;";	
 		
-		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticles());
+		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticlesUser());
 		return lista;
 	}
 

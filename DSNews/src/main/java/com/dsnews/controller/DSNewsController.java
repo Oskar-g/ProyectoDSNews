@@ -183,7 +183,7 @@ public class DSNewsController {
 			}
 			
 			//Comprobando el rol de usuario...
-			if (user.getRole().equals("dios") ){
+			if (user.getRole().equals("dios")){
 				lista = daoarticle.buscar(filter, keyword);
 			}
 			else{
@@ -191,7 +191,6 @@ public class DSNewsController {
 			}
 			
 		}//Fin de Si el filtro no es la id
-		
 		mv.addObject("lista", lista);
 		mv.addObject("role", user.getRole().equals("dios"));
 				
