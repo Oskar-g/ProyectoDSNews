@@ -137,21 +137,19 @@ public class DSNewsController {
 		}
 		
         Article article = new Article( link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
-        boolean crear = daoarticle.create(article);
-        
-        if(crear){
-        	
+        if (article.getTitle().trim().equals("") || article.getContent().trim().equals("") || article.getDescription().trim().equals("") || article.getKeywords().trim().equals("")){
+        	return mv;
+        }else{
         	try {
+        		boolean crear = daoarticle.create(article);
         		System.out.println("creada la noticia");
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
         }
-        
-        
-        return mv;
-	}
+        return null;
+  	}
 	
 	// ---------------------------------------------------------------------
 

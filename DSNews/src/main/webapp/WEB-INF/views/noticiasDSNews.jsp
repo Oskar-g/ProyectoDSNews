@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>${article.title}</h1>
+	<h2>${article.description}</h2>
+	${article.content}
 </body>
 </html>

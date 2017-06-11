@@ -174,7 +174,7 @@ public class DAOArticleImpl implements DAOArticle {
 				+ "FROM sections "
 				+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
 				+ "INNER JOIN users ON user_id = users.id "
-				+ "order by pub_date;";
+				+ "order by guid;";
 		
 		lista = jdbc.query(sql,new RowMapperArticlesUser());
 		return lista;

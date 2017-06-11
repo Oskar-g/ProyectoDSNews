@@ -27,7 +27,7 @@
 			<!-- Header -->
 				<div id="header-wrapper">
 					<div id="header">
-					<img src="images/pic01.png" alt="Foto de deSoft" class="imagen">
+					<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
 		
 				</div>
 			</div>

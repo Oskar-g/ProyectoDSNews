@@ -43,6 +43,7 @@ import modelos.Article;
 import modelos.ArticleRss;
 import modelos.Newspaper;
 import modelos.Rss;
+import modelos.Section;
 import modelos.User;
 import servicios.*;
 
@@ -100,6 +101,7 @@ public class DSNewsControllerRSS {
 		return mv;
 	}
 	
+	//Actualiza los rss
 	@RequestMapping("downloadArticles")
 	public ModelAndView updateRssArticles(){
 		
@@ -136,15 +138,16 @@ public class DSNewsControllerRSS {
 				ArticleRss arss = new ArticleRss(link,title,description,pubDate,cover,rss.getId(),0);
 				daoarss.create(arss);	
 				
-				System.out.println("Artículos RSS Actualizados!");
-				}
-          
+				System.out.println("Artículos RSS Actualizados!");				
+				
+            	}
           }
           catch (Exception ex) {
               ex.printStackTrace();
               System.out.println("ERROR: "+ex.getMessage());
-          }
-		}
+          }		
+
+		} 
 		
 		return new ModelAndView("index");
 	}
@@ -178,16 +181,29 @@ public class DSNewsControllerRSS {
 			
 			return mv;
 	}
+	//Creamos nuestro rss	
+	@RequestMapping(value = {"generarRSS"})
+	public ModelAndView generarRss(){
+
+		List<Section> listaSec = daosec.listar();
 		
+		ModelAndView mv = new ModelAndView("generarRss");
+		mv.addObject("listaSec",listaSec);
 		
+		return mv;
+	}	
+	
 	//Añade el rss a la base de datos
 	@RequestMapping(path="Rss_feed",produces="text/xml")
 	@ResponseBody
 	public String CreateRss(
-		@RequestParam(value="sid")int sectionId,
-		@RequestParam(value="section")String sectionName){
+		@RequestParam(value="sid")String StrsectionId,
+		@RequestParam(value="sname")String sectionName){
 		
+		int sectionId = Integer.parseInt(StrsectionId);
 		
+		System.out.println(sectionId);
+		System.out.println(sectionName);
 		
 		String salida="";
 		
