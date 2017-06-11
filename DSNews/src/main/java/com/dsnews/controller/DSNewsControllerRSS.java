@@ -202,9 +202,6 @@ public class DSNewsControllerRSS {
 		
 		int sectionId = Integer.parseInt(StrsectionId);
 		
-		System.out.println(sectionId);
-		System.out.println(sectionName);
-		
 		String salida="";
 		
 		 try {
@@ -257,8 +254,9 @@ public class DSNewsControllerRSS {
 		    catch (Exception ex) {
 		        ex.printStackTrace();
 		    }
-		
+
 		return salida;
+		
 	}
 	
 	

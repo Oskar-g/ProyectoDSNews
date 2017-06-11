@@ -56,11 +56,8 @@
 
 <form action="editar">
 <input type="hidden" name = "guid" value="${article.getGuid()}">
+<input type="hidden" name = "link" value="${article.getLink()}">
 <table>
-	<tr>
-		<td><label for="link"><spring:message code="link" /></label></td>
-		<td><input type="text" name="link" value="${article.link}"></td>
-	</tr>
 	<tr>
 		<td><label for="title"><spring:message code="titular" /></label></td>
 		<td><input type="text" name="title" value="${article.title}"></td>
