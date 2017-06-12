@@ -15,13 +15,12 @@ import modelos.Channel;
 
 public class DAOChannelImpl implements DAOChannel {
 
-	String mainTable = "Channel";
+	String mainTable = "channel";
 	
 	//Mapeo de la base de datos
 	class RowMapperChannel implements RowMapper<Channel>{
 		public Channel mapRow(ResultSet rs, int numRow) throws SQLException{
-			
-			
+				
 			Channel c = new Channel(
 					rs.getInt("channel_id"),
 					rs.getString("link"),
@@ -59,5 +58,13 @@ public class DAOChannelImpl implements DAOChannel {
 		return c;
 	}
 
+	public Channel read(int id){
+		String sql= "select * from "+mainTable+" where channel_id = ?";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		Channel c = jdbc.queryForObject(sql, new Object[]{id},new RowMapperChannel());
+		
+		return c;
+	}
 	
 }

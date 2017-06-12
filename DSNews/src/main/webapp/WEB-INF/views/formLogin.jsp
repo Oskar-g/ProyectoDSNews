@@ -48,7 +48,7 @@
 								<form action="login" method="POST">
 	<table>
 		<tr>
-			<td><label for="name"><spring:message code="usuario" /></label></td>
+			<td><label for="name"><spring:message code="usuario"/></label></td>
 			<td><input type="text" name ="name" autofocus></td>
 		</tr>
 		<tr>

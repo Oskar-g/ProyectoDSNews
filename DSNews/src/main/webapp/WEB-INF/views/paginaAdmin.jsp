@@ -91,7 +91,8 @@
 											<td><c:out value="${article.pubDate}"/></td>
 											<td>
 											<a href="formEditar?guid=${article.guid}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></td>				
+											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<a href="noticiasDSNews?n=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
 											</tr>
 
 											</c:forEach>
@@ -104,7 +105,8 @@
 											</header>
 											<p><a href="formCrear"><button><spring:message code="crear_noticia" /></button></a>
 											<a href="formAddRSS"><button><spring:message code="anadir_RSS" /></button></a>
-											<a href="paginaAdmin"><button><spring:message code="listar" /></button></a></p>
+											<a href="paginaAdmin"><button><spring:message code="listar" /></button></a>
+											<a href="generarRSS"><button><spring:message code="generar_RSS" /></button></a></p>
 										</section>
 										
 									</article>

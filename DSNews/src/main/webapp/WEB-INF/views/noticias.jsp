@@ -102,7 +102,7 @@
 								 				%>											
 											</c:forEach>
 				
-										</section>
+										
 									<% 	i++;
 								 		if (openrow) { 
 								 	%>
@@ -110,7 +110,7 @@
 									<%  
 									 	} 
 									%>						
-									
+										</section>
 									</c:forEach>
 <!-- FIN CUERPO NOTICIAS -->
 								</div>

@@ -31,9 +31,9 @@
 
 								<!-- Sidebar -->
 									<section class="box">
-										<a href="#" class="image featured"><img src="recursos/images/editar.jpg" alt="" /></a>
+										<a href="#" class="image featured"><img src="recursos/images/feed_rss.png" alt="" /></a>
 										<header>
-											<h3><spring:message code="titulo.paginaAdmin" /></h3>
+											<h3><spring:message code="titulo.paginaRss" /></h3>
 										</header>
 
 								
@@ -51,49 +51,21 @@
 									<article class="box post">
 									
 										<header>
-										<h2><spring:message code="editar_noticia" /></h2>
+										<h2><spring:message code="generar_RSS" /></h2>
 										</header>
 
-<form action="editar">
-<input type="hidden" name = "guid" value="${article.getGuid()}">
-<input type="hidden" name = "link" value="${article.getLink()}">
-<table>
-	<tr>
-		<td><label for="title"><spring:message code="titular" /></label></td>
-		<td><input type="text" name="title" value="${article.title}"></td>
-	</tr>
-	<tr>
-		<td><label for="content"><spring:message code="contenido" /></label></td>
- 		<td><textarea name="content">${article.content}</textarea></td>
-	</tr>
-	<tr>
-		<td><label for="description"><spring:message code="descripcion" /></label></td>
-		<td><input type="text" name="description" value="${article.description}"></td>
-	</tr>
-	<tr>
-		<td><label for="sectionId"><spring:message code="id_seccion" /></label></td>
-		<td>
-			<select name="sectionId">
-				<c:forEach items="${sections}" var="section">
-				
-					<option value="${section.getId()}" <c:if test="${section.getId()==article.getSectionId()}"><c:out value="selected"></c:out></c:if>>
-						<c:out value="${section.getName()}"></c:out>
-					</option>
-				</c:forEach>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td><label for="keywords"><spring:message code="keywords" /></label></td>
-		<td><input type="text" name="keywords" value="${article.keywords}"></td>
-	</tr>
-	<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-	<tr>
-		<td></td><td><button><spring:message code="terminar" /></button></td>
-	</tr>
-</table>
-
-</form>
+	<table>
+		<c:forEach items="${listaSec}" var="section">
+			<tr>
+				<td>				
+					<c:out value="${section.name}"></c:out>
+				</td>
+				<td>
+					<a href="Rss_feed?sid=${section.id}&sname=${section.name}"><button><spring:message code="generar_RSS"/></button></a>
+				</td>
+			</tr>
+		</c:forEach>
+	</table>
 
 										
 									</article>

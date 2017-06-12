@@ -59,6 +59,17 @@ public class DAOArticleImpl implements DAOArticle {
 		}	
 	}
 
+	
+	class RowMapperArticleMaxGUID implements RowMapper<Article>{
+		public Article mapRow(ResultSet rs, int numRow) throws SQLException{
+			
+			Article a = new Article();
+			a.setGuid(rs.getInt("guid"));
+			
+			return a;
+		}	
+	}
+
 	class RowMapperArticles implements RowMapper<Article>{
 		public Article mapRow(ResultSet rs, int numRow) throws SQLException{			
 			Article a = new Article();
@@ -86,11 +97,11 @@ public class DAOArticleImpl implements DAOArticle {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
 		
-		String sql = "insert into "+mainTable+"(link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
-				+ "values (?,?,?,now(),?,?,?,?,?)";
+		String sql = "insert into "+mainTable+"(guid,link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
+				+ "values (?,?,?,?,now(),?,?,?,?,?)";
 		
 		try{
-			jdbc.update(sql, new Object[]{a.getLink(),a.getTitle(),a.getContent(),
+			jdbc.update(sql, new Object[]{a.getGuid(),a.getLink(),a.getTitle(),a.getContent(),
 					a.getDescription(),a.getKeywords(),a.getUserId(),
 					a.getChannelId(),a.getSectionId()});
 			result = true;
@@ -113,6 +124,17 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		return a;
 	}
+	
+	
+	public Article getMax(){
+		String sql= "SELECT ifnull(MAX(guid),0)+1 as 'guid' FROM "+mainTable+";";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		Article a = jdbc.queryForObject(sql, new RowMapperArticleMaxGUID());
+		
+		return a;
+	}
+	
 	
 	/*
 	 *----------------------------------------------------------
@@ -174,7 +196,7 @@ public class DAOArticleImpl implements DAOArticle {
 				+ "FROM sections "
 				+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
 				+ "INNER JOIN users ON user_id = users.id "
-				+ "order by pub_date;";
+				+ "order by guid;";
 		
 		lista = jdbc.query(sql,new RowMapperArticlesUser());
 		return lista;
@@ -221,9 +243,14 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		keyword = "%" + keyword + "%";
 				
-		String sql = "SELECT * FROM "+mainTable+" where "+filter+" like ? AND user_id = ?;";
+		String sql = "SELECT guid, sections.name, title, pub_date, users.name "
+				+ "FROM sections "
+				+ "INNER JOIN "+mainTable+" ON section_id = sections.id "
+				+ "INNER JOIN users ON user_id = users.id "
+				+ "WHERE "+filter+" like ? AND user_id = ? "
+				+ "ORDER BY pub_date;";	
 		
-		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticles());
+		lista = jdbc.query(sql,new Object[]{keyword,userId},new RowMapperArticlesUser());
 		return lista;
 	}
 

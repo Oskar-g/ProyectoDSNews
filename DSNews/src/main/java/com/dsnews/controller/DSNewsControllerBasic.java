@@ -10,13 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import dao.DAOArticle;
+import dao.DAOArticleRss;
 import dao.DAOListadoIndex;
 import dao.DAONewspaper;
 import dao.DAOSection;
+import modelos.Article;
 import modelos.ArticleRss;
 import modelos.ListadoIndex;
 import modelos.Newspaper;
@@ -31,6 +35,8 @@ public class DSNewsControllerBasic {
 	DAONewspaper daonewspaper;
 	@Autowired
 	DAOListadoIndex daolindex;
+	@Autowired
+	DAOArticle daoarticle;
 		
 	/*
 	 * ---------------------------------------------------------------------
@@ -138,5 +144,26 @@ public class DSNewsControllerBasic {
 		return mv;
 
 		}		
+	// ---------------------------------------------------------------------
+	
+		@RequestMapping(value = {"noticiasDSNews"})
+		public ModelAndView mostrarNoticiaDSNews(
+				@RequestParam("n")String StrGuid){
+			
+			
+			String[] key = StrGuid.split("--");
+			System.out.println(key[0]);
+			
+			int guid = Integer.parseInt(key[0]);
+			
+			Article article = daoarticle.read(guid);
+			
+			
+			
+			ModelAndView mv = new ModelAndView("noticiasDSNews");
+			mv.addObject("article", article);
+			
+			return mv;
 
+			}		
 }

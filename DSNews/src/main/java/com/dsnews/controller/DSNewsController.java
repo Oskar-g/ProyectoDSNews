@@ -1,6 +1,8 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,8 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import dao.DAOArticle;
+import dao.DAOChannel;
 import dao.DAONewspaper;
 import dao.DAOSection;
+import functions.Functions;
 import modelos.Article;
 import modelos.Newspaper;
 import modelos.Section;
@@ -35,7 +39,9 @@ public class DSNewsController {
 	DAOSection daosection;
 	@Autowired
 	DAONewspaper daonewspaper;
-
+	@Autowired
+	DAOChannel daochannel;
+	
 	/*
 	 * ---------------------------------------------------------------------
 	 * ModelAndViews
@@ -116,42 +122,43 @@ public class DSNewsController {
 			@RequestParam("sectionId")int sectionId,
 			@RequestParam("keywords")String keywords){
 		
-		ModelAndView mv = new ModelAndView("errorDatos");;
+		ModelAndView mv = new ModelAndView("errorDatos");
 		User us = (User)sesion.getAttribute("user");
+
+		int channelid = 1;
+		int userid;
 		
-		int num = daoarticle.listarSuperUser().size() + 1;
-		Date pubDate = new Date();
-		DateFormat df = functions.Functions.DATE_PARSER;
-		String pubdate = df.format(pubDate);
-		pubdate.trim();
-		String link = "http://localhost:8080/DSNews/noticiasDSNews/"+pubdate+"/"+sectionId+"/"+num;
+		//Obtener el siguiente GUID
+		int nextguid = daoarticle.getMax().getGuid();
+		String server = daochannel.read(1).getLink();
+
 		
-        int channelid = 1;
-        int userid;
-        
         try{
         	userid=us.getId();
         }catch (NumberFormatException nmb) {
         	nmb.printStackTrace();
         	return mv;
 		}
-		
-        Article article = new Article( link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
-        boolean crear = daoarticle.create(article);
         
-        if(crear){
-        	
+		String link = Functions.linkGenerator(title, server, nextguid);
+        
+        Article article = new Article(link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
+        article.setGuid(nextguid);
+        
+        
+        if (article.getTitle().trim().equals("") || article.getContent().trim().equals("") || article.getDescription().trim().equals("") || article.getKeywords().trim().equals("")){
+        	return mv;
+        }else{
         	try {
+        		boolean crear = daoarticle.create(article);
         		System.out.println("creada la noticia");
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
         }
-        
-        
-        return mv;
-	}
+        return null;
+  	}
 	
 	// ---------------------------------------------------------------------
 
@@ -185,7 +192,7 @@ public class DSNewsController {
 			}
 			
 			//Comprobando el rol de usuario...
-			if (user.getRole().equals("dios") ){
+			if (user.getRole().equals("dios")){
 				lista = daoarticle.buscar(filter, keyword);
 			}
 			else{
@@ -193,7 +200,6 @@ public class DSNewsController {
 			}
 			
 		}//Fin de Si el filtro no es la id
-		
 		mv.addObject("lista", lista);
 		mv.addObject("role", user.getRole().equals("dios"));
 				
