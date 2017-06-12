@@ -15,15 +15,13 @@
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
 	
 	</head>
+	
 	<body class="left-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-						
-					</div>
-				</div>
+			<jsp:include page="common/loged_head.jsp"/>
+				
 
 			<!-- Main -->
 				<div id="main-wrapper">
@@ -58,13 +56,6 @@
 
 								<!-- Content -->
 									<article class="box post">
-									
-										<header>
-										<h2><spring:message code="saludo"
-       										arguments="${user.name};${user.role};${user.id}"
-       										htmlEscape="false"
-       										argumentSeparator=";"/></h2>
-										</header>
 
 										<table>
 
@@ -73,26 +64,35 @@
        														arguments="${user.name}"
        														htmlEscape="false"/></td>
 											</tr>
-
+				
 											<tr>
-											<td><spring:message code="id_usuario" /></td>
+											<c:if test="${role}">
+												<td><spring:message code="usuario" /></td>
+											</c:if>
+											
 											<td><spring:message code="id_articulo" /></td>
 											<td><spring:message code="id_seccion" /></td>
 											<td><spring:message code="titular" /></td>
 											<td><spring:message code="fecha_publicacion" /></td>
-											<td>&nbsp</td>
+											<td colspan="2"><spring:message code="operaciones" /></td>
 											</tr>
 
 											<c:forEach items="${lista}" var="article">
 
 											<tr>
-											<td><c:out value="${article.userId}"/></td>
+											
+											<c:if test="${role}">
+												<td><c:out value="${article.getUser().getName()}"/></td>
+											</c:if>
+											
 											<td><c:out value="${article.guid}"/></td>
-											<td><c:out value="${article.sectionId}"/></td>
+											<td><c:out value="${article.getSection().getName()}"/></td>
 											<td><c:out value="${article.title}"/></td>
 											<td><c:out value="${article.pubDate}"/></td>
-											<td><a href="formEditar?guid=${article.guid}"><button><spring:message code="modificar" /></button></a>
-											<a href="borrar?guid=${article.guid}"><button><spring:message code="borrar" /></button></a></td>				
+											<td>
+											<a href="formEditar?guid=${article.guid}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<a href="noticiasDSNews?guid=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
 											</tr>
 
 											</c:forEach>
@@ -103,9 +103,10 @@
 											<header>
 												<h3></h3>
 											</header>
-											<p><a href="formCrear"><button><spring:message code="crear_noticia" /></button></a></p>
-											<p><a href="formAddRSS"><button><spring:message code="anadir_RSS" /></button></a></p>
-											
+											<p><a href="formCrear"><button><spring:message code="crear_noticia" /></button></a>
+											<a href="formAddRSS"><button><spring:message code="anadir_RSS" /></button></a>
+											<a href="paginaAdmin"><button><spring:message code="listar" /></button></a>
+											<a href="generarRSS"><button><spring:message code="generar_RSS" /></button></a></p>
 										</section>
 										
 									</article>

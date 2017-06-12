@@ -15,36 +15,28 @@
 	</head>
 
 	<body class="no-sidebar">
+		<div id="main-wrapper">
+			<div class="container">
+				<!-- Content -->
+				<article class="box post">
+					<header>
+						<h2><spring:message code="cuerpo.loginTrue" /></h2>	
+					</header>
+					<script>window.setTimeout('window.location="paginaAdmin";',1000);</script>
+				</article>
+			</div>
+		</div>
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-					<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
+		<!-- Header -->
+			<div id="header-wrapper">
+				<div id="header">
+				<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
 
-					</div>
 				</div>
+			</div>
 		</div>
-
-			<!-- Main -->
-				<div id="main-wrapper">
-					<div class="container">
-
-						<!-- Content -->
-							<article class="box post">
-								
-								<header>
-									<h2><spring:message code="cuerpo.loginTrue" /></h2>
-									
-								</header>
-					<script>window.setTimeout('window.location="paginaAdmin";',3000);</script>
-							</article>
-					</div>
-				</div>
-
-
-
-
+		
 		<!-- Scripts -->
 			<script src="recursos/assets/js/jquery.min.js"></script>
 			<script src="recursos/assets/js/jquery.dropotron.min.js"></script>

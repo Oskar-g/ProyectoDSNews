@@ -10,8 +10,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import dao.DAOArticleImpl.RowMapperArticleUser;
-import modelos.Article;
 import modelos.ArticleRss;
 
 
@@ -26,9 +24,10 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 					rs.getString("link"),
 					rs.getString("title"),
 					rs.getString("description"),
-					rs.getDate("pubDate"),
+					rs.getDate("pub_date"),
 					rs.getString("cover"),
-					rs.getInt("idRss")
+					rs.getInt("rss_id"),
+					rs.getInt("num_entry")
 					);
 			return a;
 		}	
@@ -51,7 +50,7 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		List<ArticleRss> lista;
-		String sql = "select * from articles_rssss order by pub_date";
+		String sql = "select * from articles_rss order by pub_date";
 		
 		lista = jdbc.query(sql, new RowMapperArticleRss());
 		return lista;
@@ -65,23 +64,31 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
-		
+		int n = 0;
+		String sql1 = "Select max(num_entry)+1 as n from articles_rss";
+		try{
+			n = jdbc.queryForInt(sql1);
+		}catch(DataAccessException dae){
+			dae.printStackTrace();
+		}
+				
 		String sql = 
-				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id) "
-				+ "VALUES (?,?,?,?,?,?) "
+				"INSERT INTO articles_rss(link,title,description,pub_date,cover,rss_id,num_entry) "
+				+ "VALUES (?,?,?,now(),?,?,?) "
 				+ "ON DUPLICATE KEY UPDATE "
 					+ "title = ?, "
 					+ "description = ?, "
-					+ "pub_date = ?, "
+					+ "pub_date = now(), "
 					+ "cover = ?, "
-					+ "rss_id = ? ;";
+					+ "rss_id = ?, "
+					+ "num_entry = ?";
 		
 		try{
 			jdbc.update(sql, new Object[]{
 				//On Insert
-					art.getLink(),art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId(),
+					art.getLink(),art.getTitle(),art.getDescription(),art.getCover(),art.getRssId(),n,
 				//On Update	
-					art.getTitle(),art.getDescription(),art.getPubDate(),art.getCover(),art.getRssId()
+					art.getTitle(),art.getDescription(),art.getCover(),art.getRssId(),n
 			});
 			result = true;
 		}catch(DataAccessException dae){
@@ -97,14 +104,13 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		String sql = "update article set "
 				+"title = ?,"
 				+"description = ?,"
-				+"pub_date = ?,"
+				+"pub_date = now(),"
 				+"cover = ?,"
 				
 				+"where link = ?";
 		
 		try{
-			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),
-					art.getPubDate(),art.getLink()});
+			jdbc.update(sql, new Object[]{art.getLink(),art.getTitle(),art.getDescription(),art.getLink()});
 			result = true;
 		}catch (DataAccessException dae) {
 			dae.printStackTrace();

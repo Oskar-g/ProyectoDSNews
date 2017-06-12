@@ -11,7 +11,6 @@ public class Newspaper {
 	private String name;
 	private String logo;
 
-	
 	/*
 	 *------------------------------------------------
 	 * Constructores
@@ -21,7 +20,6 @@ public class Newspaper {
 	
 	// ------------------------------------------------ 
 
-	
 	public Newspaper(String name, String logo) {
 		super();
 		this.name = name;

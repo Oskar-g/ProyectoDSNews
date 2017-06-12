@@ -11,41 +11,27 @@
 <meta name="keywords" content="deSoft, noticias, periódico digital, prensa">
 <link rel="shortcut icon" type="image/x-icon" href="recursos/images/logo.ico" />
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
-		
-	</head>
+</head>
 	<body class="no-sidebar">
-		<div id="page-wrapper">
-
-			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-					<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
-
-						
-			<!-- Main -->
-				<div id="main-wrapper">
+	<div id="main-wrapper">
 					<div class="container">
-
 						<!-- Content -->
 							<article class="box post">
 								
 								<header>
-									<h2><spring:message code="mensaje_error"/></h2>
-									
+									<h2><spring:message code="mensaje_error" /></h2>
+									<script>window.setTimeout('window.location="paginaAdmin";',1000);</script>									
 								</header>
-					<script>window.setTimeout('window.location="paginaAdmin";',3000);</script>
-								
 							</article>
-
 					</div>
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div id="header">
+					<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
+		
 				</div>
-
-
-							</div>
-						</div>
-				
-				</div>
-
+			</div>
+		</div>		
 
 		<!-- Scripts -->
 			<script src="recursos/assets/js/jquery.min.js"></script>

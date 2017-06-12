@@ -20,6 +20,7 @@
 
 			<!-- Header -->
 				<div id="header-wrapper">
+					<a href="logout">Log Out</a>
 					<div id="header">
 					</div>
 				</div>
@@ -40,7 +41,7 @@
 
 								
 										<footer>
-											
+											<button onclick="javascript:history.back()"><spring:message code="volver" /></button>
 										</footer>
 									</section>
 
@@ -71,7 +72,7 @@
 									<tr>
 									<td><c:out value="${rss.link}"/></td>
 									<td><c:out value="${rss.sectionId}"/></td>
-									<td><c:out value="${rss.getNewspaperId}"/></td>
+									<td><c:out value="${rss.getNewspaperId()}"/></td>
 									
 									</tr>
 	
@@ -103,7 +104,7 @@
 			</td>
 			
 			<td><label for="periodico"><spring:message code="periodico" /></label>
-				<select name="periodico" id="periodicos" onchange="selector()">
+				<select name="newspaper" id="periodicos" onchange="selector()">
 					<c:forEach items="${listaPeriodicos}" var="listaPeriodicos">
 						<option value="${listaPeriodicos.getId()}"><c:out value="${listaPeriodicos.getName()}"></c:out></option>
 					</c:forEach>
