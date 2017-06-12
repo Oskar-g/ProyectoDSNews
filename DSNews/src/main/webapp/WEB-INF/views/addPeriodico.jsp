@@ -6,7 +6,7 @@
 	<head>
 
 <meta http-equiv="Content-Type" content="text/html, charset=ISO-8859-1">
-<title><spring:message code="crear_periodico" /></title>
+<title><spring:message code="titulo.periodico" /></title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="author" content="Equipo DopeTrope">
 <meta name="description" content="DeSoft ha creado un periódico digital con noticias desde todos los puntos de vista totalmente actualizadas">
@@ -34,7 +34,7 @@
 									<section class="box">
 										<a href="#" class="image featured"><img src="recursos/images/newspaper.jpg" alt="" /></a>
 										<header>
-											<h3><spring:message code="titulo.periodico" /></h3>
+											<h3><spring:message code="crear_periodico" /></h3>
 										</header>
 
 								
@@ -57,11 +57,11 @@
 										<form action="addPeriodico" method="POST">
 		<table>
 			<tr>
-				<td><label for="name">Nombre</label></td>
+				<td><label for="name"><spring:message code="nombre_periodico" /></label></td>
 				<td><input type="text" name="name"></td>
 			</tr>
 			<tr>
-				<td><label for="logo">Logo</label></td>
+				<td><label for="logo"><spring:message code="logo" /></label></td>
 				<td><input type="text" name="logo"></td>
 			</tr>
 			<tr>

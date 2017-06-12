@@ -20,7 +20,7 @@
 
 			<!-- Header -->
 				<div id="header-wrapper">
-					<a href="logout">Log Out</a>
+					<a href="logout"><spring:message code="logout" /></a>
 					<div id="header">
 					</div>
 				</div>
@@ -108,7 +108,7 @@
 					<c:forEach items="${listaPeriodicos}" var="listaPeriodicos">
 						<option value="${listaPeriodicos.getId()}"><c:out value="${listaPeriodicos.getName()}"></c:out></option>
 					</c:forEach>
-					<option value="new">Crear nuevo Periodico</option>
+					<option value="new"><spring:message code="crear_nuevo_periodico" /></option>
 					
 				</select>
 			</td>

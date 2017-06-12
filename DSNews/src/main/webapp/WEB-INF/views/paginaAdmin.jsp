@@ -31,7 +31,7 @@
 
 								<!-- Sidebar -->
 									<section class="box">
-										<a href="#" class="image featured"><img src="recursos/images/admin.png" alt="" /></a>
+										<a href="#" class="image featured"><img src="recursos/images/admin.png" alt="Administrador" /></a>
 										<header>
 											<h3><spring:message code="buscador"/></h3>
 										</header>
