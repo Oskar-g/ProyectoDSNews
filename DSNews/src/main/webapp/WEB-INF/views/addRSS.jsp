@@ -19,11 +19,7 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
-					<a href="logout">Log Out</a>
-					<div id="header">
-					</div>
-				</div>
+				<jsp:include page="common/loged_head.jsp"/>
 						
 
 			<!-- Main -->
@@ -55,30 +51,7 @@
 										<header>
 										<h2><spring:message code="anadir_RSS"/></h2>
 										</header>
-
-								<table class="rss">
-									<tr>
-									<td colspan="2"><spring:message code="lista_RSS" /></td>
-									</tr>
-
-									<tr>
-									<th><spring:message code="link_RSS" /></th>
-									<th><spring:message code="id_seccion" /></th>
-									<th><spring:message code="periodico" /></th>
-									</tr>
-
-									<c:forEach items="${lista}" var="rss">
-		
-									<tr>
-									<td><c:out value="${rss.link}"/></td>
-									<td><c:out value="${rss.sectionId}"/></td>
-									<td><c:out value="${rss.getNewspaperId()}"/></td>
-									
-									</tr>
-	
-									</c:forEach>
-								</table>
-
+										
 										<section>
 											<header>
 												<h3></h3>
@@ -132,6 +105,28 @@
 	</table>
 </form>
 										</section>
+										
+								<table class="rss">
+
+									<tr>
+									<th><spring:message code="link_RSS" /></th>
+									<th><spring:message code="id_seccion" /></th>
+									<th><spring:message code="periodico" /></th>
+									</tr>
+
+									<c:forEach items="${lista}" var="rss">
+		
+									<tr>
+									<td><c:out value="${rss.link}"/></td>
+									<td><c:out value="${rss.sectionId}"/></td>
+									<td><c:out value="${rss.getNewspaperId()}"/></td>
+									
+									</tr>
+	
+									</c:forEach>
+								</table>
+
+										
 										
 									</article>
 
