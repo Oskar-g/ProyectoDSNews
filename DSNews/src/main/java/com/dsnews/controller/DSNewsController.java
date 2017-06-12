@@ -1,6 +1,8 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +24,7 @@ import dao.DAOArticle;
 import dao.DAOChannel;
 import dao.DAONewspaper;
 import dao.DAOSection;
+import functions.Functions;
 import modelos.Article;
 import modelos.Newspaper;
 import modelos.Section;
@@ -128,22 +131,16 @@ public class DSNewsController {
 		//Obtener el siguiente GUID
 		int nextguid = daoarticle.getMax().getGuid();
 		String server = daochannel.read(1).getLink();
+
 		
-		
- 
-        String link = server+"noticiasDSNews?n="+nextguid;
-        
         try{
         	userid=us.getId();
         }catch (NumberFormatException nmb) {
         	nmb.printStackTrace();
         	return mv;
 		}
-		
-       /* 
-        String q = "random word £500 bank $";
-        String url = "http://example.com/query?q=" + URLEncoder.encode(q, "UTF-8");
-        */
+        
+		String link = Functions.linkGenerator(title, server, nextguid);
         
         Article article = new Article(link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
         article.setGuid(nextguid);
