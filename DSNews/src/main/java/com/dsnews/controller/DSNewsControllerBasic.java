@@ -148,9 +148,10 @@ public class DSNewsControllerBasic {
 	
 		@RequestMapping(value = {"noticiasDSNews"})
 		public ModelAndView mostrarNoticiaDSNews(
-				@RequestParam("guid")String StrGuid){
+				@RequestParam("n")String StrGuid){
 			
 			int guid = Integer.parseInt(StrGuid);
+			
 			
 			Article article = daoarticle.read(guid);
 			

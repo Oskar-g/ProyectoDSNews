@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import dao.DAOArticle;
+import dao.DAOChannel;
 import dao.DAONewspaper;
 import dao.DAOSection;
 import modelos.Article;
@@ -35,7 +36,9 @@ public class DSNewsController {
 	DAOSection daosection;
 	@Autowired
 	DAONewspaper daonewspaper;
-
+	@Autowired
+	DAOChannel daochannel;
+	
 	/*
 	 * ---------------------------------------------------------------------
 	 * ModelAndViews
@@ -119,20 +122,16 @@ public class DSNewsController {
 		ModelAndView mv = new ModelAndView("errorDatos");
 		User us = (User)sesion.getAttribute("user");
 
-		//EL METODO MAS GUARRO DEL MUNDO PARA GENERAR UN LINK ALEATORIO
-		String link= "";
-		List<Article> listar = daoarticle.listarSuperUser();
-		int size = listar.size(); 
-		if (size > 0) {
-			Article a = listar.get(size-1);
-			int tam = a.getGuid()+1;
-			link = "noticiasDSNews?guid="+tam;
-		}else if(size == 0){
-			link = "noticiasDSNews?guid=1";
-		}
+		int channelid = 1;
+		int userid;
 		
-        int channelid = 1;
-        int userid;
+		//Obtener el siguiente GUID
+		int nextguid = daoarticle.getMax().getGuid();
+		String server = daochannel.read(1).getLink();
+		
+		
+ 
+        String link = server+"noticiasDSNews?n="+nextguid;
         
         try{
         	userid=us.getId();
@@ -141,8 +140,15 @@ public class DSNewsController {
         	return mv;
 		}
 		
+       /* 
+        String q = "random word £500 bank $";
+        String url = "http://example.com/query?q=" + URLEncoder.encode(q, "UTF-8");
+        */
+        
         Article article = new Article(link, title, content, new Date(),description, keywords, userid, channelid, sectionId);
-
+        article.setGuid(nextguid);
+        
+        
         if (article.getTitle().trim().equals("") || article.getContent().trim().equals("") || article.getDescription().trim().equals("") || article.getKeywords().trim().equals("")){
         	return mv;
         }else{

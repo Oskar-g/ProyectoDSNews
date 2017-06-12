@@ -92,7 +92,7 @@
 											<td>
 											<a href="formEditar?guid=${article.guid}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<a href="noticiasDSNews?guid=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
+											<a href="noticiasDSNews?n=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
 											</tr>
 
 											</c:forEach>
