@@ -229,6 +229,7 @@ public class DSNewsControllerRSS {
 		      for (Article article : articles) {
 		    	  
 		    	  entry = new SyndEntryImpl();
+		    	  entry.setUri(article.getLink());
 			      entry.setTitle(article.getTitle());
 			      entry.setLink(article.getLink());
 			      entry.setPublishedDate(article.getPubDate());

@@ -15,7 +15,7 @@ import modelos.Channel;
 
 public class DAOChannelImpl implements DAOChannel {
 
-	String mainTable = "Channel";
+	String mainTable = "channel";
 	
 	//Mapeo de la base de datos
 	class RowMapperChannel implements RowMapper<Channel>{
