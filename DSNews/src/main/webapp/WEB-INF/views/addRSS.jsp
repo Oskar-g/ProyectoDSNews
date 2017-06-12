@@ -19,7 +19,12 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<jsp:include page="common/loged_head.jsp"/>
+
+				<div id="header-wrapper">
+					<a href="logout"><spring:message code="logout" /></a>
+					<div id="header">
+					</div>
+				</div>
 						
 
 			<!-- Main -->
@@ -81,7 +86,7 @@
 					<c:forEach items="${listaPeriodicos}" var="listaPeriodicos">
 						<option value="${listaPeriodicos.getId()}"><c:out value="${listaPeriodicos.getName()}"></c:out></option>
 					</c:forEach>
-					<option value="new">Crear nuevo Periodico</option>
+					<option value="new"><spring:message code="crear_nuevo_periodico" /></option>
 					
 				</select>
 			</td>
