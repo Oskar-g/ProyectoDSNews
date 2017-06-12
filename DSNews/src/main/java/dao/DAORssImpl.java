@@ -19,6 +19,8 @@ public class DAORssImpl implements DAORss{
 	 * ----------------------------------------------------------
 	 */
 	private String mainTable = "rss_feeds";
+	private String joinTable1 = "newspapers";
+	
 	private DataSource dataSource;
 		
 	/*
@@ -79,7 +81,20 @@ public class DAORssImpl implements DAORss{
 				+ "FROM "+this.mainTable+" "
 				+ "ORDER BY section_id";	
 		
-		List<Rss> lista = jdbc.query(sql, new Object[]{},new RowMapperRss());
+		List<Rss> lista = jdbc.query(sql, new Object[]{},new RowMapperRss().mapperRss);
+		
+		return lista;
+	}
+
+	public List<Rss> listarTodo() {
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+
+		String sql = "SELECT * "
+				+ "FROM "+this.mainTable+" "
+				+ "INNER JOIN "+this.joinTable1+" ON newspaper_id = "+this.joinTable1+".id "
+				+ "ORDER BY section_id";	
+		
+		List<Rss> lista = jdbc.query(sql, new Object[]{},new RowMapperRss().mapperRssPeriodico);
 		
 		return lista;
 	}

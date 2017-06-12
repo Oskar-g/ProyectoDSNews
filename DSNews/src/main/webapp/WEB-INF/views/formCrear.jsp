@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -15,18 +15,18 @@
 <link rel="shortcut icon" type="image/x-icon" href="recursos/images/logo.ico" />
 <link rel="stylesheet" href="recursos/assets/css/main.css" />
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=zts4im6m4bpnyqrz26hvn6x9859jxyq2px5u9loc8gwzglxs"></script>
 <script>tinymce.init({ selector:'textarea' });</script>
+
 	
 	</head>
-	
 	
 	<body class="left-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header">
-						
+			<jsp:include page="common/loged_head.jsp"/>
+				
 
 			<!-- Main -->
 				<div id="main-wrapper">
@@ -43,7 +43,7 @@
 
 								
 										<footer>
-											
+											<button onclick="javascript:history.back()"><spring:message code="volver" /></button>
 										</footer>
 									</section>
 
@@ -57,13 +57,8 @@
 										<header>
 										<h2><spring:message code="crear_noticia" /></h2>
 										</header>
-
-										<form action="crear">
+<form action="crear">
 <table>
-	<tr>
-		<td><label for="link"><spring:message code="link" /></label></td>
-		<td><input type="text" name="link"></td>
-	</tr>
 	<tr>
 		<td><label for="title"><spring:message code="titular" /></label></td>
 		<td><input type="text" name="title"></td>
@@ -72,20 +67,18 @@
 		<td><label for="content"><spring:message code="contenido" /></label></td>
  		<td><textarea name="content"></textarea></td>
 	<tr>
-		<td><label for="pubDate"><spring:message code="fecha_publicacion" /></label></td>
-		<td><input type="Date" name="pubDate"></td>
-	</tr>
-	<tr>
 		<td><label for="description"><spring:message code="descripcion" /></label></td>
 		<td><input type="text" name="description"></td>
 	</tr>
 	<tr>
-		<td><label for="channelid"><spring:message code="id_periodico" /></label></td>
-		<td><input type="number" name="channelid"></td>
-	</tr>
-	<tr>
-		<td><label for="sectionid"><spring:message code="id_seccion" /></label></td>
-		<td><input type="number" name="sectionid"></td>
+		<td><label for="sectionId"><spring:message code="id_seccion" /></label></td>
+		<td>
+			<select name="sectionId">
+				<c:forEach items="${sections}" var="section">
+					<option value="${section.getId()}"><c:out value="${section.getName()}"></c:out></option>
+				</c:forEach>
+			</select>
+		</td>
 	</tr>
 	<tr>
 		<td><label for="keywords"><spring:message code="keywords" /></label></td>

@@ -17,7 +17,7 @@ public interface DAONewspaper {
 	 * @return		Objeto Periodico con los datos del registro 
 	 * 				coincidente
 	 */
-	Newspaper getNewspaper(int id);
+	public Newspaper getNewspaper(int id);
 	
 	// ------------------------------------------------------------------
 	
@@ -30,6 +30,19 @@ public interface DAONewspaper {
 	 * @return		Lista de Objetos Periodico con los datos 
 	 * 				almacenados en la base de datos
 	 */
-	List<Newspaper> listar();
+	public List<Newspaper> listar();
+
+	// ------------------------------------------------------------------
+	
+	/**
+	 * Listar Periodicos
+	 * 
+	 * Obtener los datos de todas los periodicos almacenados
+	 * en la base de datos
+	 *  
+	 * @return		Lista de Objetos Periodico con los datos 
+	 * 				almacenados en la base de datos
+	 */
+	public boolean create(Newspaper n);
 	
 }//Fin de DAONewspaper

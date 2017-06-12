@@ -1,16 +1,24 @@
 package modelos;
 
 public class User {
-	//Datos o propiedades
+	/*
+	 * ------------------------------------------------
+	 * Attributos
+	 *------------------------------------------------ 
+	 */
 	private int id;
 	private String name;
 	private String role;
 	
-	//Constructores 
-	//Constructor vacio
+	/*
+	 * ------------------------------------------------
+	 * Contructores
+	 *------------------------------------------------ 
+	 */
 	public User(){ }
 	
-	//Constructores con parametros
+	// ------------------------------------------------
+	
 	public User(int id,String name, String role){
 		this.id = id;
 		this.name= name;
@@ -18,7 +26,11 @@ public class User {
 		
 	}
 
-	//Getters y setters
+	/*
+	 * ------------------------------------------------
+	 * Getters & Setters
+	 *------------------------------------------------ 
+	 */
 	public int getId() {
 		return id;
 	}
