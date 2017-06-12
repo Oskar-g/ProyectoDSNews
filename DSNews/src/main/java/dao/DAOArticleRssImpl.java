@@ -136,4 +136,18 @@ public class DAOArticleRssImpl implements DAOArticleRss {
 		int i = jdbc.update(sql, new Object[]{id});
 		return (i == 0);
 	}
+	
+	public int getSiguienteOrden(){
+		String sql="select max(num_entry)+1 from "+mainTable;
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		int sig=jdbc.queryForInt(sql);
+		return sig;
+	}
+	
+	public void updateOrdenRezagados(int o){
+		int m=getSiguienteOrden();
+		String sql="update "+mainTable+" set num_entry=num_entry+? where num_entry<?";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		jdbc.update(sql,new Object[]{m,o});
+	}
 }

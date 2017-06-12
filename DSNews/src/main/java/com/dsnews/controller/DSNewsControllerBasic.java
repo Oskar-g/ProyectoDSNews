@@ -73,6 +73,7 @@ public class DSNewsControllerBasic {
 		
 		//Sólo periodico y categoría
 		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
+		
 		for (Section categoria : sections) {
 			
 			List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
