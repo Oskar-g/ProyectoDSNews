@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Añadir RSS</title>
+		<title>Admin deSoft</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="author" content="Equipo DopeTrope">
@@ -18,10 +18,7 @@
 			<!-- Header -->
 				<div id="header-wrapper">
 					<div id="header">
-					</div>
-				</div>
 						
-
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
@@ -30,7 +27,7 @@
 
 								<!-- Sidebar -->
 									<section class="box">
-										<a href="#" class="image featured"><img src="images/rss.jpg" alt="" /></a>
+										<a href="#" class="image featured"><img src="images/login.png" alt="" /></a>
 										<header>
 											<h3>Administrador</h3>
 										</header>
@@ -49,59 +46,30 @@
 									<article class="box post">
 									
 										<header>
-										<h2>Añadir RSS</h2>
+										<h2>Log in</h2>
 										</header>
 
-								<table class="rss">
-									<tr>
-									<td colspan="2">LISTA DE RSS AÑADIDOS</td>
-									</tr>
-
-									<tr>
-									<th>Link RSS</th>
-									<th>Sección Id</th>
-									</tr>
-
-									<c:forEach items="${lista}" var="rss">
+								<form action="login" method="POST">
+	<table>
+		<tr>
+			<td><label for="name">USUARIO</label></td>
+			<td><input type="text" name ="name"></td>
+		</tr>
+		<tr>
+			<td><label for="password">CONTRASEÑA</label></td>
+			<td><input type="password"  name ="password"></td>
+		</tr>
 		
-									<tr>
-									<td><c:out value="${rss.link}"/></td>
-									<td><c:out value="${rss.sectionId}"/></td>
-									</tr>
+	</table>
 	
-									</c:forEach>
-								</table>
+	<button type="submit">Acceso</button>
+		</form>
 
 										<section>
 											<header>
 												<h3></h3>
 											</header>
-											<form action="addRSS">
-	<table class="rss">
-		<tr>
-			<td><label for="link">Link</label><input type="text" name="link"></td>
-			
-			
-			<td><label for="section_id">Categoría</label>
-				<select name="section_id">
-					<option value="1">España</option>
-					<option value="2">Internacional</option>
-					<option value="3">Economía</option>
-					<option value="4">Ciencia</option>
-					<option value="5">Tecnología</option>
-					<option value="6">Cultura</option>
-					<option value="7">Deportes</option>
-					<option value="8">Televisión</option>
-					<option value="9">Sociedad</option>
-				</select>
-			</td>
-		</tr>
-		<tr><td colspan="2">&nbsp;</td></tr>
-		<tr>
-			<td colspan="2"><button>Añadir</button></td>
-		</tr>
-	</table>
-</form>
+											
 										</section>
 										
 									</article>
@@ -111,8 +79,7 @@
 					</div>
 				</div>
 
-			
-		<!--Footer-->
+		
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
