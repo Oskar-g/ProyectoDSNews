@@ -1,6 +1,8 @@
+<!DOCTYPE HTML>
+
 <html>
 	<head>
-		<title><spring:message code="titulo.index" /></title>
+		<title>Noticias deSoft</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="author" content="Equipo DopeTrope">
@@ -9,8 +11,9 @@
 		<link rel="shortcut icon" type="image/x-icon" href="recursos/images/logo.ico" />
 		<link rel="stylesheet" href="recursos/assets/css/main.css" />
 	
+		
 	</head>
-	<body class="left-sidebar">
+	<body class="no-sidebar">
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -19,58 +22,37 @@
 						<img src="recursos/images/pic01.png" alt="Foto de deSoft" class="imagen">
 
 
-						<!-- Banner -->
-							<section id="banner">
-								<header>
-									<h2>Bienvenido a noticias</h2>
-									<p>Haga click en su periodico favorito</p>
-								</header>
-							</section>
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="index.html">Home</a></li>	
+								</ul>
+							</nav>
+
+					</div>
+				</div>
+
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
-						<div class="row">
-							<!--<div class="4u 12u(mobile)">
 
-								 Sidebar 
-									<section class="box">
-										<a href="#" class="image featured"><img src="recursos/images/login.png" alt="" /></a>
-										<header>
-											<h3><spring:message code="titulo.paginaAdmin"/></h3>
-										</header>
-
+						<!-- Content -->
+							<article class="box post">
+								<a href="#" class="image featured"><img src="recursos/images/pic01.jpg" alt="" /></a>
+								<header>
+									<h2>${articles.title}</h2>
+									<p>${article.descirption}</p>
+								</header>
+								<p>
+									${article.content}
+								</p>
 								
-										<footer>
-											
-										</footer>
-									</section>
+							</article>
 
-							</div>-->
+					</div>
+				</div>
 
-							<div class="8u 12u(mobile) important(mobile)">
-								<div class="logos">
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="1" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="2" class="portada"></a>
-									<a href="#"><img src="recursos/images/elpais.png" alt="3" class="portada"></a>
-								
-								</div>
-							</div>
-						</div>
-
-						<br>
-						<br>
-						<br>
-
-						<!--Footer-->
+			<!--Footer-->
 						<div class="row">
 							<div class="4u 12u(mobile)">
 								<section>
@@ -150,7 +132,7 @@
 					</div>
 				</div>
 
-		
+
 		<!-- Scripts -->
 			<script src="recursos/assets/js/jquery.min.js"></script>
 			<script src="recursos/assets/js/jquery.dropotron.min.js"></script>
