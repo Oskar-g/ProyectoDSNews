@@ -19,8 +19,9 @@
 		<div id="page-wrapper">
 
 			<!-- Header -->
+
 				<div id="header-wrapper">
-					<a href="logout">Log Out</a>
+					<a href="logout"><spring:message code="logout" /></a>
 					<div id="header">
 					</div>
 				</div>
@@ -55,30 +56,7 @@
 										<header>
 										<h2><spring:message code="anadir_RSS"/></h2>
 										</header>
-
-								<table class="rss">
-									<tr>
-									<td colspan="2"><spring:message code="lista_RSS" /></td>
-									</tr>
-
-									<tr>
-									<th><spring:message code="link_RSS" /></th>
-									<th><spring:message code="id_seccion" /></th>
-									<th><spring:message code="periodico" /></th>
-									</tr>
-
-									<c:forEach items="${lista}" var="rss">
-		
-									<tr>
-									<td><c:out value="${rss.link}"/></td>
-									<td><c:out value="${rss.sectionId}"/></td>
-									<td><c:out value="${rss.getNewspaperId()}"/></td>
-									
-									</tr>
-	
-									</c:forEach>
-								</table>
-
+										
 										<section>
 											<header>
 												<h3></h3>
@@ -108,7 +86,7 @@
 					<c:forEach items="${listaPeriodicos}" var="listaPeriodicos">
 						<option value="${listaPeriodicos.getId()}"><c:out value="${listaPeriodicos.getName()}"></c:out></option>
 					</c:forEach>
-					<option value="new">Crear nuevo Periodico</option>
+					<option value="new"><spring:message code="crear_nuevo_periodico" /></option>
 					
 				</select>
 			</td>
@@ -132,6 +110,28 @@
 	</table>
 </form>
 										</section>
+										
+								<table class="rss">
+
+									<tr>
+									<th><spring:message code="link_RSS" /></th>
+									<th><spring:message code="id_seccion" /></th>
+									<th><spring:message code="periodico" /></th>
+									</tr>
+
+									<c:forEach items="${lista}" var="rss">
+		
+									<tr>
+									<td><c:out value="${rss.link}"/></td>
+									<td><c:out value="${rss.sectionId}"/></td>
+									<td><c:out value="${rss.getNewspaperId()}"/></td>
+									
+									</tr>
+	
+									</c:forEach>
+								</table>
+
+										
 										
 									</article>
 

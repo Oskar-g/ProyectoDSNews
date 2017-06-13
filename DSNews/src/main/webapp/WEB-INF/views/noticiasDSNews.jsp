@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Noticias deSoft</title>
+		<title><spring:message code="titulo.index"></spring:message></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="author" content="Equipo DopeTrope">
@@ -28,7 +28,7 @@
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
-									<li class="current"><a href="index.html">Home</a></li>	
+									<li class="current"><a href="index.html"><spring:message code="home"/></a></li>	
 								</ul>
 							</nav>
 
@@ -122,7 +122,7 @@
 								<!-- Copyright -->
 									<div id="copyright">
 										<ul class="links">
-											<li>&copy; <spring:message code="copyright"/></li>
+											<li>&copy; <a href="https://www.linkedin.com/groups/8612162"><spring:message code="dopetrope"/></a><spring:message code="copyright"/></li>
 										</ul>
 									</div>
 

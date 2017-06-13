@@ -31,7 +31,7 @@
 
 								<!-- Sidebar -->
 									<section class="box">
-										<a href="#" class="image featured"><img src="recursos/images/admin.png" alt="" /></a>
+										<a href="#" class="image featured"><img src="recursos/images/admin.png" alt="Administrador" /></a>
 										<header>
 											<h3><spring:message code="buscador"/></h3>
 										</header>
@@ -92,6 +92,17 @@
 											<td>
 											<a href="formEditar?guid=${article.guid}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<!-- <script language="Javascript"> 
+												function confirmar(){ 
+												confirmar=confirm("¿Quiere borrar la noticia?"); 
+												if (confirmar) 
+												alert('Has dicho que si');
+												else 
+												alert('Has dicho que no'); 
+												} 
+											</script>
+											<a href="javascript:confirmar()">pulsar</a> -->
+											
 											<a href="noticiasDSNews?n=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
 											</tr>
 

@@ -27,8 +27,8 @@
 						<!-- Banner -->
 							<section id="banner">
 								<header>
-									<h2>Bienvenido a noticias</h2>
-									<p>Haga click en su periodico favorito</p>
+									<h2><spring:message code="bienvenido.index" /></h2>
+									<p><spring:message code="clic_favorito" /></p>
 								</header>
 							</section>
 			<!-- Main -->
@@ -130,7 +130,7 @@
 								<!-- Copyright -->
 									<div id="copyright">
 										<ul class="links">
-											<li>&copy; <spring:message code="copyright"/></li>
+											<li>&copy; <a href="https://www.linkedin.com/groups/8612162"><spring:message code="dopetrope"/></a><spring:message code="copyright"/></li>
 										</ul>
 									</div>
 

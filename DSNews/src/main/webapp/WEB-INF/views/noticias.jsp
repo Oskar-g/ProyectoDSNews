@@ -110,7 +110,8 @@
 									<%  
 									 	} 
 									%>						
-										</section>
+
+									</section>
 									</c:forEach>
 <!-- FIN CUERPO NOTICIAS -->
 								</div>
