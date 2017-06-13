@@ -59,6 +59,17 @@ public class DAOArticleImpl implements DAOArticle {
 		}	
 	}
 
+	
+	class RowMapperArticleMaxGUID implements RowMapper<Article>{
+		public Article mapRow(ResultSet rs, int numRow) throws SQLException{
+			
+			Article a = new Article();
+			a.setGuid(rs.getInt("guid"));
+			
+			return a;
+		}	
+	}
+
 	class RowMapperArticles implements RowMapper<Article>{
 		public Article mapRow(ResultSet rs, int numRow) throws SQLException{			
 			Article a = new Article();
@@ -86,11 +97,11 @@ public class DAOArticleImpl implements DAOArticle {
 		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
 		boolean result = false;
 		
-		String sql = "insert into "+mainTable+"(link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
-				+ "values (?,?,?,now(),?,?,?,?,?)";
+		String sql = "insert into "+mainTable+"(guid,link,title,content,pub_date,description,keywords,user_id,channel_id,section_id)"
+				+ "values (?,?,?,?,now(),?,?,?,?,?)";
 		
 		try{
-			jdbc.update(sql, new Object[]{a.getLink(),a.getTitle(),a.getContent(),
+			jdbc.update(sql, new Object[]{a.getGuid(),a.getLink(),a.getTitle(),a.getContent(),
 					a.getDescription(),a.getKeywords(),a.getUserId(),
 					a.getChannelId(),a.getSectionId()});
 			result = true;
@@ -113,6 +124,17 @@ public class DAOArticleImpl implements DAOArticle {
 		
 		return a;
 	}
+	
+	
+	public Article getMax(){
+		String sql= "SELECT ifnull(MAX(guid),0)+1 as 'guid' FROM "+mainTable+";";
+		JdbcTemplate jdbc = new JdbcTemplate(dataSource);
+		
+		Article a = jdbc.queryForObject(sql, new RowMapperArticleMaxGUID());
+		
+		return a;
+	}
+	
 	
 	/*
 	 *----------------------------------------------------------

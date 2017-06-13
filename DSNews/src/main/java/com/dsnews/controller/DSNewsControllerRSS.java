@@ -106,7 +106,7 @@ public class DSNewsControllerRSS {
 	public ModelAndView updateRssArticles(){
 		
       List<Rss> lista = daorss.listar();
-      
+      int siguienteOrden=daoarss.getSiguienteOrden();
 		for (Rss rss : lista) {
 			try {
 				URL feedUrl = new URL(rss.getLink());
@@ -148,7 +148,7 @@ public class DSNewsControllerRSS {
           }		
 
 		} 
-		
+		daoarss.updateOrdenRezagados(siguienteOrden);
 		return new ModelAndView("index");
 	}
 	
@@ -229,6 +229,7 @@ public class DSNewsControllerRSS {
 		      for (Article article : articles) {
 		    	  
 		    	  entry = new SyndEntryImpl();
+		    	  entry.setUri(article.getLink());
 			      entry.setTitle(article.getTitle());
 			      entry.setLink(article.getLink());
 			      entry.setPublishedDate(article.getPubDate());

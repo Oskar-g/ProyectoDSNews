@@ -1,7 +1,10 @@
 package functions;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Clase Para pequeñas operaciones y utilidades
@@ -71,5 +74,26 @@ public class Functions {
 		return "x";
 		
 	}// Fin de AcortarString	
+	
+	
+	public static String linkGenerator(String title, String server, int nextguid){
+		String url="";
+		Date date = new Date();
+        String newdate= new SimpleDateFormat("yyyy/MM/dd").format(date);
+        
+        String link = server+"noticiasDSNews?n="+nextguid+"--"+newdate;
+      
+		try {
+			url = URLEncoder.encode(title, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+        link+="-"+url;
+
+        System.out.println(link);
+		
+		return link;
+	}
+	
 	
 }//Fin de Functions

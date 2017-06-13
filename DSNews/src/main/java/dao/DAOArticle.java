@@ -11,6 +11,7 @@ public interface DAOArticle {
 	public boolean create(Article a);
 	public boolean update(Article a);
 	public Article read(int guid);
+	public Article getMax();	
 	public boolean delete(int guid);
 	public List<Article> buscar(String filter, String keyword);
 	public List<Article> buscar(String filter, String keyword,int userId);

@@ -92,7 +92,18 @@
 											<td>
 											<a href="formEditar?guid=${article.guid}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 											<a href="borrar?guid=${article.guid}"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<a href="noticiasDSNews?guid=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
+											<!-- <script language="Javascript"> 
+												function confirmar(){ 
+												confirmar=confirm("¿Quiere borrar la noticia?"); 
+												if (confirmar) 
+												alert('Has dicho que si');
+												else 
+												alert('Has dicho que no'); 
+												} 
+											</script>
+											<a href="javascript:confirmar()">pulsar</a> -->
+											
+											<a href="noticiasDSNews?n=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
 											</tr>
 
 											</c:forEach>

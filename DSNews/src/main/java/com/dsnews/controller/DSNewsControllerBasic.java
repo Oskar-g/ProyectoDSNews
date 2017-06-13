@@ -73,6 +73,7 @@ public class DSNewsControllerBasic {
 		
 		//Sólo periodico y categoría
 		List<ListadoIndex> listadoCompleto = new ArrayList<ListadoIndex>();
+		
 		for (Section categoria : sections) {
 			
 			List<ArticleRss> listaArticulos = new ArrayList<ArticleRss>();
@@ -148,11 +149,17 @@ public class DSNewsControllerBasic {
 	
 		@RequestMapping(value = {"noticiasDSNews"})
 		public ModelAndView mostrarNoticiaDSNews(
-				@RequestParam("guid")String StrGuid){
+				@RequestParam("n")String StrGuid){
 			
-			int guid = Integer.parseInt(StrGuid);
+			
+			String[] key = StrGuid.split("--");
+			System.out.println(key[0]);
+			
+			int guid = Integer.parseInt(key[0]);
 			
 			Article article = daoarticle.read(guid);
+			
+			
 			
 			ModelAndView mv = new ModelAndView("noticiasDSNews");
 			mv.addObject("article", article);

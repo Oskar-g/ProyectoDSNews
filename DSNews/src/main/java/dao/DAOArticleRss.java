@@ -12,5 +12,6 @@ public interface DAOArticleRss {
 	public boolean update(ArticleRss art);
 	public ArticleRss read(int id);
 	public boolean delete(int id);
-
+	public int getSiguienteOrden();
+	public void updateOrdenRezagados(int o);
 }
