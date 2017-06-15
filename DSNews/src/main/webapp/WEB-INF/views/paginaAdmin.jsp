@@ -103,7 +103,7 @@
 											</script>
 											<a href="javascript:confirmar()">pulsar</a> -->
 											
-											<a href="noticiasDSNews?n=${article.guid}"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
+											<a href="noticiasDSNews?n=${article.guid}" target="_BLANK"><i class="fa fa-eye" aria-hidden="true"></i></a></td>	
 											</tr>
 
 											</c:forEach>

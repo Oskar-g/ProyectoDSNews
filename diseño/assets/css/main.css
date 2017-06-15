@@ -178,7 +178,7 @@
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
-		background-color: #fff;
+		/*background-color: #fff;*/
 	}
 
 	.row > * {
@@ -1230,6 +1230,7 @@
 
 	table {
 		width: 100%;
+
 	}
 
 		table.default {
@@ -1258,7 +1259,9 @@
 			table.default thead {
 				border-bottom: solid 2px #dddddd;
 			}
-
+			.logos{
+				margin-left: 25%;
+			}
 /* Section/Article */
 
 	section, article {
@@ -1288,6 +1291,13 @@
 			display: inline;
 			margin: 0;
 			padding: 0 1em 0 1em;
+		}
+
+		.logos{
+			/*margin-right: auto;
+			margin-left: auto;*/
+			position: center;
+			width: 100%;
 		}
 
 /* Box */
@@ -1415,6 +1425,16 @@
 			float: left;
 			margin: 0 2em 2em 0;
 		}
+
+		.portada{
+			width: 200px;
+			height: 60px;
+			float: left;
+			margin-right: 3%;
+			margin-left: 1.5%;
+			margin-bottom: 1.5%;
+		}
+
 
 /* List */
 

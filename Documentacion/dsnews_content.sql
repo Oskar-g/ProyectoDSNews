@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 
 --
 -- Base de datos: `dsnews_content`
-DROP DATABASE IF EXISTS 'dsnews_content';
+DROP DATABASE IF EXISTS dsnews_content;
 CREATE DATABASE IF NOT EXISTS `dsnews_content` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `dsnews_content`;
 
@@ -380,7 +380,7 @@ CREATE TABLE `channel` (
 --
 
 INSERT INTO `channel` (`channel_id`, `link`, `title`, `last_build_date`, `language`, `description`, `copyright`, `title_image`, `url_image`, `link_image`) VALUES
-(1, 'http://localhost:8080/', 'DsNews', '2017-06-09', 'ES', 'Periodico digital DsNews', 'Dsnews 2017 TOdos los derechos Reservados', 'Logo DsNews', 'http://localhost:8080/DSNews/recursos/images/logo.png', 'http://localhost:8080/DSNews/recursos/images/logo.png');
+(1, 'http://localhost:8080/DsNews/', 'DsNews', '2017-06-09', 'ES', 'Periodico digital DsNews', 'Dsnews 2017 TOdos los derechos Reservados', 'Logo DsNews', 'http://localhost:8080/DSNews/recursos/images/logo.png', 'http://localhost:8080/DSNews/recursos/images/logo.png');
 
 -- --------------------------------------------------------
 

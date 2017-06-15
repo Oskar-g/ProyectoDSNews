@@ -2,12 +2,6 @@ package com.dsnews.controller;
 
 import java.io.IOException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -17,43 +11,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
-import dao.DAOArticle;
-import dao.DAOArticleRss;
-import dao.DAOArticleRssImpl;
-import dao.DAOListadoIndex;
-import dao.DAONewspaper;
-import dao.DAONewspaperImpl;
-import dao.DAORss;
-import dao.DAORssImpl;
-import dao.DAOSection;
 import dao.DAOUser;
-import modelos.Article;
-import modelos.ArticleRss;
-import modelos.ListadoIndex;
-import modelos.Newspaper;
-import modelos.Rss;
-import modelos.Section;
+
 import modelos.User;
 
 @Controller
 public class DSNewsControllerLogin {
 	@Autowired
 	DAOUser daouser;
-	@Autowired
-	DAOArticle daoarticle;
-	@Autowired
-	DAORss daorss;
-	@Autowired
-	DAOArticleRss daoarticlerss;
-	@Autowired
-	DAOSection daosection;
-	@Autowired
-	DAONewspaper daonewspaper;
-	@Autowired
-	DAOListadoIndex daolindex;
-	
-	
+
+	/**
+	 * Formulario de Login
+	 * 
+	 * Carga la vista con el formulari de acceso a la plataforma para los administradores
+	 * Si ya existe una sesión con un parámetro como objeto de usuario se redireccionará
+	 * al panel de administración.
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param rs		Objeto de response
+	 * 
+	 * @return			Model and View que corresponde a formLogin
+	 */
 	@RequestMapping(value = {"formLogin"})
 	public ModelAndView formlogin(HttpSession sesion, HttpServletResponse rs){
 		
@@ -74,6 +52,22 @@ public class DSNewsControllerLogin {
 		return mv;
 	}
 	
+	// ----------------------------------------------------------------------------------
+	
+	/**
+	 * Login
+	 * 
+	 * Genera una sesión con los datos del usuario para tener acceso al sitema
+	 * Si le verificación es errónea, retornará a la vista loginFalse
+	 * si no, a la vista loginTrue.
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param name		Nombre de la cuenta del usuario
+	 * @param password	Password del usuario
+	 * 
+	 * @return			Model And View de loginTrue o loginFalse dependiendo del 
+	 * 					resultado en la busqueda de coincidencia de usuario 
+	 */
 	@RequestMapping(value = {"login"})
 	public ModelAndView login(HttpSession sesion,
 			@RequestParam(value="name")String name,
@@ -94,6 +88,18 @@ public class DSNewsControllerLogin {
 				return mv;
 			}
 	
+	// ----------------------------------------------------------------------------------
+		
+	/**
+	 * Desconectar Usuario
+	 * 
+	 * Destruye la sesión actual
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param rs		Objeto de response
+	 * 
+	 * @return			null, contempla una redirección al controlador "index"
+	 */
 	@RequestMapping(value = {"logout"})
 	public ModelAndView logout(HttpSession sesion, HttpServletResponse rs){
 		

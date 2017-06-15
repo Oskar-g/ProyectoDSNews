@@ -10,7 +10,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,13 +30,11 @@ import com.rometools.rome.io.XmlReader;
 
 import dao.DAOArticle;
 import dao.DAOArticleRss;
-import dao.DAOListadoIndex;
+import dao.DAOChannel;
 import dao.DAONewspaper;
 import dao.DAORss;
-import dao.DAOChannel;
-import dao.DAOChannelImpl;
 import dao.DAOSection;
-import dao.DAOUser;
+
 import modelos.Channel;
 import modelos.Article;
 import modelos.ArticleRss;
@@ -45,17 +42,15 @@ import modelos.Newspaper;
 import modelos.Rss;
 import modelos.Section;
 import modelos.User;
-import servicios.*;
 
 
 @Controller
 public class DSNewsControllerRSS {
+
+	@Autowired
+	DAONewspaper daon;
 	@Autowired
 	DAORss daor;
-	@Autowired
-	DAOUser daou;
-	@Autowired
-	DAOArticle daoa;
 	@Autowired
 	DAORss daorss;
 	@Autowired
@@ -63,14 +58,20 @@ public class DSNewsControllerRSS {
 	@Autowired
 	DAOSection daosec;
 	@Autowired
-	DAOListadoIndex daoli;
-	@Autowired
-	DAONewspaper daon;
-	@Autowired
 	DAOChannel daochannel;
+	@Autowired
+	DAOArticle daoa;
 	
-	
-	//Envia al jsp para añadir un rss
+	/**
+	 * Formulario Añadir Rss
+	 * 
+	 * Carga el formulario para añadir nuevos rss externos
+	 * 
+	 * @param sesion		Objeto de sesión
+	 * @param rs			Objeto de response
+	 * 
+	 * @return			Vista addRSS para añadir rss
+	 */
 	@RequestMapping("formAddRSS")
 	public ModelAndView formAddRSS(HttpSession session, HttpServletResponse rs){
 		
@@ -99,9 +100,20 @@ public class DSNewsControllerRSS {
 		}
 		
 		return mv;
-	}
 	
-	//Actualiza los rss
+	}//Fin de formAddRSS
+	
+	// ----------------------------------------------------------------------------
+	
+	/**
+	 * Actualizar Artículos Obtenidos por RSS
+	 * 
+	 * Se da un repaso a cada enlace RSS añadido en la base de datos
+	 * y se escriben (o sobreescriben) los articulos que haya disponibles
+	 * en dicho enlace
+	 * 
+	 * @return		Vista del index
+	 */
 	@RequestMapping("downloadArticles")
 	public ModelAndView updateRssArticles(){
 		
@@ -109,15 +121,11 @@ public class DSNewsControllerRSS {
       int siguienteOrden=daoarss.getSiguienteOrden();
 		for (Rss rss : lista) {
 			try {
-				URL feedUrl = new URL(rss.getLink());
-				int rssId = rss.getId();
-              
+				URL feedUrl = new URL(rss.getLink());           
               
 	            SyndFeedInput input = new SyndFeedInput();
 	            SyndFeed feed = input.build(new XmlReader(feedUrl));
 	            
-	            
-            	
             	for (SyndEntry entrada: feed.getEntries()) {
 	            		            	
 					String cover= "";
@@ -131,10 +139,7 @@ public class DSNewsControllerRSS {
 				}catch (Exception e) {
 						System.out.println("ERROR NO TIENE IMAGEN");
 				}
-				
-				//String cover = entrada.getEnclosures().get(0).getUrl();
-				//System.out.println(entrada);
-				                	
+								                	
 				ArticleRss arss = new ArticleRss(link,title,description,pubDate,cover,rss.getId(),0);
 				daoarss.create(arss);	
 				
@@ -150,9 +155,22 @@ public class DSNewsControllerRSS {
 		} 
 		daoarss.updateOrdenRezagados(siguienteOrden);
 		return new ModelAndView("index");
-	}
+		
+	}//Fin de downloadArticles
 	
-	//Añade el rss a la base de datos
+	// --------------------------------------------------------------------------------------
+	
+	/**
+	 * Añadir Rss externo
+	 * 
+	 * @param sesion		Objeto de sesión
+	 * @param rs			Objeto de response
+	 * @param link			Enlace del Rss externo
+	 * @param sectionId		Sección a la que pertenece dicho rss
+	 * @param newspaperid	Periodico al que pertenece el rss
+	 * 
+	 * @return				Vista de error de datos si la creación es incorrecta
+	 */
 	@RequestMapping("addRSS")
 	public ModelAndView addRss(
 		HttpSession sesion,
@@ -179,9 +197,20 @@ public class DSNewsControllerRSS {
 		}
 			mv = new ModelAndView("errorDatos");
 			
-			return mv;
-	}
-	//Creamos nuestro rss	
+		return mv;
+			
+	}//Fin de addRSS
+	
+	// ----------------------------------------------------------------------
+	
+	/**
+	 * Listar nuestros Rss
+	 * 
+	 * Se repasan todas y cada una de las categorías de la base de datos
+	 * para generar en laces que de acceso a los rss de dicha categoría
+	 * 
+	 * @return		Vista de generarRss con el listado de rss propios
+	 */
 	@RequestMapping(value = {"generarRSS"})
 	public ModelAndView generarRss(){
 
@@ -193,7 +222,17 @@ public class DSNewsControllerRSS {
 		return mv;
 	}	
 	
-	//Añade el rss a la base de datos
+	// ----------------------------------------------------------------------
+	
+	/**
+	 * Generar XML de un feed.
+	 * 
+	 * A partir de los datos pasados como parámetro, se filtran los resultados
+	 * para generar un 
+	 * @param StrsectionId
+	 * @param sectionName
+	 * @return
+	 */
 	@RequestMapping(path="Rss_feed",produces="text/xml")
 	@ResponseBody
 	public String CreateRss(
@@ -206,7 +245,6 @@ public class DSNewsControllerRSS {
 		
 		 try {
 		      String feedType = "rss_2.0";
-		      String fileName = "feed.xml";
 
 		      SyndFeed feed = new SyndFeedImpl();
 		      feed.setFeedType(feedType);
@@ -242,13 +280,11 @@ public class DSNewsControllerRSS {
 		      }
 		      
 		      feed.setEntries(entries);
-		      
 
-		      //Writer writer = new FileWriter(fileName);
 		      StringWriter writer=new StringWriter();
 		      SyndFeedOutput output = new SyndFeedOutput();
 		      output.output(feed,writer);
-		      //writer.close();
+
 		      salida=writer.toString();
 		      System.out.println("RSS CREADO CORRECTAMENTE!");
 		    }
@@ -258,8 +294,6 @@ public class DSNewsControllerRSS {
 
 		return salida;
 		
-	}
+	}//Fin de Rss_feed
 	
-	
-}
-
+}//Fin de DSNewsControllerRss

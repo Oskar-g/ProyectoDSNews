@@ -7,9 +7,7 @@ import javax.sql.DataSource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import modelos.Article;
 import modelos.Newspaper;
-import modelos.User;
 import rowmappers.RowMapperNewspaper;
 
 public class DAONewspaperImpl implements DAONewspaper{

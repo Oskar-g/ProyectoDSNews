@@ -145,7 +145,6 @@ public class DAOArticleImpl implements DAOArticle {
 		JdbcTemplate jdbc = new JdbcTemplate (dataSource);
 		boolean result = false;
 		String sql = "update "+mainTable+" set "
-				+"link = ?,"
 				+"title = ?,"
 				+"content = ?,"
 				+"pub_date = now(),"
@@ -155,7 +154,7 @@ public class DAOArticleImpl implements DAOArticle {
 				+"where guid = ?";
 		
 		try{
-			jdbc.update(sql,new Object[]{a.getLink(),a.getTitle(),a.getContent(),
+			jdbc.update(sql,new Object[]{a.getTitle(),a.getContent(),
 					a.getDescription(),a.getKeywords(),
 					a.getSectionId(),a.getGuid()});
 			result = true;

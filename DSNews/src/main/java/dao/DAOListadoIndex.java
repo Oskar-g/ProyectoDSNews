@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import modelos.ArticleRss;
-import modelos.ListadoIndex;
 
 public interface DAOListadoIndex {
 	
