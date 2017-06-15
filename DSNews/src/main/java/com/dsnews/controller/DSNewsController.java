@@ -1,11 +1,6 @@
 package com.dsnews.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +43,21 @@ public class DSNewsController {
 	 * ---------------------------------------------------------------------
 	 */
 		
+	/**
+	 * Página de Administración
+	 * 
+	 * Desde aquí se puede acceder a la creación, edicion y modificación de articulos,
+	 * adición de rss y creación de periodicos.
+	 * Se verificará que el usuario está logueado para poder acceder aquí y en base a su rol
+	 * se generaráun contenido u en la lista de articulos.
+	 * 
+	 * Si el usuario no está logueado se redireccionará al controlador formLogin
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param rs		Objeto de response
+	 * 
+	 * @return			Model and View que corresponde a paginaAdmin
+	 */
 	@RequestMapping(value = {"paginaAdmin"})
 	public ModelAndView paginaAdmin(HttpSession sesion, HttpServletResponse rs){
 		ModelAndView mv = new ModelAndView("paginaAdmin");
@@ -81,10 +91,22 @@ public class DSNewsController {
 		}//Fin de Si usuario logueado...
 	
 		return mv;
-	}
+		
+	}//Fin de paginaAdmin
 	
 	// ---------------------------------------------------------------------
 
+	/**
+	 * Crear artículos. 
+	 * 
+	 * Para acceder a esta página el usuario debe de estar logueado
+	 * Si el usuario no está logueado se redireccionará al controlador formLogin
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param rs		Objeto de response
+	 * 
+	 * @return			Model and View que corresponde a formCrear
+	 */
 	@RequestMapping(value = {"formCrear"})
 	public ModelAndView formCrear(HttpSession sesion, HttpServletResponse rs){
 		ModelAndView mv = null;
@@ -110,10 +132,27 @@ public class DSNewsController {
 		}
 
 		return mv;
-	}
+	
+	}//Fin de formCrear
 	
 	// ---------------------------------------------------------------------
 
+	/**
+	 * Do Crear artículo
+	 * 
+	 * Si la inserción de datos es correcta se redireccionará al panel de administración
+	 * 
+	 * @param sesion			Objeto de sesión
+	 * @param rs				Objeto de response
+	 * @param title				Título de la noticia
+	 * @param content			Contenido de la noticia
+	 * @param description		Breve descripción de la noticia
+	 * @param sectionId			Id de la sección a la que pertenece
+	 * @param keywords			Palabras clave de la noticia.
+	 * 
+	 * @return			Model and View que corresponde a Error de datos si 
+	 * 					la inserción es errónea
+	 */
 	@RequestMapping(value = {"crear"})
 	public ModelAndView crear(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("title")String title,
@@ -131,7 +170,7 @@ public class DSNewsController {
 		//Obtener el siguiente GUID
 		int nextguid = daoarticle.getMax().getGuid();
 		String server = daochannel.read(1).getLink();
-
+		System.out.println(server);
 		
         try{
         	userid=us.getId();
@@ -150,65 +189,32 @@ public class DSNewsController {
         	return mv;
         }else{
         	try {
-        		boolean crear = daoarticle.create(article);
+        		daoarticle.create(article);
         		System.out.println("creada la noticia");
 				rs.sendRedirect("paginaAdmin");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
         }
+        
         return null;
-  	}
-	
-	// ---------------------------------------------------------------------
-
-	
-	@RequestMapping(value = {"buscarIndex"})
-	public ModelAndView buscarIndex(HttpSession sesion, HttpServletResponse rs,
-			@RequestParam("filter")String filter,
-			@RequestParam("keyword")String keyword){
-		
-		User user = (User)sesion.getAttribute("user");
-		ModelAndView mv = new ModelAndView("paginaAdmin");
-
-		List<Article>lista = new ArrayList<Article>(); 
-		
-		//Si el filtro es la id... (guid)
-		if(filter.equals("id")){
-
-			int keywordparsed;
-			try{
-				//Tratar de parsear el valor para verificar que es entero...
-				keywordparsed = Integer.parseInt(keyword);
-			}catch (Exception e) {
-				mv = new ModelAndView("errorDatos");
-			}
-			
-		}else{
-			
-			//Evitar inyección 
-			if(keyword.trim().equals("") || keyword.trim().isEmpty() || keyword == null){ 
-				mv = new ModelAndView("errorDatos");
-			}
-			
-			//Comprobando el rol de usuario...
-			if (user.getRole().equals("dios")){
-				lista = daoarticle.buscar(filter, keyword);
-			}
-			else{
-				lista = daoarticle.buscar(filter, keyword,user.getId());
-			}
-			
-		}//Fin de Si el filtro no es la id
-		mv.addObject("lista", lista);
-		mv.addObject("role", user.getRole().equals("dios"));
-				
-		return mv;
-		
-	}//Fin de buscarIndex
+  	
+	}//Fin de crear
 	
 	// ---------------------------------------------------------------------
 	
+	/**
+	 * Formulario para editar artículos. 
+	 * 
+	 * Para acceder a esta página el usuario debe de estar logueado
+	 * Si el usuario no está logueado se redireccionará al controlador formLogin
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param rs		Objeto de response
+	 * @param guid		identificador inequívoco del artículo
+	 * 
+	 * @return			Model and View que corresponde a formEditar
+	 */
 	@RequestMapping(value = {"formEditar"})
 	public ModelAndView formEditar(HttpSession session, HttpServletResponse rs,
 		@RequestParam("guid")int guid){
@@ -244,14 +250,31 @@ public class DSNewsController {
 			}
 		}
 		return mv;
-	}
+		
+	}//Fin de formEditar
 	
 	// ---------------------------------------------------------------------
 
+	/**
+	 * Efectuar la edición de un artículo
+	 * 
+	 * Si la modificación de datos es correcta se redireccionará al panel de administración
+	 * 
+	 * @param sesion			Objeto de sesión
+	 * @param rs				Objeto de response
+	 * @param guid				Identificador inequivoco del articulo
+	 * @param title				Título de la noticia
+	 * @param content			Contenido de la noticia
+	 * @param description		Breve descripción de la noticia
+	 * @param sectionId			Id de la sección a la que pertenece
+	 * @param keywords			Palabras clave de la noticia.
+	 * 
+	 * @return			Model and View que corresponde a Error de datos si 
+	 * 					la modificació es errónea
+	 */
 	@RequestMapping(value = {"editar"})
 	public ModelAndView editar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("guid")int guid,
-			@RequestParam("link")String link,
 			@RequestParam("title")String title,
 			@RequestParam("content")String content,
 			@RequestParam("description")String description,
@@ -271,7 +294,7 @@ public class DSNewsController {
         	nmb.printStackTrace();
 		}
 		
-        Article article = new Article(guid, link,  title,  content,  new Date(),  description,  keywords,
+        Article article = new Article(guid, null,  title,  content,  new Date(),  description,  keywords,
     			 userid,  1, sectionId);
         boolean modificar = daoarticle.update(article);
         
@@ -291,6 +314,15 @@ public class DSNewsController {
 	
 	// ---------------------------------------------------------------------
 	
+	/**
+	 * Borrar articulo
+	 * 
+	 * @param sesion			Objeto de sesión
+	 * @param rs				Objeto de response
+	 * @param guid				Identificador inequivoco del articulo
+	 * 
+	 * @return					Model And View de errorBorrare si hay un error durante el borrado
+	 */
 	@RequestMapping(value = {"borrar"})
 	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("guid")int guid){
@@ -311,5 +343,65 @@ public class DSNewsController {
 		return mv;
 		
 	}//Fin de borrar
+	
+	// ---------------------------------------------------------------------
+	
+	/**
+	 * Buscar Artículos
+	 * 
+	 * Filtra los articulos del usuario mediante id, titulo o contenido
+	 * Si el usuario no está logueado se redireccionará al controlador formLogin
+	 * 
+	 * @param sesion	Objeto de sesión
+	 * @param rs		Objeto de response
+	 * @param filter	Tipo de filtro {guid,title,content}
+	 * @param keyword	palabra o id a buscar
+	 * 
+	 * @return			Model and View que corresponde a Error de datos si 
+	 * 					la hay algún problema en la búsqueda, si todo es correcto
+	 * 					cargará la vista de paginaAdmin.js
+	 */
+	@RequestMapping(value = {"buscarIndex"})
+	public ModelAndView buscarIndex(HttpSession sesion, HttpServletResponse rs,
+			@RequestParam("filter")String filter,
+			@RequestParam("keyword")String keyword){
+		
+		User user = (User)sesion.getAttribute("user");
+		ModelAndView mv = new ModelAndView("paginaAdmin");
+
+		List<Article>lista = new ArrayList<Article>(); 
+		
+		//Si el filtro es la id... (guid)
+		if(filter.equals("id")){
+
+			try{
+				//Tratar de parsear el valor para verificar que es entero...
+				Integer.parseInt(keyword);
+			}catch (Exception e) {
+				mv = new ModelAndView("errorDatos");
+			}
+			
+		}else{
+			
+			//Evitar inyección 
+			if(keyword.trim().equals("") || keyword.trim().isEmpty() || keyword == null){ 
+				mv = new ModelAndView("errorDatos");
+			}
+			
+			//Comprobando el rol de usuario...
+			if (user.getRole().equals("dios")){
+				lista = daoarticle.buscar(filter, keyword);
+			}
+			else{
+				lista = daoarticle.buscar(filter, keyword,user.getId());
+			}
+			
+		}//Fin de Si el filtro no es la id
+		mv.addObject("lista", lista);
+		mv.addObject("role", user.getRole().equals("dios"));
+				
+		return mv;
+		
+	}//Fin de buscarIndex
 	
 }//Fin de DSNewsController

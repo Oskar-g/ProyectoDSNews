@@ -2,12 +2,6 @@ package com.dsnews.controller;
 
 import java.io.IOException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -20,20 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dao.DAOArticle;
 import dao.DAOArticleRss;
-import dao.DAOArticleRssImpl;
 import dao.DAOListadoIndex;
 import dao.DAONewspaper;
-import dao.DAONewspaperImpl;
 import dao.DAORss;
-import dao.DAORssImpl;
 import dao.DAOSection;
 import dao.DAOUser;
-import modelos.Article;
-import modelos.ArticleRss;
-import modelos.ListadoIndex;
 import modelos.Newspaper;
-import modelos.Rss;
-import modelos.Section;
 import modelos.User;
 
 @Controller
@@ -53,7 +39,14 @@ public class DSNewsControllerNewspaper {
 	@Autowired
 	DAOListadoIndex daolindex;
 	
-	
+	/**
+	 * Formulario para Añadir periódico
+	 * 
+	 * @param sesion	Objeto Sesión
+	 * @param rs		Objeto Response
+	 * 
+	 * @return			vista de addPeriodico.js
+	 */
 	@RequestMapping(value = {"formAddPeriodico"})
 	public ModelAndView formAddPeriodico(HttpSession session, HttpServletResponse rs){
 		
@@ -73,9 +66,23 @@ public class DSNewsControllerNewspaper {
 		} else {
 			mv = new ModelAndView("addPeriodico");
 		}
+		
 		return mv;
-	}
+		
+	}//Fin de formAddPeriodico
 	
+	// -------------------------------------------------------------------
+	
+	/**
+	 * Añadir periódico
+	 * 
+	 * @param sesion	Objeto Sesión
+	 * @param rs		Objeto Response
+	 * @param name		Nombre del periódico
+	 * @param logo		url del logotipo
+	 * 
+	 * @return			vista de errorDatos.js si la adición es errónea
+	 */
 	@RequestMapping(value = {"addPeriodico"})
 	public ModelAndView borrar(HttpSession sesion,HttpServletResponse rs,
 			@RequestParam("name")String name,
@@ -94,7 +101,9 @@ public class DSNewsControllerNewspaper {
 		}else{
 			mv = new ModelAndView("errorDatos");
 		}
-		return mv;
-	}
 	
-}
+		return mv;
+	
+	}//Fin de addPeriodico
+	
+}//Fin de DSNewsControllerNewspaper
