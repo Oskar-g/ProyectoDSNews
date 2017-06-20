@@ -10,13 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dao.DAOArticle;
-import dao.DAOArticleRss;
 import dao.DAOListadoIndex;
 import dao.DAONewspaper;
 import dao.DAOSection;
@@ -44,6 +42,14 @@ public class DSNewsControllerBasic {
 	 * ---------------------------------------------------------------------
 	 */
 	
+	/**
+	 * Index
+	 * 
+	 * Carga la página principal de la aplicación visible para el común 
+	 * de los usuarios con un listado de periodicos para leer
+	 * 
+	 * @return	Vista de index.js
+	 */
 	@RequestMapping(value = {"/", "index"})
 	public ModelAndView index(){
 
@@ -54,12 +60,23 @@ public class DSNewsControllerBasic {
 		mv.addObject("newspapers",newspapers);
 		
 		return mv;
-	}
+		
+	}//Fin de index
 	
 	// ---------------------------------------------------------------------
 	
+	/**
+	 * Mostrar noticias por periódico.
+	 * 
+	 * Carga las noticias del periodico separadas por categorías.
+	 * 
+	 * @param periodico		id del periódico que filtrar
+	 * 
+	 * @return				Vista de noticias.jsp
+	 */
 	@RequestMapping(value = {"noticias"})
-	public ModelAndView inicio(@RequestParam(value="periodico")int periodico){
+	public ModelAndView inicio(
+			@RequestParam(value="periodico")int periodico){
 		
 		ModelAndView mv = new ModelAndView("noticias");
 		
@@ -92,10 +109,24 @@ public class DSNewsControllerBasic {
 		mv.addObject("logo",logo);
 
 		return mv;
-	}
+		
+	}//Fin de noticias
 	
 	// ---------------------------------------------------------------------
 	
+	/**
+	 * Mostrar noticias por periódico.
+	 * 
+	 * Carga las noticias del periodico separadas por categorías.
+	 * Filtradas además por sección/ sección + fecha de publicación 
+	 * 
+	 * @param rs			Objeto Response
+	 * @param periodico		id del periodico
+	 * @param seccion		id de la sección (categoría)
+	 * @param pubDate		Fecha de publicación
+	 * 
+	 * @return				Vista de noticias.jsp
+	 */
 	@RequestMapping(value = {"buscarNoticias"})
 	public ModelAndView buscarNoticias(HttpServletResponse rs,
 			@RequestParam("newspapers")int periodico,
@@ -144,27 +175,26 @@ public class DSNewsControllerBasic {
 
 		return mv;
 
-		}		
+	}//Fin de buscarNoticias	
+	
 	// ---------------------------------------------------------------------
 	
-		@RequestMapping(value = {"noticiasDSNews"})
-		public ModelAndView mostrarNoticiaDSNews(
-				@RequestParam("n")String StrGuid){
-			
-			
-			String[] key = StrGuid.split("--");
-			System.out.println(key[0]);
-			
-			int guid = Integer.parseInt(key[0]);
-			
-			Article article = daoarticle.read(guid);
-			
-			
-			
-			ModelAndView mv = new ModelAndView("noticiasDSNews");
-			mv.addObject("article", article);
-			
-			return mv;
+	@RequestMapping(value = {"noticiasDSNews"})
+	public ModelAndView mostrarNoticiaDSNews(
+			@RequestParam("n")String StrGuid){
 
-			}		
-}
+		String[] key = StrGuid.split("--");
+		System.out.println(key[0]);
+		
+		int guid = Integer.parseInt(key[0]);
+		
+		Article article = daoarticle.read(guid);
+		
+		ModelAndView mv = new ModelAndView("noticiasDSNews");
+		mv.addObject("article", article);
+		
+		return mv;
+
+	}//Fin de noticiasDSNews
+		
+}//Fin de DSNewsControllerBasic
